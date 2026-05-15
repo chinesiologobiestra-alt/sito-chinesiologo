@@ -4,6 +4,7 @@ import jsPDF from 'jspdf'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 
+// VERSIONE DEFINITIVA INTEGRATA FRONTEND + BACKEND
 export default function App() {
   const services = [
     {
