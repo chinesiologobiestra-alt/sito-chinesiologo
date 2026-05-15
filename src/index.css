@@ -40,3 +40,16 @@
 .react-calendar__tile:hover {
   background: #27272a;
 }
+.react-calendar__month-view__days__day {
+  color: black !important;
+}
+
+.react-calendar__tile--now {
+  background: #facc15 !important;
+  color: black !important;
+}
+
+.react-calendar__tile--active {
+  background: #eab308 !important;
+  color: black !important;
+}
