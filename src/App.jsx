@@ -206,7 +206,7 @@ export default function App() {
   doc.setFontSize(12)
 
   doc.text(
-    'Prenotazione confermata con successo.',
+    'Prenotazione confermata. Per qualunque informazione può contattarmi su whatsapp al numero 3425620513',
     20,
     170
   )
