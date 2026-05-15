@@ -4,7 +4,16 @@ import jsPDF from 'jspdf'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 
-// VERSIONE DEFINITIVA INTEGRATA FRONTEND + BACKEND
+// VERSIONE COMPLETA OPERATIVA
+// Include:
+// - Frontend luxury
+// - Prenotazioni Supabase
+// - Login admin
+// - Dashboard
+// - Calendario
+// - PDF prenotazioni
+// - Gestione appuntamenti
+// - Compatibilità Vercel
 export default function App() {
   const services = [
     {
