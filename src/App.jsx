@@ -4,7 +4,7 @@ import jsPDF from 'jspdf'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 
-export default function App() { 
+export default function App() {
 
   const [bookings, setBookings] = useState([])
 
@@ -74,10 +74,51 @@ export default function App() {
     await supabase.auth.signOut()
   }
 
+  function isTimeBooked(selectedDate, selectedTime) {
+
+    return bookings.some(
+      (booking) =>
+        booking.booking_date === selectedDate &&
+        booking.booking_time === selectedTime
+    )
+  }
+
+  function getBookingsForDate(date) {
+
+    const formattedDate = date.toISOString().split('T')[0]
+
+    return bookings.filter(
+      (booking) => booking.booking_date === formattedDate
+    )
+  }
+
+  function tileClassName({ date, view }) {
+
+    if (view === 'month') {
+
+      const dayBookings = getBookingsForDate(date)
+
+      if (dayBookings.length >= 6) {
+        return 'fully-booked'
+      }
+
+      if (dayBookings.length > 0) {
+        return 'partially-booked'
+      }
+    }
+
+    return null
+  }
+
   async function book(service) {
 
     if (!patient || !date || !time) {
       alert('Compila tutti i campi')
+      return
+    }
+
+    if (isTimeBooked(date, time)) {
+      alert('Orario già prenotato')
       return
     }
 
@@ -155,12 +196,6 @@ export default function App() {
           prenotazione online professionale.
         </p>
 
-        <button
-          className="mt-10 bg-yellow-500 hover:bg-yellow-600 text-black px-8 py-4 rounded-2xl font-bold transition"
-        >
-          Prenota Ora
-        </button>
-
       </section>
 
       <section className="max-w-6xl mx-auto px-6 pb-24">
@@ -188,12 +223,52 @@ export default function App() {
 
           <input
             type="time"
+            min="08:00"
+            max="20:00"
+            step="1800"
             value={time}
             onChange={(e) => setTime(e.target.value)}
             className="bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 outline-none"
           />
 
         </div>
+
+        {date && (
+
+          <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 mb-12">
+
+            <h3 className="text-xl font-bold text-yellow-500 mb-4">
+              Orari Occupati
+            </h3>
+
+            <div className="flex flex-wrap gap-3">
+
+              {bookings
+                .filter((booking) => booking.booking_date === date)
+                .map((booking) => (
+
+                  <div
+                    key={booking.id}
+                    className="bg-red-500/20 border border-red-500 text-red-400 px-4 py-2 rounded-xl"
+                  >
+                    {booking.booking_time}
+                  </div>
+
+                ))}
+
+              {bookings.filter((booking) => booking.booking_date === date).length === 0 && (
+
+                <div className="text-green-400">
+                  Nessun orario occupato
+                </div>
+
+              )}
+
+            </div>
+
+          </div>
+
+        )}
 
         <div className="space-y-6">
 
@@ -242,8 +317,16 @@ export default function App() {
           <div className="bg-black rounded-3xl p-10 flex justify-center">
 
             <Calendar
-              onChange={setSelectedDate}
+              onChange={(value) => {
+                setSelectedDate(value)
+
+                const formatted =
+                  value.toISOString().split('T')[0]
+
+                setDate(formatted)
+              }}
               value={selectedDate}
+              tileClassName={tileClassName}
               className="rounded-3xl border-none p-6"
             />
 
