@@ -4,7 +4,7 @@ import jsPDF from 'jspdf'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 
-export default function App() {
+export default function App() { 
 
   const [bookings, setBookings] = useState([])
 
