@@ -195,6 +195,9 @@ export default function App() {
     doc.text(`Servizio: ${booking.service}`, 20, 80)
     doc.text(`Data: ${booking.booking_date}`, 20, 100)
     doc.text(`Orario: ${booking.booking_time}`, 20, 120)
+    doc.text('La ringrazio per la sua prenotazione. Per qualsiasi informazione, non esiti a contattarmi'
+      + ' per email: chinesiologo.biestra@gmail.com o per telefono 3425620513 (anche whatsapp).'
+      + ' Fabio Biestra')
 
     doc.save(`prenotazione-${booking.patient}.pdf`)
   }
