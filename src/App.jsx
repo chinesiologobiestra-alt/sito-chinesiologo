@@ -141,7 +141,8 @@ export default function App() {
       return
     }
 
-    await fetch('https://api.resend.com/emails', {
+    
+    fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -179,7 +180,7 @@ export default function App() {
       }),
     })
 
-    alert('Prenotazione salvata!')
+    alert('Prenotazione salvata con successo!')
 
     loadBookings()
 
