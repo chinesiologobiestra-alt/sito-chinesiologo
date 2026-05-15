@@ -10,10 +10,10 @@ export default function App() {
   const [date, setDate] = useState('')
   const [time, setTime] = useState('')
 
-  const [isAdminLogged, setIsAdminLogged] = useState(false)
+  const [session, setSession] = useState(null)
 
-  const [adminEmail, setAdminEmail] = useState('')
-  const [adminPassword, setAdminPassword] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   const services = [
     'Valutazione Posturale',
@@ -22,7 +22,21 @@ export default function App() {
   ]
 
   useEffect(() => {
+
     loadBookings()
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session)
+    })
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+
+    return () => subscription.unsubscribe()
+
   }, [])
 
   async function loadBookings() {
@@ -40,16 +54,20 @@ export default function App() {
     setBookings(data)
   }
 
-  function loginAdmin() {
+  async function signIn() {
 
-    if (
-      adminEmail === 'admin@studio.it' &&
-      adminPassword === 'admin123'
-    ) {
-      setIsAdminLogged(true)
-    } else {
-      alert('Credenziali errate')
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+
+    if (error) {
+      alert(error.message)
     }
+  }
+
+  async function logout() {
+    await supabase.auth.signOut()
   }
 
   async function book(service) {
@@ -159,12 +177,14 @@ export default function App() {
 
           <input
             type="date"
+            value={date}
             onChange={(e) => setDate(e.target.value)}
             className="bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 outline-none"
           />
 
           <input
             type="time"
+            value={time}
             onChange={(e) => setTime(e.target.value)}
             className="bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 outline-none"
           />
@@ -260,7 +280,7 @@ export default function App() {
 
         <div className="max-w-6xl mx-auto">
 
-          {!isAdminLogged && (
+          {!session && (
 
             <div className="bg-zinc-100 rounded-3xl p-8 mb-10">
 
@@ -273,21 +293,21 @@ export default function App() {
                 <input
                   type="email"
                   placeholder="Email admin"
-                  value={adminEmail}
-                  onChange={(e) => setAdminEmail(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="border rounded-2xl px-5 py-4"
                 />
 
                 <input
                   type="password"
                   placeholder="Password"
-                  value={adminPassword}
-                  onChange={(e) => setAdminPassword(e.target.value)}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="border rounded-2xl px-5 py-4"
                 />
 
                 <button
-                  onClick={loginAdmin}
+                  onClick={signIn}
                   className="bg-yellow-500 hover:bg-yellow-600 rounded-2xl font-bold"
                 >
                   Login
@@ -299,7 +319,7 @@ export default function App() {
 
           )}
 
-          {isAdminLogged && (
+          {session && (
 
             <>
 
@@ -314,6 +334,13 @@ export default function App() {
                   <p className="text-gray-500 mt-2">
                     Totale prenotazioni: {bookings.length}
                   </p>
+
+                  <button
+                    onClick={logout}
+                    className="mt-4 bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl"
+                  >
+                    Logout
+                  </button>
 
                 </div>
 
