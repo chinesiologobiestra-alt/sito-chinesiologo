@@ -5,617 +5,220 @@ import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 
 export default function App() {
-
-  const [bookings, setBookings] = useState([])
-
-  const [patient, setPatient] = useState('')
-  const [patientEmail, setPatientEmail] = useState('')
-  const [date, setDate] = useState('')
-  const [time, setTime] = useState('')
-
-  const [session, setSession] = useState(null)
-
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-
-  const [selectedDate, setSelectedDate] = useState(new Date())
-
   const services = [
-    'Valutazione Posturale',
-    'Recupero Funzionale',
-    'Allenamento Personalizzato'
-  ]
-
-  useEffect(() => {
-
-    loadBookings()
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-    })
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
-
-    return () => subscription.unsubscribe()
-
-  }, [])
-
-  async function loadBookings() {
-
-    const { data, error } = await supabase
-      .from('bookings')
-      .select('*')
-      .order('id', { ascending: false })
-
-    if (error) {
-      console.log(error)
-      return
-    }
-
-    setBookings(data)
-  }
-
-  async function signIn() {
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
-
-    if (error) {
-      alert(error.message)
-    }
-  }
-
-  async function logout() {
-    await supabase.auth.signOut()
-  }
-
-  function isTimeBooked(selectedDate, selectedTime) {
-
-    return bookings.some(
-      (booking) =>
-        booking.booking_date === selectedDate &&
-        booking.booking_time === selectedTime
-    )
-  }
-
-  function getBookingsForDate(date) {
-
-    const year = date.getFullYear()
-    const month = String(date.getMonth() + 1).padStart(2, '0')
-    const day = String(date.getDate()).padStart(2, '0')
-
-    const formattedDate = `${year}-${month}-${day}`
-
-    return bookings.filter(
-      (booking) => booking.booking_date === formattedDate
-    )
-  }
-
-  function tileClassName({ date, view }) {
-
-    if (view === 'month') {
-
-      const dayBookings = getBookingsForDate(date)
-
-      if (dayBookings.length > 0) {
-        return 'fully-booked'
-      }
-    }
-
-    return null
-  }
-
-  async function book(service) {
-
-    if (!patient || !patientEmail || !date || !time) {
-      alert('Compila tutti i campi')
-      return
-    }
-
-    if (isTimeBooked(date, time)) {
-      alert('Orario già prenotato')
-      return
-    }
-
-    const booking = {
-      patient,
-      patient_email: patientEmail,
-      service,
-      booking_date: date,
-      booking_time: time,
-    }
-
-    const { error } = await supabase
-      .from('bookings')
-      .insert([booking])
-
-    if (error) {
-      console.log(error)
-      alert('Errore prenotazione')
-      return
-    }
-
-    
-   await fetch('/api/send-email', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    patient,
-    email: patientEmail,
-    service,
-    date,
-    time,
-  }),
-})
-
-    alert('Prenotazione salvata con successo!')
-
-    loadBookings()
-
-    setPatient('')
-    setPatientEmail('')
-    setDate('')
-    setTime('')
-  }
-
-  async function deleteBooking(id) {
-
-    const { error } = await supabase
-      .from('bookings')
-      .delete()
-      .eq('id', id)
-
-    if (error) {
-      console.log(error)
-      alert('Errore eliminazione')
-      return
-    }
-
-    loadBookings()
-  }
-
-  function downloadPDF(booking) {
-
-  const doc = new jsPDF()
-
-  doc.setFillColor(0, 0, 0)
-  doc.rect(0, 0, 210, 297, 'F')
-
-  doc.setTextColor(234, 179, 8)
-
-  doc.setFontSize(28)
-  doc.text('Fabio Biestra Chinesiologo', 20, 30)
-
-  doc.setFontSize(16)
-
-  doc.text(`Paziente: ${booking.patient}`, 20, 70)
-  doc.text(`Servizio: ${booking.service}`, 20, 90)
-  doc.text(`Data: ${booking.booking_date}`, 20, 110)
-  doc.text(`Orario: ${booking.booking_time}`, 20, 130)
-
-  doc.setTextColor(255, 255, 255)
-
-  doc.setFontSize(12)
-
-  doc.text(
-    'Prenotazione confermata. Per qualunque informazione può contattarmi su whatsapp al numero 3425620513',
-    20,
-    170
-  )
-
-  doc.save(`prenotazione-${booking.patient}.pdf`)
-}
-  
+    {
+      title: 'Valutazione chinesiologica',
+      desc: 'Analisi posturale e funzionale completa.',
+    },
+    {
+      title: 'Rieducazione posturale',
+      desc: 'Correzione degli squilibri posturali.',
+    },
+    {
+      title: 'Dimagrimento funzionale',
+      desc: 'Programmi personalizzati per il benessere.',
+    },
+    {
+      title: 'Recupero infortuni',
+      desc: 'Riabilitazione e ritorno al movimento.',
+    },
+    {
+      title: 'Allenamento personalizzato',
+      desc: 'Percorsi su misura per ogni esigenza.',
+    },
+  ];
 
   return (
+    <main className="min-h-screen bg-black text-white overflow-hidden">
+      <div className="fixed inset-0 opacity-20 pointer-events-none">
+        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-yellow-500 blur-[180px] rounded-full" />
+      </div>
 
-    <div className="min-h-screen bg-black text-white">
-
-      <section className="py-24 px-6 text-center">
-
-        <h1 className="text-6xl font-bold text-yellow-500 mb-6">
-          Fabio Biestra Chinesiologo
-        </h1>
-
-        <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-          Benessere, recupero funzionale e percorsi personalizzati. 
-          "La forza non è solo muscolare, è equilibrio tra corpo e mente."
-        </p>
-
-      </section>
-
-      <section className="max-w-6xl mx-auto px-6 pb-24">
-
-        <h2 className="text-4xl font-bold text-yellow-500 mb-10">
-          Prenotazioni Online
-        </h2>
-
-        <div className="grid md:grid-cols-4 gap-5 mb-12">
-
-          <input
-            type="text"
-            placeholder="Nome paziente"
-            value={patient}
-            onChange={(e) => setPatient(e.target.value)}
-            className="bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 outline-none"
-          />
-
-          <input
-            type="email"
-            placeholder="Email paziente"
-            value={patientEmail}
-            onChange={(e) => setPatientEmail(e.target.value)}
-            className="bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 outline-none"
-          />
-
-          <input
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className="bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 outline-none"
-          />
-
-          <select
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-            className="bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 outline-none"
-          >
-
-            <option value="">
-              Seleziona orario
-            </option>
-
-            {[
-              '09:00',
-              '09:30',
-              '10:00',
-              '10:30',
-              '11:00',
-              '11:30',
-              '12:00',
-              '12:30',
-              '13:00',
-              '13:30',
-              '14:00',
-              '14:30',
-              '15:00',
-              '15:30',
-              '16:00',
-              '16:30',
-              '17:00',
-              '17:30',
-              '18:00',
-              '18:30',
-            ]
-              .filter((slot) => !isTimeBooked(date, slot))
-              .map((slot) => (
-
-                <option key={slot} value={slot}>
-                  {slot}
-                </option>
-
-              ))}
-
-          </select>
-
-        </div>
-
-        {date && (
-
-          <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 mb-12">
-
-            <h3 className="text-xl font-bold text-yellow-500 mb-4">
-              Orari Occupati
-            </h3>
-
-            <div className="flex flex-wrap gap-3">
-
-              {bookings
-                .filter((booking) => booking.booking_date === date)
-                .map((booking) => (
-
-                  <div
-                    key={booking.id}
-                    className="bg-red-500/20 border border-red-500 text-red-400 px-4 py-2 rounded-xl"
-                  >
-                    {booking.booking_time}
-                  </div>
-
-                ))}
-
-              {bookings.filter((booking) => booking.booking_date === date).length === 0 && (
-
-                <div className="text-green-400">
-                  Nessun orario occupato
-                </div>
-
-              )}
-
+      <header className="sticky top-0 z-50 border-b border-yellow-500/10 bg-black/90 backdrop-blur-xl">
+        <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-full border border-yellow-500 flex items-center justify-center text-yellow-500 text-2xl font-bold">
+              F
             </div>
 
+            <div>
+              <h1 className="text-2xl font-black tracking-wide">
+                FABIO BIESTRA
+              </h1>
+              <p className="text-yellow-500 uppercase text-xs tracking-[0.4em]">
+                Chinesiologo Professionista
+              </p>
+            </div>
           </div>
 
-        )}
+          <nav className="hidden lg:flex items-center gap-8 text-sm font-semibold uppercase tracking-wide">
+            <a href="#">Home</a>
+            <a href="#">Chi Sono</a>
+            <a href="#servizi">Servizi</a>
+            <a href="#benefici">Benefici</a>
+            <a href="#recensioni">Recensioni</a>
+            <a href="#contatti">Contatti</a>
+          </nav>
 
-        <div className="space-y-6">
+          <button className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded-xl transition shadow-lg shadow-yellow-500/20">
+            Prenota Ora
+          </button>
+        </div>
+      </header>
 
-          {services.map((service) => (
+      <section className="relative min-h-[92vh] flex items-center">
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent z-10" />
 
-            <div
-              key={service}
-              className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 flex justify-between items-center"
-            >
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage:
+              "url('https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=1974&auto=format&fit=crop')",
+          }}
+        />
 
-              <div>
+        <div className="relative z-20 max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <p className="text-yellow-500 uppercase tracking-[0.35em] font-semibold mb-6">
+              Movimento. Equilibrio. Benessere.
+            </p>
 
-                <h3 className="text-2xl font-semibold mb-2">
-                  {service}
-                </h3>
+            <h2 className="text-6xl md:text-7xl font-black leading-[0.95] mb-8">
+              Il movimento
+              <br />
+              che migliora
+              <br />
+              <span className="text-yellow-500">la tua vita.</span>
+            </h2>
 
-                <p className="text-gray-400">
-                  Percorso professionale personalizzato
-                </p>
+            <p className="text-zinc-300 text-xl leading-relaxed max-w-xl mb-10">
+              Percorsi personalizzati di chinesiologia, postura e recupero
+              funzionale per migliorare il tuo benessere quotidiano.
+            </p>
 
-              </div>
-
-              <button
-                onClick={() => book(service)}
-                className="bg-yellow-500 hover:bg-yellow-600 text-black px-6 py-3 rounded-2xl font-bold transition"
-              >
-                Prenota
+            <div className="flex flex-wrap gap-4 mb-14">
+              <button className="bg-yellow-500 text-black font-bold px-8 py-5 rounded-2xl hover:bg-yellow-400 transition text-lg">
+                Prenota una visita
               </button>
 
+              <button className="border border-yellow-500 text-yellow-500 px-8 py-5 rounded-2xl hover:bg-yellow-500 hover:text-black transition text-lg">
+                Scopri di più
+              </button>
             </div>
-
-          ))}
-
-        </div>
-
-      </section>
-
-      <section className="bg-zinc-900 py-24 px-6">
-
-        <div className="max-w-6xl mx-auto">
-
-          <h2 className="text-4xl font-bold text-yellow-500 mb-12 text-center">
-            Calendario Appuntamenti
-          </h2>
-
-          <div className="bg-black rounded-3xl p-10 flex justify-center">
-
-            <Calendar
-              onChange={(value) => {
-
-                setSelectedDate(value)
-
-                const year = value.getFullYear()
-                const month = String(value.getMonth() + 1).padStart(2, '0')
-                const day = String(value.getDate()).padStart(2, '0')
-
-                const formatted = `${year}-${month}-${day}`
-
-                setDate(formatted)
-              }}
-              value={selectedDate}
-              tileClassName={tileClassName}
-              className="rounded-3xl border-none p-6"
-            />
-
           </div>
 
-          <div className="mt-10 text-center text-gray-300 text-xl">
-
-            Giorno selezionato:
-
-            <span className="text-yellow-500 font-bold ml-3">
-              {selectedDate.toLocaleDateString()}
-            </span>
-
-          </div>
-
-        </div>
-
-      </section>
-
-      <section className="bg-zinc-950 py-24 px-6">
-
-        <div className="max-w-6xl mx-auto">
-
-          <h2 className="text-4xl font-bold text-yellow-500 mb-12 text-center">
-            Recensioni
-          </h2>
-
-          <div className="grid md:grid-cols-2 gap-8">
-
-            <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
-
-              <div className="text-yellow-500 text-2xl mb-4">
-                ★★★★★
-              </div>
-
-              <p className="text-gray-300 mb-6">
-                Professionalità incredibile.
-                Dopo poche sedute ho migliorato postura e mobilità.
-              </p>
-
-              <div className="text-yellow-500 font-semibold">
-                Marco R.
-              </div>
-
-            </div>
-
-            <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
-
-              <div className="text-yellow-500 text-2xl mb-4">
-                ★★★★★
-              </div>
-
-              <p className="text-gray-300 mb-6">
-                Ambiente professionale e percorso personalizzato davvero efficace.
-              </p>
-
-              <div className="text-yellow-500 font-semibold">
-                Laura B.
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-      <section className="bg-white text-black py-24 px-6">
-
-        <div className="max-w-6xl mx-auto">
-
-          {!session && (
-
-            <div className="bg-zinc-100 rounded-3xl p-8 mb-10">
-
-              <h3 className="text-2xl font-bold mb-6">
-                Login Admin
+          <div className="hidden lg:block">
+            <div className="bg-zinc-950/90 border border-yellow-500/20 rounded-[32px] p-8 backdrop-blur-xl shadow-2xl shadow-yellow-500/10">
+              <h3 className="text-3xl font-black mb-8">
+                Dashboard Professionale
               </h3>
 
-              <div className="grid md:grid-cols-3 gap-4">
-
-                <input
-                  type="email"
-                  placeholder="Email admin"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="border rounded-2xl px-5 py-4"
-                />
-
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="border rounded-2xl px-5 py-4"
-                />
-
-                <button
-                  onClick={signIn}
-                  className="bg-yellow-500 hover:bg-yellow-600 rounded-2xl font-bold"
-                >
-                  Login
-                </button>
-
-              </div>
-
-            </div>
-
-          )}
-
-          {session && (
-
-            <>
-
-              <div className="flex justify-between items-center mb-10">
-
-                <div>
-
-                  <h2 className="text-4xl font-bold">
-                    Admin Dashboard
-                  </h2>
-
-                  <p className="text-gray-500 mt-2">
-                    Totale prenotazioni: {bookings.length}
-                  </p>
-
-                  <button
-                    onClick={logout}
-                    className="mt-4 bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl"
+              <div className="grid grid-cols-2 gap-4 mb-8">
+                {[
+                  ['Prenotazioni', '48'],
+                  ['Pazienti', '15'],
+                  ['Recensioni', '24'],
+                  ['Appuntamenti', '6'],
+                ].map((item, index) => (
+                  <div
+                    key={index}
+                    className="bg-black border border-yellow-500/10 rounded-2xl p-5"
                   >
-                    Logout
-                  </button>
-
-                </div>
-
-              </div>
-
-              <div className="bg-zinc-100 rounded-3xl p-8 shadow-lg">
-
-                {bookings.length === 0 ? (
-
-                  <div className="text-center text-gray-500 py-10">
-                    Nessuna prenotazione presente
+                    <p className="text-zinc-500 text-sm mb-2">{item[0]}</p>
+                    <h4 className="text-4xl font-black text-yellow-500">
+                      {item[1]}
+                    </h4>
                   </div>
-
-                ) : (
-
-                  <div className="space-y-5">
-
-                    {bookings.map((booking) => (
-
-                      <div
-                        key={booking.id}
-                        className="bg-white rounded-2xl p-6 border flex justify-between items-center"
-                      >
-
-                        <div>
-
-                          <h3 className="text-xl font-bold">
-                            {booking.patient}
-                          </h3>
-
-                          <p className="text-gray-500 mt-1">
-                            {booking.service}
-                          </p>
-
-                          <p className="text-sm text-gray-400 mt-1">
-                            {booking.booking_date} • {booking.booking_time}
-                          </p>
-
-                        </div>
-
-                        <div className="flex gap-3">
-
-                          <button
-                            onClick={() => downloadPDF(booking)}
-                            className="bg-yellow-500 hover:bg-yellow-600 text-black px-5 py-3 rounded-xl font-bold transition"
-                          >
-                            PDF
-                          </button>
-
-                          <button
-                            onClick={() => deleteBooking(booking.id)}
-                            className="bg-red-500 hover:bg-red-600 text-white px-5 py-3 rounded-xl font-bold transition"
-                          >
-                            Elimina
-                          </button>
-
-                        </div>
-
-                      </div>
-
-                    ))}
-
-                  </div>
-
-                )}
-
+                ))}
               </div>
-
-            </>
-
-          )}
-
+            </div>
+          </div>
         </div>
-
       </section>
 
-    </div>
+      <section id="servizi" className="py-28 bg-zinc-950">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-20">
+            <p className="text-yellow-500 uppercase tracking-[0.3em] mb-4">
+              Servizi professionali
+            </p>
 
-  )
+            <h3 className="text-5xl md:text-6xl font-black mb-6">
+              Percorsi su misura
+            </h3>
+          </div>
+
+          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
+            {services.map((service, index) => (
+              <div
+                key={index}
+                className="group bg-black border border-yellow-500/10 rounded-[32px] p-8 hover:border-yellow-500 hover:-translate-y-2 transition duration-300"
+              >
+                <div className="w-16 h-16 rounded-2xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center text-yellow-500 text-3xl mb-8">
+                  ✦
+                </div>
+
+                <h4 className="text-3xl font-black mb-5">{service.title}</h4>
+
+                <p className="text-zinc-400 text-lg leading-relaxed mb-8">
+                  {service.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="contatti" className="py-28 bg-black border-t border-yellow-500/10">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="bg-gradient-to-r from-yellow-500 to-yellow-400 rounded-[40px] p-14 lg:p-20 text-black shadow-2xl shadow-yellow-500/20">
+            <div className="grid lg:grid-cols-2 gap-14 items-center">
+              <div>
+                <p className="uppercase tracking-[0.3em] font-semibold mb-5">
+                  Prenota una consulenza
+                </p>
+
+                <h3 className="text-5xl md:text-6xl font-black leading-tight mb-8">
+                  Inizia oggi il tuo percorso.
+                </h3>
+              </div>
+
+              <div className="bg-black rounded-[32px] p-8 text-white border border-white/10">
+                <div className="space-y-5">
+                  <input
+                    placeholder="Nome e cognome"
+                    className="w-full bg-zinc-900 border border-yellow-500/20 rounded-2xl px-5 py-4 outline-none"
+                  />
+
+                  <input
+                    placeholder="Telefono"
+                    className="w-full bg-zinc-900 border border-yellow-500/20 rounded-2xl px-5 py-4 outline-none"
+                  />
+
+                  <textarea
+                    rows={5}
+                    placeholder="Scrivi il tuo messaggio"
+                    className="w-full bg-zinc-900 border border-yellow-500/20 rounded-2xl px-5 py-4 outline-none"
+                  />
+
+                  <button className="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-black py-5 rounded-2xl transition text-lg">
+                    Invia richiesta
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer className="border-t border-yellow-500/10 py-12 bg-black text-center">
+        <div className="max-w-7xl mx-auto px-6">
+          <h4 className="text-2xl font-black mb-3">FABIO BIESTRA</h4>
+          <p className="text-zinc-600 text-sm">
+            © 2026 Fabio Biestra — Tutti i diritti riservati
+          </p>
+        </div>
+      </footer>
+    </main>
+  );
 }
