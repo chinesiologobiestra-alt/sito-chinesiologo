@@ -85,7 +85,13 @@ export default function App() {
 
   function getBookingsForDate(date) {
 
-    const formattedDate = date.toISOString().split('T')[0]
+    const year = date.getFullYear()
+
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+
+    const day = String(date.getDate()).padStart(2, '0')
+
+    const formattedDate = `${year}-${month}-${day}`
 
     return bookings.filter(
       (booking) => booking.booking_date === formattedDate
@@ -98,12 +104,8 @@ export default function App() {
 
       const dayBookings = getBookingsForDate(date)
 
-      if (dayBookings.length >= 6) {
-        return 'fully-booked'
-      }
-
       if (dayBookings.length > 0) {
-        return 'partially-booked'
+        return 'fully-booked'
       }
     }
 
@@ -225,7 +227,7 @@ export default function App() {
             type="time"
             min="08:00"
             max="20:00"
-            step="1800"
+            step="3600"
             value={time}
             onChange={(e) => setTime(e.target.value)}
             className="bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 outline-none"
@@ -318,10 +320,16 @@ export default function App() {
 
             <Calendar
               onChange={(value) => {
+
                 setSelectedDate(value)
 
-                const formatted =
-                  value.toISOString().split('T')[0]
+                const year = value.getFullYear()
+
+                const month = String(value.getMonth() + 1).padStart(2, '0')
+
+                const day = String(value.getDate()).padStart(2, '0')
+
+                const formatted = `${year}-${month}-${day}`
 
                 setDate(formatted)
               }}
