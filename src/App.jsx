@@ -223,7 +223,7 @@ export default function App() {
             className="bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 outline-none"
           />
 
-          <<select
+          <select
   value={time}
   onChange={(e) => setTime(e.target.value)}
   className="bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 outline-none"
