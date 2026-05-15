@@ -149,7 +149,7 @@ export default function App() {
         Authorization: `Bearer ${import.meta.env.VITE_RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: 'Studio Premium <onboarding@resend.dev>',
+        from: 'Studio Chinesiologico <onboarding@resend.dev>',
         to: patientEmail,
         subject: 'Prenotazione Confermata',
         html: `
