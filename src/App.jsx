@@ -184,23 +184,36 @@ export default function App() {
 
   function downloadPDF(booking) {
 
-    const doc = new jsPDF()
+  const doc = new jsPDF()
 
-    doc.setFontSize(22)
-    doc.text('Fabio Biestra Chinesiologo', 20, 30)
+  doc.setFillColor(0, 0, 0)
+  doc.rect(0, 0, 210, 297, 'F')
 
-    doc.setFontSize(14)
+  doc.setTextColor(234, 179, 8)
 
-    doc.text(`Paziente: ${booking.patient}`, 20, 60)
-    doc.text(`Servizio: ${booking.service}`, 20, 80)
-    doc.text(`Data: ${booking.booking_date}`, 20, 100)
-    doc.text(`Orario: ${booking.booking_time}`, 20, 120)
-    doc.text('La ringrazio per la sua prenotazione. Per qualsiasi informazione, non esiti a contattarmi'
-      + ' per email: chinesiologo.biestra@gmail.com o per telefono 3425620513 (anche whatsapp).'
-      + ' Fabio Biestra')
+  doc.setFontSize(28)
+  doc.text('Fabio Biestra Chinesiologo', 20, 30)
 
-    doc.save(`prenotazione-${booking.patient}.pdf`)
-  }
+  doc.setFontSize(16)
+
+  doc.text(`Paziente: ${booking.patient}`, 20, 70)
+  doc.text(`Servizio: ${booking.service}`, 20, 90)
+  doc.text(`Data: ${booking.booking_date}`, 20, 110)
+  doc.text(`Orario: ${booking.booking_time}`, 20, 130)
+
+  doc.setTextColor(255, 255, 255)
+
+  doc.setFontSize(12)
+
+  doc.text(
+    'Prenotazione confermata con successo.',
+    20,
+    170
+  )
+
+  doc.save(`prenotazione-${booking.patient}.pdf`)
+}
+  
 
   return (
 
