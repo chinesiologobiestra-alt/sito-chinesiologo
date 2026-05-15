@@ -142,43 +142,19 @@ export default function App() {
     }
 
     
-    fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${import.meta.env.VITE_RESEND_API_KEY}`,
-      },
-      body: JSON.stringify({
-        from: 'Studio Chinesiologico <onboarding@resend.dev>',
-        to: patientEmail,
-        subject: 'Prenotazione Confermata',
-        html: `
-          <div style="font-family: Arial; padding:20px;">
-            <h1 style="color:#eab308;">
-              Prenotazione Confermata
-            </h1>
-
-            <p>Ciao ${patient},</p>
-
-            <p>
-              La tua prenotazione è stata confermata con successo.
-            </p>
-
-            <hr />
-
-            <p><b>Servizio:</b> ${service}</p>
-            <p><b>Data:</b> ${date}</p>
-            <p><b>Orario:</b> ${time}</p>
-
-            <hr />
-
-            <p>
-              Studio Chinesiologico Premium
-            </p>
-          </div>
-        `,
-      }),
-    })
+   await fetch('/api/send-email', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    patient,
+    email: patientEmail,
+    service,
+    date,
+    time,
+  }),
+})
 
     alert('Prenotazione salvata con successo!')
 
@@ -211,7 +187,7 @@ export default function App() {
     const doc = new jsPDF()
 
     doc.setFontSize(22)
-    doc.text('Studio Chinesiologico Premium', 20, 30)
+    doc.text('Fabio Biestra Chinesiologo', 20, 30)
 
     doc.setFontSize(14)
 
@@ -230,12 +206,12 @@ export default function App() {
       <section className="py-24 px-6 text-center">
 
         <h1 className="text-6xl font-bold text-yellow-500 mb-6">
-          Studio Chinesiologico Premium
+          Fabio Biestra Chinesiologo
         </h1>
 
         <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-          Benessere, recupero funzionale e percorsi personalizzati con
-          prenotazione online professionale.
+          Benessere, recupero funzionale e percorsi personalizzati. 
+          "La forza non è solo muscolare, è equilibrio tra corpo e mente."
         </p>
 
       </section>
