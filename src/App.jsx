@@ -223,15 +223,48 @@ export default function App() {
             className="bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 outline-none"
           />
 
-          <input
-            type="time"
-            min="08:00"
-            max="20:00"
-            step="3600"
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-            className="bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 outline-none"
-          />
+          <<select
+  value={time}
+  onChange={(e) => setTime(e.target.value)}
+  className="bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 outline-none"
+>
+
+  <option value="">
+    Seleziona orario
+  </option>
+
+  {[
+    '09:00',
+    '09:30',
+    '10:00',
+    '10:30',
+    '11:00',
+    '11:30',
+    '12:00',
+    '12:30',
+    '13:00',
+    '13:30',
+    '14:00',
+    '14:30',
+    '15:00',
+    '15:30',
+    '16:00',
+    '16:30',
+    '17:00',
+    '17:30',
+    '18:00',
+    '18:30',
+  ]
+    .filter((slot) => !isTimeBooked(date, slot))
+    .map((slot) => (
+
+      <option key={slot} value={slot}>
+        {slot}
+      </option>
+
+    ))}
+
+</select>
 
         </div>
 
