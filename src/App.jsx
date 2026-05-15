@@ -9,6 +9,7 @@ export default function App() {
   const [bookings, setBookings] = useState([])
 
   const [patient, setPatient] = useState('')
+  const [patientEmail, setPatientEmail] = useState('')
   const [date, setDate] = useState('')
   const [time, setTime] = useState('')
 
@@ -86,9 +87,7 @@ export default function App() {
   function getBookingsForDate(date) {
 
     const year = date.getFullYear()
-
     const month = String(date.getMonth() + 1).padStart(2, '0')
-
     const day = String(date.getDate()).padStart(2, '0')
 
     const formattedDate = `${year}-${month}-${day}`
@@ -114,7 +113,7 @@ export default function App() {
 
   async function book(service) {
 
-    if (!patient || !date || !time) {
+    if (!patient || !patientEmail || !date || !time) {
       alert('Compila tutti i campi')
       return
     }
@@ -126,6 +125,7 @@ export default function App() {
 
     const booking = {
       patient,
+      patient_email: patientEmail,
       service,
       booking_date: date,
       booking_time: time,
@@ -141,11 +141,50 @@ export default function App() {
       return
     }
 
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${import.meta.env.VITE_RESEND_API_KEY}`,
+      },
+      body: JSON.stringify({
+        from: 'Studio Premium <onboarding@resend.dev>',
+        to: patientEmail,
+        subject: 'Prenotazione Confermata',
+        html: `
+          <div style="font-family: Arial; padding:20px;">
+            <h1 style="color:#eab308;">
+              Prenotazione Confermata
+            </h1>
+
+            <p>Ciao ${patient},</p>
+
+            <p>
+              La tua prenotazione è stata confermata con successo.
+            </p>
+
+            <hr />
+
+            <p><b>Servizio:</b> ${service}</p>
+            <p><b>Data:</b> ${date}</p>
+            <p><b>Orario:</b> ${time}</p>
+
+            <hr />
+
+            <p>
+              Studio Chinesiologico Premium
+            </p>
+          </div>
+        `,
+      }),
+    })
+
     alert('Prenotazione salvata!')
 
     loadBookings()
 
     setPatient('')
+    setPatientEmail('')
     setDate('')
     setTime('')
   }
@@ -206,13 +245,21 @@ export default function App() {
           Prenotazioni Online
         </h2>
 
-        <div className="grid md:grid-cols-3 gap-5 mb-12">
+        <div className="grid md:grid-cols-4 gap-5 mb-12">
 
           <input
             type="text"
             placeholder="Nome paziente"
             value={patient}
             onChange={(e) => setPatient(e.target.value)}
+            className="bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 outline-none"
+          />
+
+          <input
+            type="email"
+            placeholder="Email paziente"
+            value={patientEmail}
+            onChange={(e) => setPatientEmail(e.target.value)}
             className="bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 outline-none"
           />
 
@@ -224,47 +271,47 @@ export default function App() {
           />
 
           <select
-  value={time}
-  onChange={(e) => setTime(e.target.value)}
-  className="bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 outline-none"
->
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+            className="bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 outline-none"
+          >
 
-  <option value="">
-    Seleziona orario
-  </option>
+            <option value="">
+              Seleziona orario
+            </option>
 
-  {[
-    '09:00',
-    '09:30',
-    '10:00',
-    '10:30',
-    '11:00',
-    '11:30',
-    '12:00',
-    '12:30',
-    '13:00',
-    '13:30',
-    '14:00',
-    '14:30',
-    '15:00',
-    '15:30',
-    '16:00',
-    '16:30',
-    '17:00',
-    '17:30',
-    '18:00',
-    '18:30',
-  ]
-    .filter((slot) => !isTimeBooked(date, slot))
-    .map((slot) => (
+            {[
+              '09:00',
+              '09:30',
+              '10:00',
+              '10:30',
+              '11:00',
+              '11:30',
+              '12:00',
+              '12:30',
+              '13:00',
+              '13:30',
+              '14:00',
+              '14:30',
+              '15:00',
+              '15:30',
+              '16:00',
+              '16:30',
+              '17:00',
+              '17:30',
+              '18:00',
+              '18:30',
+            ]
+              .filter((slot) => !isTimeBooked(date, slot))
+              .map((slot) => (
 
-      <option key={slot} value={slot}>
-        {slot}
-      </option>
+                <option key={slot} value={slot}>
+                  {slot}
+                </option>
 
-    ))}
+              ))}
 
-</select>
+          </select>
 
         </div>
 
@@ -357,9 +404,7 @@ export default function App() {
                 setSelectedDate(value)
 
                 const year = value.getFullYear()
-
                 const month = String(value.getMonth() + 1).padStart(2, '0')
-
                 const day = String(value.getDate()).padStart(2, '0')
 
                 const formatted = `${year}-${month}-${day}`
