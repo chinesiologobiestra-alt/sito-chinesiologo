@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './lib/supabase'
 import jsPDF from 'jspdf'
+import Calendar from 'react-calendar'
+import 'react-calendar/dist/Calendar.css'
 
 export default function App() {
 
@@ -14,6 +16,8 @@ export default function App() {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const [selectedDate, setSelectedDate] = useState(new Date())
 
   const services = [
     'Valutazione Posturale',
@@ -222,6 +226,38 @@ export default function App() {
             </div>
 
           ))}
+
+        </div>
+
+      </section>
+
+      <section className="bg-zinc-900 py-24 px-6">
+
+        <div className="max-w-6xl mx-auto">
+
+          <h2 className="text-4xl font-bold text-yellow-500 mb-12 text-center">
+            Calendario Appuntamenti
+          </h2>
+
+          <div className="bg-black rounded-3xl p-10 flex justify-center">
+
+            <Calendar
+              onChange={setSelectedDate}
+              value={selectedDate}
+              className="rounded-3xl border-none p-6"
+            />
+
+          </div>
+
+          <div className="mt-10 text-center text-gray-300 text-xl">
+
+            Giorno selezionato:
+
+            <span className="text-yellow-500 font-bold ml-3">
+              {selectedDate.toLocaleDateString()}
+            </span>
+
+          </div>
 
         </div>
 
