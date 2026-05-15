@@ -1,95 +1,396 @@
-import './index.css'
+import { useEffect, useState } from 'react'
+import { supabase } from './lib/supabase'
+import jsPDF from 'jspdf'
 
 export default function App() {
-  return (
-    <div>
-      <section className="hero">
-        <h1>Studio Chinesiologico Premium</h1>
 
-        <p>
-          Benessere, recupero funzionale e percorsi personalizzati
-          con prenotazione online e gestione professionale completa.
+  const [bookings, setBookings] = useState([])
+
+  const [patient, setPatient] = useState('')
+  const [date, setDate] = useState('')
+  const [time, setTime] = useState('')
+
+  const [isAdminLogged, setIsAdminLogged] = useState(false)
+
+  const [adminEmail, setAdminEmail] = useState('')
+  const [adminPassword, setAdminPassword] = useState('')
+
+  const services = [
+    'Valutazione Posturale',
+    'Recupero Funzionale',
+    'Allenamento Personalizzato'
+  ]
+
+  useEffect(() => {
+    loadBookings()
+  }, [])
+
+  async function loadBookings() {
+
+    const { data, error } = await supabase
+      .from('bookings')
+      .select('*')
+      .order('id', { ascending: false })
+
+    if (error) {
+      console.log(error)
+      return
+    }
+
+    setBookings(data)
+  }
+
+  function loginAdmin() {
+
+    if (
+      adminEmail === 'admin@studio.it' &&
+      adminPassword === 'admin123'
+    ) {
+      setIsAdminLogged(true)
+    } else {
+      alert('Credenziali errate')
+    }
+  }
+
+  async function book(service) {
+
+    if (!patient || !date || !time) {
+      alert('Compila tutti i campi')
+      return
+    }
+
+    const booking = {
+      patient,
+      service,
+      booking_date: date,
+      booking_time: time,
+    }
+
+    const { error } = await supabase
+      .from('bookings')
+      .insert([booking])
+
+    if (error) {
+      console.log(error)
+      alert('Errore prenotazione')
+      return
+    }
+
+    alert('Prenotazione salvata!')
+
+    loadBookings()
+
+    setPatient('')
+    setDate('')
+    setTime('')
+  }
+
+  async function deleteBooking(id) {
+
+    const { error } = await supabase
+      .from('bookings')
+      .delete()
+      .eq('id', id)
+
+    if (error) {
+      console.log(error)
+      alert('Errore eliminazione')
+      return
+    }
+
+    loadBookings()
+  }
+
+  function downloadPDF(booking) {
+
+    const doc = new jsPDF()
+
+    doc.setFontSize(22)
+    doc.text('Studio Chinesiologico Premium', 20, 30)
+
+    doc.setFontSize(14)
+
+    doc.text(`Paziente: ${booking.patient}`, 20, 60)
+    doc.text(`Servizio: ${booking.service}`, 20, 80)
+    doc.text(`Data: ${booking.booking_date}`, 20, 100)
+    doc.text(`Orario: ${booking.booking_time}`, 20, 120)
+
+    doc.save(`prenotazione-${booking.patient}.pdf`)
+  }
+
+  return (
+
+    <div className="min-h-screen bg-black text-white">
+
+      <section className="py-24 px-6 text-center">
+
+        <h1 className="text-6xl font-bold text-yellow-500 mb-6">
+          Studio Chinesiologico Premium
+        </h1>
+
+        <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          Benessere, recupero funzionale e percorsi personalizzati con
+          prenotazione online professionale.
         </p>
 
-        <button className="gold-btn">
+        <button
+          className="mt-10 bg-yellow-500 hover:bg-yellow-600 text-black px-8 py-4 rounded-2xl font-bold transition"
+        >
           Prenota Ora
         </button>
+
       </section>
 
-      <section className="section">
-        <div className="container">
-          <h2>Prenotazioni Online</h2>
+      <section className="max-w-6xl mx-auto px-6 pb-24">
 
-          <div className="services">
-            <div className="card">
-              <h3>Valutazione Posturale</h3>
-              <button className="gold-btn">Prenota</button>
-            </div>
+        <h2 className="text-4xl font-bold text-yellow-500 mb-10">
+          Prenotazioni Online
+        </h2>
 
-            <div className="card">
-              <h3>Recupero Funzionale</h3>
-              <button className="gold-btn">Prenota</button>
-            </div>
+        <div className="grid md:grid-cols-3 gap-5 mb-12">
 
-            <div className="card">
-              <h3>Allenamento Personalizzato</h3>
-              <button className="gold-btn">Prenota</button>
-            </div>
-          </div>
+          <input
+            type="text"
+            placeholder="Nome paziente"
+            value={patient}
+            onChange={(e) => setPatient(e.target.value)}
+            className="bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 outline-none"
+          />
 
-          <div className="calendar">
-            <h2>Calendario</h2>
+          <input
+            type="date"
+            onChange={(e) => setDate(e.target.value)}
+            className="bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 outline-none"
+          />
 
-            <div className="calendar-grid">
-              {[1,2,3,4,5,6,7,8,9,10].map(day => (
-                <button key={day}>{day}</button>
-              ))}
-            </div>
-          </div>
+          <input
+            type="time"
+            onChange={(e) => setTime(e.target.value)}
+            className="bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 outline-none"
+          />
+
         </div>
-      </section>
 
-      <section className="section reviews">
-        <div className="container">
-          <h2>Recensioni</h2>
+        <div className="space-y-6">
 
-          <div className="review-card">
-            <h3>★★★★★</h3>
-            <p>
-              Professionalità incredibile.
-              Dopo poche sedute ho migliorato postura e mobilità.
-            </p>
-          </div>
+          {services.map((service) => (
 
-          <div className="review-card">
-            <h3>★★★★★</h3>
-            <p>
-              Ambiente professionale e percorso personalizzato davvero efficace.
-            </p>
-          </div>
+            <div
+              key={service}
+              className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 flex justify-between items-center"
+            >
+
+              <div>
+
+                <h3 className="text-2xl font-semibold mb-2">
+                  {service}
+                </h3>
+
+                <p className="text-gray-400">
+                  Percorso professionale personalizzato
+                </p>
+
+              </div>
+
+              <button
+                onClick={() => book(service)}
+                className="bg-yellow-500 hover:bg-yellow-600 text-black px-6 py-3 rounded-2xl font-bold transition"
+              >
+                Prenota
+              </button>
+
+            </div>
+
+          ))}
+
         </div>
+
       </section>
 
-      <section className="section admin">
-        <div className="container">
-          <h2>Admin Dashboard</h2>
+      <section className="bg-zinc-950 py-24 px-6">
 
-          <div className="card">
-            <p>Paziente: Mario Rossi</p>
-            <p>Servizio: Valutazione Posturale</p>
-            <p>Orario: 10:30</p>
+        <div className="max-w-6xl mx-auto">
 
-            <button className="gold-btn">
-              Gestisci
-            </button>
+          <h2 className="text-4xl font-bold text-yellow-500 mb-12 text-center">
+            Recensioni
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-8">
+
+            <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+
+              <div className="text-yellow-500 text-2xl mb-4">
+                ★★★★★
+              </div>
+
+              <p className="text-gray-300 mb-6">
+                Professionalità incredibile.
+                Dopo poche sedute ho migliorato postura e mobilità.
+              </p>
+
+              <div className="text-yellow-500 font-semibold">
+                Marco R.
+              </div>
+
+            </div>
+
+            <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+
+              <div className="text-yellow-500 text-2xl mb-4">
+                ★★★★★
+              </div>
+
+              <p className="text-gray-300 mb-6">
+                Ambiente professionale e percorso personalizzato davvero efficace.
+              </p>
+
+              <div className="text-yellow-500 font-semibold">
+                Laura B.
+              </div>
+
+            </div>
+
           </div>
+
         </div>
+
       </section>
 
-      <footer className="footer">
-        <h2>Studio Chinesiologico</h2>
-        <p>© 2026 Tutti i diritti riservati</p>
-      </footer>
+      <section className="bg-white text-black py-24 px-6">
+
+        <div className="max-w-6xl mx-auto">
+
+          {!isAdminLogged && (
+
+            <div className="bg-zinc-100 rounded-3xl p-8 mb-10">
+
+              <h3 className="text-2xl font-bold mb-6">
+                Login Admin
+              </h3>
+
+              <div className="grid md:grid-cols-3 gap-4">
+
+                <input
+                  type="email"
+                  placeholder="Email admin"
+                  value={adminEmail}
+                  onChange={(e) => setAdminEmail(e.target.value)}
+                  className="border rounded-2xl px-5 py-4"
+                />
+
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={adminPassword}
+                  onChange={(e) => setAdminPassword(e.target.value)}
+                  className="border rounded-2xl px-5 py-4"
+                />
+
+                <button
+                  onClick={loginAdmin}
+                  className="bg-yellow-500 hover:bg-yellow-600 rounded-2xl font-bold"
+                >
+                  Login
+                </button>
+
+              </div>
+
+            </div>
+
+          )}
+
+          {isAdminLogged && (
+
+            <>
+
+              <div className="flex justify-between items-center mb-10">
+
+                <div>
+
+                  <h2 className="text-4xl font-bold">
+                    Admin Dashboard
+                  </h2>
+
+                  <p className="text-gray-500 mt-2">
+                    Totale prenotazioni: {bookings.length}
+                  </p>
+
+                </div>
+
+              </div>
+
+              <div className="bg-zinc-100 rounded-3xl p-8 shadow-lg">
+
+                {bookings.length === 0 ? (
+
+                  <div className="text-center text-gray-500 py-10">
+                    Nessuna prenotazione presente
+                  </div>
+
+                ) : (
+
+                  <div className="space-y-5">
+
+                    {bookings.map((booking) => (
+
+                      <div
+                        key={booking.id}
+                        className="bg-white rounded-2xl p-6 border flex justify-between items-center"
+                      >
+
+                        <div>
+
+                          <h3 className="text-xl font-bold">
+                            {booking.patient}
+                          </h3>
+
+                          <p className="text-gray-500 mt-1">
+                            {booking.service}
+                          </p>
+
+                          <p className="text-sm text-gray-400 mt-1">
+                            {booking.booking_date} • {booking.booking_time}
+                          </p>
+
+                        </div>
+
+                        <div className="flex gap-3">
+
+                          <button
+                            onClick={() => downloadPDF(booking)}
+                            className="bg-yellow-500 hover:bg-yellow-600 text-black px-5 py-3 rounded-xl font-bold transition"
+                          >
+                            PDF
+                          </button>
+
+                          <button
+                            onClick={() => deleteBooking(booking.id)}
+                            className="bg-red-500 hover:bg-red-600 text-white px-5 py-3 rounded-xl font-bold transition"
+                          >
+                            Elimina
+                          </button>
+
+                        </div>
+
+                      </div>
+
+                    ))}
+
+                  </div>
+
+                )}
+
+              </div>
+
+            </>
+
+          )}
+
+        </div>
+
+      </section>
+
     </div>
+
   )
 }
