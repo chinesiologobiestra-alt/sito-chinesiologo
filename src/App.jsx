@@ -99,17 +99,98 @@ return ( <div className="bg-black text-white min-h-screen"> <header className="s
     </div>
   </section>
 
-  <section id="metodo" className="py-20 px-6 max-w-7xl mx-auto">
-    <h2 className="text-4xl text-yellow-500 font-bold text-center mb-12">Metodo di lavoro</h2>
-    <div className="grid md:grid-cols-4 gap-6">
-      {method.map((step, i) => (
-        <div key={step} className="bg-zinc-900 p-6 rounded-3xl border border-yellow-700/20 text-center">
-          <p className="text-yellow-500 text-3xl font-bold mb-3">0{i + 1}</p>
-          <h3 className="font-semibold">{step}</h3>
-        </div>
-      ))}
+<section id="metodo" className="py-24 px-6 bg-black">
+  <div className="max-w-7xl mx-auto text-center">
+    <p className="uppercase tracking-[0.3em] text-yellow-500 mb-3">
+      Il mio metodo
+    </p>
+
+    <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+      Prestazioni su misura,
+      <span className="text-yellow-500"> risultati concreti</span>
+    </h2>
+
+    <div className="w-32 h-[2px] bg-yellow-500 mx-auto mb-8"></div>
+
+    <p className="text-gray-300 text-lg max-w-4xl mx-auto leading-8 mb-16">
+      Ogni percorso è unico, costruito su analisi precise, obiettivi chiari
+      e un approccio scientifico. Il mio metodo unisce competenza,
+      esperienza e attenzione alla persona.
+    </p>
+
+    <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-8">
+      <div className="bg-zinc-950 border border-yellow-600/20 rounded-[2rem] p-8 hover:border-yellow-500 transition duration-300">
+        <div className="text-5xl mb-6">🔍</div>
+
+        <h3 className="text-2xl font-bold text-white mb-4">
+          Valutazione iniziale
+        </h3>
+
+        <p className="text-gray-400 leading-7">
+          Analizzo la tua storia, il tuo stato fisico e le tue esigenze
+          attraverso test specifici e un confronto diretto. È il punto
+          di partenza per capire davvero cosa ti serve.
+        </p>
+      </div>
+
+      <div className="bg-zinc-950 border border-yellow-600/20 rounded-[2rem] p-8 hover:border-yellow-500 transition duration-300">
+        <div className="text-5xl mb-6">🧍</div>
+
+        <h3 className="text-2xl font-bold text-white mb-4">
+          Analisi postura e movimento
+        </h3>
+
+        <p className="text-gray-400 leading-7">
+          Valuto postura, mobilità e schemi motori per individuare
+          compensi, rigidità e limitazioni che possono influenzare
+          il benessere e le prestazioni quotidiane.
+        </p>
+      </div>
+
+      <div className="bg-zinc-950 border border-yellow-600/20 rounded-[2rem] p-8 hover:border-yellow-500 transition duration-300">
+        <div className="text-5xl mb-6">🎯</div>
+
+        <h3 className="text-2xl font-bold text-white mb-4">
+          Percorso personalizzato
+        </h3>
+
+        <p className="text-gray-400 leading-7">
+          Costruisco un programma su misura, basato sui tuoi obiettivi
+          reali e sostenibili. Ogni esercizio ha uno scopo preciso e
+          segue un percorso di progressione chiaro.
+        </p>
+      </div>
+
+      <div className="bg-zinc-950 border border-yellow-600/20 rounded-[2rem] p-8 hover:border-yellow-500 transition duration-300">
+        <div className="text-5xl mb-6">📈</div>
+
+        <h3 className="text-2xl font-bold text-white mb-4">
+          Benessere e continuità
+        </h3>
+
+        <p className="text-gray-400 leading-7">
+          Ti accompagno nel tempo monitorando i progressi e adattando
+          il percorso quando necessario, per risultati concreti e duraturi.
+        </p>
+      </div>
     </div>
-  </section>
+
+    <div className="mt-14">
+      <a
+        href="https://wa.me/393425620513?text=Ciao%20Fabio%2C%20vorrei%20prenotare%20una%20consulenza"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-3 bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded-full transition"
+      >
+        Prenota una consulenza gratuita
+      </a>
+
+      <p className="text-gray-400 mt-4">
+        Scrivimi su WhatsApp e iniziamo insieme il tuo percorso.
+      </p>
+    </div>
+  </div>
+</section>
 
   <section id="faq" className="bg-zinc-950 py-20 px-6">
     <div className="max-w-4xl mx-auto">
