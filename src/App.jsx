@@ -33,6 +33,93 @@ const method = [
 const scrollTo = (id) => {
 document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 };
+import { useState } from "react";
+
+function Prenotazione() {
+  const [form, setForm] = useState({
+    nome: "",
+    telefono: "",
+    servizio: "",
+    data: "",
+    ora: "",
+  });
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const invia = () => {
+    const msg = `Ciao Fabio, vorrei prenotare:%0A
+Nome: ${form.nome}%0A
+Telefono: ${form.telefono}%0A
+Servizio: ${form.servizio}%0A
+Data: ${form.data}%0A
+Ora: ${form.ora}`;
+
+    window.open(`https://wa.me/393425620513?text=${msg}`, "_blank");
+  };
+
+  return (
+    <section id="prenota" className="py-24 px-6 bg-zinc-950">
+      <div className="max-w-3xl mx-auto">
+
+        <h2 className="text-4xl font-bold text-yellow-500 text-center mb-10">
+          Prenota una consulenza
+        </h2>
+
+        <div className="space-y-4">
+
+          <input
+            name="nome"
+            placeholder="Nome e cognome"
+            onChange={handleChange}
+            className="w-full p-4 rounded-xl bg-black border border-yellow-700/20"
+          />
+
+          <input
+            name="telefono"
+            placeholder="Telefono"
+            onChange={handleChange}
+            className="w-full p-4 rounded-xl bg-black border border-yellow-700/20"
+          />
+
+          <select
+            name="servizio"
+            onChange={handleChange}
+            className="w-full p-4 rounded-xl bg-black border border-yellow-700/20"
+          >
+            <option>Seleziona servizio</option>
+            <option>Valutazione chinesiologica</option>
+            <option>Rieducazione posturale</option>
+            <option>Benessere generale</option>
+          </select>
+
+          <input
+            type="date"
+            name="data"
+            onChange={handleChange}
+            className="w-full p-4 rounded-xl bg-black border border-yellow-700/20"
+          />
+
+          <input
+            type="time"
+            name="ora"
+            onChange={handleChange}
+            className="w-full p-4 rounded-xl bg-black border border-yellow-700/20"
+          />
+
+          <button
+            onClick={invia}
+            className="w-full bg-yellow-500 text-black font-bold p-4 rounded-xl hover:bg-yellow-400"
+          >
+            Invia richiesta su WhatsApp
+          </button>
+
+        </div>
+      </div>
+    </section>
+  );
+}
 
 return ( <div className="bg-black text-white min-h-screen"> <header className="sticky top-0 z-50 bg-black/90 backdrop-blur border-b border-yellow-700/20"> <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center"> <div> <h1 className="text-yellow-500 text-2xl font-bold">FB</h1> <p className="text-sm text-gray-400">Fabio Biestra – Chinesiologo</p> </div>
 
