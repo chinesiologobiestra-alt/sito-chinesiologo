@@ -79,7 +79,7 @@ return ( <div className="bg-black text-white min-h-screen"> <header className="s
 
     <div className="flex justify-center">
       <img
-        src="/fabio-biestra.jpeg"
+        src="/fabio-biestra.jpg"
         alt="Fabio Biestra"
         className="rounded-[2rem] border border-yellow-600/30 w-[380px] object-cover shadow-2xl"
       />
