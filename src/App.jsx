@@ -1,242 +1,127 @@
-import { useEffect, useState } from 'react'
-import { supabase } from './lib/supabase'
-import jsPDF from 'jspdf'
-import Calendar from 'react-calendar'
-import 'react-calendar/dist/Calendar.css'
-
-// VERSIONE COMPLETA OPERATIVA
-// Pulsanti e funzioni collegati realmente:
-// - onClick prenotazioni
-// - login admin
-// - gestione booking
-// - calendario attivo
-// - dashboard reale
-// - pdf prenotazioni
-// - integrazione Supabase
-// Include:
-// - Frontend luxury
-// - Prenotazioni Supabase
-// - Login admin
-// - Dashboard
-// - Calendario
-// - PDF prenotazioni
-// - Gestione appuntamenti
-// - Compatibilità Vercel
 export default function App() {
   const services = [
-    {
-      title: 'Valutazione chinesiologica',
-      desc: 'Analisi posturale e funzionale completa.',
-    },
-    {
-      title: 'Rieducazione posturale',
-      desc: 'Correzione degli squilibri posturali.',
-    },
-    {
-      title: 'Dimagrimento funzionale',
-      desc: 'Programmi personalizzati per il benessere.',
-    },
-    {
-      title: 'Recupero infortuni',
-      desc: 'Riabilitazione e ritorno al movimento.',
-    },
-    {
-      title: 'Allenamento personalizzato',
-      desc: 'Percorsi su misura per ogni esigenza.',
-    },
+    'Valutazione chinesiologica',
+    'Rieducazione posturale',
+    'Recupero infortuni e dolore',
+    'Dimagrimento funzionale',
+    'Allenamento personalizzato',
+    'Benessere e prevenzione',
+  ];
+
+  const certifications = [
+    'Laurea Triennale in Scienze delle Attività Motorie e Sportive',
+    'Ginnastica Posturale I, II e III livello',
+    'Tecnico Analisi della Postura',
+    'Recupero Motorio e Funzionale Post‑Traumatico',
+    'Ginnastica Ipopressiva',
+    'Ginnastica Posturale in Gravidanza',
   ];
 
   return (
-    <main className="min-h-screen bg-black text-white overflow-hidden">
-      <div className="fixed inset-0 opacity-20 pointer-events-none">
-        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-yellow-500 blur-[180px] rounded-full" />
-      </div>
-
-      <header className="sticky top-0 z-50 border-b border-yellow-500/10 bg-black/90 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-full border border-yellow-500 flex items-center justify-center text-yellow-500 text-2xl font-bold">
-              F
-            </div>
-
-            <div>
-              <h1 className="text-2xl font-black tracking-wide">
-                FABIO BIESTRA
-              </h1>
-              <p className="text-yellow-500 uppercase text-xs tracking-[0.4em]">
-                Chinesiologo Professionista
-              </p>
-            </div>
+    <div className="min-h-screen bg-black text-white">
+      <header className="border-b border-yellow-700/30 sticky top-0 z-50 bg-black/90 backdrop-blur">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+          <div>
+            <h1 className="text-2xl font-bold text-yellow-500">FB</h1>
+            <p className="text-sm text-gray-400">Fabio Biestra – Chinesiologo</p>
           </div>
-
-          <nav className="hidden lg:flex items-center gap-8 text-sm font-semibold uppercase tracking-wide">
-            <a href="#">Home</a>
-            <a href="#">Chi Sono</a>
-            <a href="#servizi">Servizi</a>
-            <a href="#benefici">Benefici</a>
-            <a href="#recensioni">Recensioni</a>
-            <a href="#contatti">Contatti</a>
-          </nav>
-
-          <button className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded-xl transition shadow-lg shadow-yellow-500/20">
-            Prenota Ora
-          </button>
+          <a
+            href="https://wa.me/393425620513?text=Ciao%20Fabio%2C%20vorrei%20prenotare%20una%20consulenza%20chinesiologica"
+            target="_blank"
+            className="bg-yellow-500 text-black px-5 py-2 rounded-full font-semibold hover:scale-105 transition"
+          >
+            Prenota su WhatsApp
+          </a>
         </div>
       </header>
 
-      <section className="relative min-h-[92vh] flex items-center">
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent z-10" />
+      <section className="max-w-7xl mx-auto px-6 py-24 text-center">
+        <p className="uppercase tracking-[0.3em] text-yellow-500 mb-4">
+          Provincia di Pisa
+        </p>
+        <h2 className="text-5xl md:text-7xl font-bold leading-tight">
+          Fabio Biestra <span className="text-yellow-500">Chinesiologo</span>
+        </h2>
+        <p className="text-xl text-gray-300 max-w-3xl mx-auto mt-8">
+          Percorsi personalizzati orientati a postura, benessere e qualità del movimento.
+        </p>
+        <blockquote className="italic text-yellow-400 text-2xl mt-10 max-w-3xl mx-auto">
+          “Il vero benessere nasce dall’equilibrio tra mente, corpo e movimento.”
+        </blockquote>
+      </section>
 
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=1974&auto=format&fit=crop')",
-          }}
-        />
+      <section className="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <h3 className="text-4xl font-bold mb-6 text-yellow-500">Chi sono</h3>
+          <p className="text-gray-300 leading-8">
+            Sono Fabio Biestra, chinesiologo laureato in Scienze delle Attività Motorie e Sportive.
+            Il mio obiettivo è aiutare le persone a ritrovare equilibrio, benessere e qualità di vita
+            attraverso il movimento, con un approccio personalizzato orientato a postura e benessere generale.
+          </p>
+          <p className="text-gray-300 leading-8 mt-4">
+            La prima persona che ho imparato ad aiutare è stata me stesso. Oggi accompagno chi desidera
+            stare meglio, ritrovare fiducia nel proprio corpo e costruire un percorso sostenibile nel tempo.
+          </p>
+        </div>
 
-        <div className="relative z-20 max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <p className="text-yellow-500 uppercase tracking-[0.35em] font-semibold mb-6">
-              Movimento. Equilibrio. Benessere.
-            </p>
-
-            <h2 className="text-6xl md:text-7xl font-black leading-[0.95] mb-8">
-              Il movimento
-              <br />
-              che migliora
-              <br />
-              <span className="text-yellow-500">la tua vita.</span>
-            </h2>
-
-            <p className="text-zinc-300 text-xl leading-relaxed max-w-xl mb-10">
-              Percorsi personalizzati di chinesiologia, postura e recupero
-              funzionale per migliorare il tuo benessere quotidiano.
-            </p>
-
-            <div className="flex flex-wrap gap-4 mb-14">
-              <button className="bg-yellow-500 text-black font-bold px-8 py-5 rounded-2xl hover:bg-yellow-400 transition text-lg">
-                Prenota una visita
-              </button>
-
-              <button className="border border-yellow-500 text-yellow-500 px-8 py-5 rounded-2xl hover:bg-yellow-500 hover:text-black transition text-lg">
-                Scopri di più
-              </button>
-            </div>
-          </div>
-
-          <div className="hidden lg:block">
-            <div className="bg-zinc-950/90 border border-yellow-500/20 rounded-[32px] p-8 backdrop-blur-xl shadow-2xl shadow-yellow-500/10">
-              <h3 className="text-3xl font-black mb-8">
-                Dashboard Professionale
-              </h3>
-
-              <div className="grid grid-cols-2 gap-4 mb-8">
-                {[
-                  ['Prenotazioni', '48'],
-                  ['Pazienti', '15'],
-                  ['Recensioni', '24'],
-                  ['Appuntamenti', '6'],
-                ].map((item, index) => (
-                  <div
-                    key={index}
-                    className="bg-black border border-yellow-500/10 rounded-2xl p-5"
-                  >
-                    <p className="text-zinc-500 text-sm mb-2">{item[0]}</p>
-                    <h4 className="text-4xl font-black text-yellow-500">
-                      {item[1]}
-                    </h4>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+        <div className="flex justify-center">
+          <img
+            src="/fabio-biestra.jpg"
+            alt="Fabio Biestra"
+            className="rounded-[2rem] shadow-2xl border border-yellow-600/40 w-[380px] object-cover"
+          />
         </div>
       </section>
 
-      <section id="servizi" className="py-28 bg-zinc-950">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20">
-            <p className="text-yellow-500 uppercase tracking-[0.3em] mb-4">
-              Servizi professionali
-            </p>
-
-            <h3 className="text-5xl md:text-6xl font-black mb-6">
-              Percorsi su misura
-            </h3>
-          </div>
-
-          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <div
-                key={index}
-                className="group bg-black border border-yellow-500/10 rounded-[32px] p-8 hover:border-yellow-500 hover:-translate-y-2 transition duration-300"
-              >
-                <div className="w-16 h-16 rounded-2xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center text-yellow-500 text-3xl mb-8">
-                  ✦
-                </div>
-
-                <h4 className="text-3xl font-black mb-5">{service.title}</h4>
-
-                <p className="text-zinc-400 text-lg leading-relaxed mb-8">
-                  {service.desc}
-                </p>
+      <section className="bg-zinc-950 py-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <h3 className="text-4xl font-bold text-center text-yellow-500 mb-12">
+            Servizi
+          </h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            {services.map((service) => (
+              <div key={service} className="bg-zinc-900 p-6 rounded-3xl border border-yellow-700/20 hover:border-yellow-500 transition">
+                <h4 className="text-xl font-semibold text-yellow-400">{service}</h4>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="contatti" className="py-28 bg-black border-t border-yellow-500/10">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="bg-gradient-to-r from-yellow-500 to-yellow-400 rounded-[40px] p-14 lg:p-20 text-black shadow-2xl shadow-yellow-500/20">
-            <div className="grid lg:grid-cols-2 gap-14 items-center">
-              <div>
-                <p className="uppercase tracking-[0.3em] font-semibold mb-5">
-                  Prenota una consulenza
-                </p>
-
-                <h3 className="text-5xl md:text-6xl font-black leading-tight mb-8">
-                  Inizia oggi il tuo percorso.
-                </h3>
-              </div>
-
-              <div className="bg-black rounded-[32px] p-8 text-white border border-white/10">
-                <div className="space-y-5">
-                  <input
-                    placeholder="Nome e cognome"
-                    className="w-full bg-zinc-900 border border-yellow-500/20 rounded-2xl px-5 py-4 outline-none"
-                  />
-
-                  <input
-                    placeholder="Telefono"
-                    className="w-full bg-zinc-900 border border-yellow-500/20 rounded-2xl px-5 py-4 outline-none"
-                  />
-
-                  <textarea
-                    rows={5}
-                    placeholder="Scrivi il tuo messaggio"
-                    className="w-full bg-zinc-900 border border-yellow-500/20 rounded-2xl px-5 py-4 outline-none"
-                  />
-
-                  <button className="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-black py-5 rounded-2xl transition text-lg">
-                    Invia richiesta
-                  </button>
-                </div>
-              </div>
+      <section className="max-w-7xl mx-auto px-6 py-20">
+        <h3 className="text-4xl font-bold text-yellow-500 text-center mb-12">
+          Formazione & Specializzazioni
+        </h3>
+        <div className="grid md:grid-cols-2 gap-4">
+          {certifications.map((item) => (
+            <div key={item} className="bg-zinc-900 rounded-2xl p-5 border border-yellow-700/20">
+              {item}
             </div>
-          </div>
+          ))}
         </div>
       </section>
 
-      <footer className="border-t border-yellow-500/10 py-12 bg-black text-center">
-        <div className="max-w-7xl mx-auto px-6">
-          <h4 className="text-2xl font-black mb-3">FABIO BIESTRA</h4>
-          <p className="text-zinc-600 text-sm">
-            © 2026 Fabio Biestra — Tutti i diritti riservati
-          </p>
-        </div>
+      <section className="bg-zinc-950 py-20 text-center px-6">
+        <h3 className="text-4xl font-bold text-yellow-500 mb-6">
+          Prenota una consulenza
+        </h3>
+        <p className="text-gray-300 max-w-2xl mx-auto mb-8">
+          Inizia oggi il tuo percorso verso un maggiore benessere fisico attraverso un approccio personalizzato.
+        </p>
+        <a
+          href="https://wa.me/393425620513?text=Ciao%20Fabio%2C%20vorrei%20prenotare%20una%20consulenza%20chinesiologica"
+          target="_blank"
+          className="bg-yellow-500 text-black px-8 py-4 rounded-full font-bold text-lg"
+        >
+          Contattami su WhatsApp
+        </a>
+      </section>
+
+      <footer className="border-t border-yellow-700/20 py-8 text-center text-gray-400">
+        <p>Fabio Biestra – Chinesiologo</p>
+        <p>Provincia di Pisa</p>
+        <p>info@fabiobiestrachinesiologo.it</p>
       </footer>
-    </main>
+    </div>
   );
 }
