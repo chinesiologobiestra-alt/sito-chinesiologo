@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "./lib/supabase";
 
 function Prenotazione() {
   const [form, setForm] = useState({
@@ -10,10 +11,34 @@ function Prenotazione() {
   });
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const invia = () => {
+  const invia = async () => {
+
+    const { error } = await supabase
+      .from("bookings")
+      .insert([
+        {
+          patient_name: form.nome,
+          patient_phone: form.telefono,
+          service: form.servizio,
+          booking_date: form.data,
+          booking_time: form.ora,
+        },
+      ]);
+
+    if (error) {
+      alert("Errore durante la prenotazione");
+      console.log(error);
+      return;
+    }
+
+    alert("Prenotazione inviata correttamente!");
+
     const msg = `Ciao Fabio, vorrei prenotare:%0A
 Nome: ${form.nome}%0A
 Telefono: ${form.telefono}%0A
@@ -29,6 +54,7 @@ Ora: ${form.ora}`;
 
   return (
     <section id="prenota" className="py-24 px-6 bg-zinc-950">
+
       <div className="max-w-3xl mx-auto">
 
         <h2 className="text-4xl font-bold text-yellow-500 text-center mb-10">
@@ -41,20 +67,20 @@ Ora: ${form.ora}`;
             name="nome"
             placeholder="Nome e cognome"
             onChange={handleChange}
-            className="w-full p-4 rounded-xl bg-black border border-yellow-700/20 text-white"
+            className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
           />
 
           <input
             name="telefono"
             placeholder="Telefono"
             onChange={handleChange}
-            className="w-full p-4 rounded-xl bg-black border border-yellow-700/20 text-white"
+            className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
           />
 
           <select
             name="servizio"
             onChange={handleChange}
-            className="w-full p-4 rounded-xl bg-black border border-yellow-700/20 text-white"
+            className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
           >
             <option>Seleziona servizio</option>
             <option>Valutazione chinesiologica</option>
@@ -66,14 +92,14 @@ Ora: ${form.ora}`;
             type="date"
             name="data"
             onChange={handleChange}
-            className="w-full p-4 rounded-xl bg-black border border-yellow-700/20 text-white"
+            className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
           />
 
           <input
             type="time"
             name="ora"
             onChange={handleChange}
-            className="w-full p-4 rounded-xl bg-black border border-yellow-700/20 text-white"
+            className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
           />
 
           <button
@@ -84,7 +110,124 @@ Ora: ${form.ora}`;
           </button>
 
         </div>
+
       </div>
+
+    </section>
+  );
+}
+
+function AdminPanel() {
+
+  const [bookings, setBookings] = useState([]);
+
+  useEffect(() => {
+    loadBookings();
+  }, []);
+
+  const loadBookings = async () => {
+
+    const { data, error } = await supabase
+      .from("bookings")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.log(error);
+      return;
+    }
+
+    setBookings(data || []);
+  };
+
+  const eliminaPrenotazione = async (id) => {
+
+    await supabase
+      .from("bookings")
+      .delete()
+      .eq("id", id);
+
+    loadBookings();
+  };
+
+  return (
+    <section className="py-24 px-6 bg-black">
+
+      <div className="max-w-6xl mx-auto">
+
+        <h2 className="text-4xl font-bold text-yellow-500 mb-10 text-center">
+          Dashboard Prenotazioni
+        </h2>
+
+        <div className="overflow-auto border border-yellow-700 rounded-3xl">
+
+          <table className="w-full text-left">
+
+            <thead className="bg-zinc-900">
+
+              <tr>
+                <th className="p-4">Nome</th>
+                <th className="p-4">Telefono</th>
+                <th className="p-4">Servizio</th>
+                <th className="p-4">Data</th>
+                <th className="p-4">Ora</th>
+                <th className="p-4">Azioni</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              {bookings.map((booking) => (
+
+                <tr
+                  key={booking.id}
+                  className="border-t border-yellow-700"
+                >
+
+                  <td className="p-4">
+                    {booking.patient_name}
+                  </td>
+
+                  <td className="p-4">
+                    {booking.patient_phone}
+                  </td>
+
+                  <td className="p-4">
+                    {booking.service}
+                  </td>
+
+                  <td className="p-4">
+                    {booking.booking_date}
+                  </td>
+
+                  <td className="p-4">
+                    {booking.booking_time}
+                  </td>
+
+                  <td className="p-4">
+
+                    <button
+                      onClick={() => eliminaPrenotazione(booking.id)}
+                      className="bg-red-600 hover:bg-red-500 px-4 py-2 rounded-xl"
+                    >
+                      Elimina
+                    </button>
+
+                  </td>
+
+                </tr>
+
+              ))}
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
     </section>
   );
 }
@@ -124,13 +267,12 @@ export default function App() {
   return (
     <div className="bg-black text-white min-h-screen">
 
-      {/* HEADER */}
-
-      <header className="sticky top-0 z-50 bg-black/90 backdrop-blur border-b border-yellow-700/20">
+      <header className="sticky top-0 z-50 bg-black border-b border-yellow-700">
 
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
           <div>
+
             <h1 className="text-yellow-500 text-2xl font-bold">
               FB
             </h1>
@@ -138,6 +280,7 @@ export default function App() {
             <p className="text-sm text-gray-400">
               Fabio Biestra – Chinesiologo
             </p>
+
           </div>
 
           <nav className="hidden md:flex gap-6 text-sm text-gray-300">
@@ -165,7 +308,7 @@ export default function App() {
           </nav>
 
           <a
-            href="https://wa.me/393425620513?text=Ciao%20Fabio%2C%20vorrei%20prenotare%20una%20consulenza"
+            href="https://wa.me/393425620513"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-yellow-500 text-black px-5 py-2 rounded-full font-semibold"
@@ -174,9 +317,8 @@ export default function App() {
           </a>
 
         </div>
-      </header>
 
-      {/* HERO */}
+      </header>
 
       <section className="text-center py-24 px-6">
 
@@ -202,8 +344,6 @@ export default function App() {
 
       </section>
 
-      {/* CHI SONO */}
-
       <section
         id="chi-sono"
         className="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center"
@@ -219,8 +359,8 @@ export default function App() {
             Sono Fabio Biestra, laureato in
             Scienze delle Attività Motorie e Sportive.
             Mi occupo di postura e benessere generale,
-            accompagnando soprattutto persone sedentarie
-            in un percorso personalizzato.
+            accompagnando persone sedentarie e chi desidera
+            migliorare il proprio stato fisico attraverso il movimento.
           </p>
 
         </div>
@@ -230,14 +370,12 @@ export default function App() {
           <img
             src="/fabio-biestra.jpeg"
             alt="Fabio Biestra"
-            className="rounded-[2rem] border border-yellow-600/30 w-[380px] object-cover shadow-2xl"
+            className="rounded-[2rem] border border-yellow-600 w-[380px] object-cover shadow-2xl"
           />
 
         </div>
 
       </section>
-
-      {/* SERVIZI */}
 
       <section
         id="servizi"
@@ -253,9 +391,10 @@ export default function App() {
           <div className="grid md:grid-cols-3 gap-6">
 
             {services.map((service) => (
+
               <div
                 key={service}
-                className="bg-zinc-900 rounded-3xl p-6 border border-yellow-700/20 hover:border-yellow-500 transition"
+                className="bg-zinc-900 rounded-3xl p-6 border border-yellow-700 hover:border-yellow-500 transition"
               >
 
                 <h3 className="text-yellow-400 font-semibold text-xl">
@@ -263,13 +402,14 @@ export default function App() {
                 </h3>
 
               </div>
+
             ))}
 
           </div>
-        </div>
-      </section>
 
-      {/* METODO */}
+        </div>
+
+      </section>
 
       <section id="metodo" className="py-24 px-6 bg-black">
 
@@ -286,16 +426,10 @@ export default function App() {
             </span>
           </h2>
 
-          <div className="w-32 h-[2px] bg-yellow-500 mx-auto mb-8"></div>
+          <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-8 mt-16">
 
-          <p className="text-gray-300 text-lg max-w-4xl mx-auto leading-8 mb-16">
-            Ogni percorso è unico, costruito su analisi precise,
-            obiettivi chiari e un approccio scientifico.
-          </p>
+            <div className="bg-zinc-950 border border-yellow-700 rounded-[2rem] p-8">
 
-          <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-8">
-
-            <div className="bg-zinc-950 border border-yellow-600/20 rounded-[2rem] p-8">
               <div className="text-5xl mb-6">🔍</div>
 
               <h3 className="text-2xl font-bold mb-4">
@@ -305,9 +439,11 @@ export default function App() {
               <p className="text-gray-400 leading-7">
                 Analisi completa della persona e degli obiettivi.
               </p>
+
             </div>
 
-            <div className="bg-zinc-950 border border-yellow-600/20 rounded-[2rem] p-8">
+            <div className="bg-zinc-950 border border-yellow-700 rounded-[2rem] p-8">
+
               <div className="text-5xl mb-6">🧍</div>
 
               <h3 className="text-2xl font-bold mb-4">
@@ -317,9 +453,11 @@ export default function App() {
               <p className="text-gray-400 leading-7">
                 Valutazione di postura, mobilità e schemi motori.
               </p>
+
             </div>
 
-            <div className="bg-zinc-950 border border-yellow-600/20 rounded-[2rem] p-8">
+            <div className="bg-zinc-950 border border-yellow-700 rounded-[2rem] p-8">
+
               <div className="text-5xl mb-6">🎯</div>
 
               <h3 className="text-2xl font-bold mb-4">
@@ -329,9 +467,11 @@ export default function App() {
               <p className="text-gray-400 leading-7">
                 Programma costruito su misura in base agli obiettivi.
               </p>
+
             </div>
 
-            <div className="bg-zinc-950 border border-yellow-600/20 rounded-[2rem] p-8">
+            <div className="bg-zinc-950 border border-yellow-700 rounded-[2rem] p-8">
+
               <div className="text-5xl mb-6">📈</div>
 
               <h3 className="text-2xl font-bold mb-4">
@@ -341,13 +481,14 @@ export default function App() {
               <p className="text-gray-400 leading-7">
                 Monitoraggio costante dei progressi nel tempo.
               </p>
+
             </div>
 
           </div>
-        </div>
-      </section>
 
-      {/* FAQ */}
+        </div>
+
+      </section>
 
       <section
         id="faq"
@@ -363,9 +504,10 @@ export default function App() {
           <div className="space-y-4">
 
             {faq.map((item) => (
+
               <div
                 key={item.q}
-                className="bg-zinc-900 rounded-2xl p-6 border border-yellow-700/20"
+                className="bg-zinc-900 rounded-2xl p-6 border border-yellow-700"
               >
 
                 <h3 className="font-semibold text-yellow-400 mb-2">
@@ -377,19 +519,20 @@ export default function App() {
                 </p>
 
               </div>
+
             ))}
 
           </div>
-        </div>
-      </section>
 
-      {/* PRENOTAZIONE */}
+        </div>
+
+      </section>
 
       <Prenotazione />
 
-      {/* FOOTER */}
+      <AdminPanel />
 
-      <footer className="border-t border-yellow-700/20 py-8 text-center text-gray-400">
+      <footer className="border-t border-yellow-700 py-8 text-center text-gray-400">
 
         <p>Fabio Biestra – Chinesiologo</p>
 
