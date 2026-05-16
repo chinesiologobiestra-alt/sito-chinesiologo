@@ -5,6 +5,14 @@ import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 
 // VERSIONE COMPLETA OPERATIVA
+// Pulsanti e funzioni collegati realmente:
+// - onClick prenotazioni
+// - login admin
+// - gestione booking
+// - calendario attivo
+// - dashboard reale
+// - pdf prenotazioni
+// - integrazione Supabase
 // Include:
 // - Frontend luxury
 // - Prenotazioni Supabase
