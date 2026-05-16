@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "./lib/supabase";
 
 function Prenotazione() {
+
   const [form, setForm] = useState({
     nome: "",
     telefono: "",
@@ -10,14 +11,64 @@ function Prenotazione() {
     ora: "",
   });
 
-  const handleChange = (e) => {
-    setForm({
+  const [availableTimes, setAvailableTimes] = useState([]);
+
+  const allTimes = [
+    "09:00",
+    "10:00",
+    "11:00",
+    "12:00",
+    "15:00",
+    "16:00",
+    "17:00",
+    "18:00",
+  ];
+
+  const handleChange = async (e) => {
+
+    const updatedForm = {
       ...form,
       [e.target.name]: e.target.value,
-    });
+    };
+
+    setForm(updatedForm);
+
+    if (e.target.name === "data") {
+
+      const { data, error } = await supabase
+        .from("bookings")
+        .select("booking_time")
+        .eq("booking_date", e.target.value);
+
+      if (error) {
+        console.log(error);
+        return;
+      }
+
+      const bookedTimes = data.map(
+        (item) => item.booking_time
+      );
+
+      const freeTimes = allTimes.filter(
+        (time) => !bookedTimes.includes(time)
+      );
+
+      setAvailableTimes(freeTimes);
+    }
   };
 
   const invia = async () => {
+
+    const { data: existing } = await supabase
+      .from("bookings")
+      .select("*")
+      .eq("booking_date", form.data)
+      .eq("booking_time", form.ora);
+
+    if (existing.length > 0) {
+      alert("Questo orario non è disponibile");
+      return;
+    }
 
     const { error } = await supabase
       .from("bookings")
@@ -95,12 +146,26 @@ Ora: ${form.ora}`;
             className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
           />
 
-          <input
-            type="time"
+          <select
             name="ora"
             onChange={handleChange}
             className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
-          />
+          >
+
+            <option>
+              Seleziona orario
+            </option>
+
+            {availableTimes.map((time) => (
+              <option
+                key={time}
+                value={time}
+              >
+                {time}
+              </option>
+            ))}
+
+          </select>
 
           <button
             onClick={invia}
@@ -338,10 +403,6 @@ export default function App() {
           benessere e qualità del movimento.
         </p>
 
-        <blockquote className="italic text-yellow-400 mt-8 text-2xl max-w-3xl mx-auto">
-          “Il vero benessere nasce dall’equilibrio tra mente, corpo e movimento.”
-        </blockquote>
-
       </section>
 
       <section
@@ -358,9 +419,7 @@ export default function App() {
           <p className="text-gray-300 leading-8">
             Sono Fabio Biestra, laureato in
             Scienze delle Attività Motorie e Sportive.
-            Mi occupo di postura e benessere generale,
-            accompagnando persone sedentarie e chi desidera
-            migliorare il proprio stato fisico attraverso il movimento.
+            Mi occupo di postura e benessere generale.
           </p>
 
         </div>
@@ -394,7 +453,7 @@ export default function App() {
 
               <div
                 key={service}
-                className="bg-zinc-900 rounded-3xl p-6 border border-yellow-700 hover:border-yellow-500 transition"
+                className="bg-zinc-900 rounded-3xl p-6 border border-yellow-700"
               >
 
                 <h3 className="text-yellow-400 font-semibold text-xl">
@@ -429,7 +488,6 @@ export default function App() {
           <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-8 mt-16">
 
             <div className="bg-zinc-950 border border-yellow-700 rounded-[2rem] p-8">
-
               <div className="text-5xl mb-6">🔍</div>
 
               <h3 className="text-2xl font-bold mb-4">
@@ -439,11 +497,9 @@ export default function App() {
               <p className="text-gray-400 leading-7">
                 Analisi completa della persona e degli obiettivi.
               </p>
-
             </div>
 
             <div className="bg-zinc-950 border border-yellow-700 rounded-[2rem] p-8">
-
               <div className="text-5xl mb-6">🧍</div>
 
               <h3 className="text-2xl font-bold mb-4">
@@ -453,11 +509,9 @@ export default function App() {
               <p className="text-gray-400 leading-7">
                 Valutazione di postura, mobilità e schemi motori.
               </p>
-
             </div>
 
             <div className="bg-zinc-950 border border-yellow-700 rounded-[2rem] p-8">
-
               <div className="text-5xl mb-6">🎯</div>
 
               <h3 className="text-2xl font-bold mb-4">
@@ -467,11 +521,9 @@ export default function App() {
               <p className="text-gray-400 leading-7">
                 Programma costruito su misura in base agli obiettivi.
               </p>
-
             </div>
 
             <div className="bg-zinc-950 border border-yellow-700 rounded-[2rem] p-8">
-
               <div className="text-5xl mb-6">📈</div>
 
               <h3 className="text-2xl font-bold mb-4">
@@ -481,7 +533,6 @@ export default function App() {
               <p className="text-gray-400 leading-7">
                 Monitoraggio costante dei progressi nel tempo.
               </p>
-
             </div>
 
           </div>
