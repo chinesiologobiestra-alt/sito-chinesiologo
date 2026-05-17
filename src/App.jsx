@@ -89,6 +89,9 @@ function Prenotazione() {
     }
 
     alert("Prenotazione inviata correttamente!");
+  };
+
+  const inviaWhatsApp = () => {
 
     const msg = `Ciao Fabio, vorrei prenotare:%0A
 Nome: ${form.nome}%0A
@@ -101,6 +104,28 @@ Ora: ${form.ora}`;
       `https://wa.me/393425620513?text=${msg}`,
       "_blank"
     );
+  };
+
+  const inviaEmail = () => {
+
+    const subject = encodeURIComponent(
+      "Prenotazione consulenza"
+    );
+
+    const body = encodeURIComponent(
+`Nome: ${form.nome}
+
+Telefono: ${form.telefono}
+
+Servizio: ${form.servizio}
+
+Data: ${form.data}
+
+Ora: ${form.ora}`
+    );
+
+    window.location.href =
+      `mailto:chinesiolo.biestra@gmail.com?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -167,12 +192,110 @@ Ora: ${form.ora}`;
 
           </select>
 
-          <button
-            onClick={invia}
-            className="w-full bg-yellow-500 text-black font-bold p-4 rounded-xl hover:bg-yellow-400 transition"
-          >
-            Invia richiesta su WhatsApp
-          </button>
+          <div className="grid md:grid-cols-2 gap-4">
+
+            <button
+              onClick={async () => {
+                await invia();
+                inviaWhatsApp();
+              }}
+              className="w-full bg-yellow-500 text-black font-bold p-4 rounded-xl hover:bg-yellow-400 transition"
+            >
+              Prenota via WhatsApp
+            </button>
+
+            <button
+              onClick={async () => {
+                await invia();
+                inviaEmail();
+              }}
+              className="w-full bg-white text-black font-bold p-4 rounded-xl hover:bg-gray-200 transition"
+            >
+              Prenota via Email
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+  );
+}
+
+function AgendaPanel() {
+
+  const [bookings, setBookings] = useState([]);
+
+  useEffect(() => {
+    loadBookings();
+  }, []);
+
+  const loadBookings = async () => {
+
+    const { data } = await supabase
+      .from("bookings")
+      .select("*")
+      .order("booking_date", { ascending: true });
+
+    setBookings(data || []);
+  };
+
+  return (
+    <section className="py-24 px-6 bg-zinc-950">
+
+      <div className="max-w-6xl mx-auto">
+
+        <h2 className="text-4xl font-bold text-red-500 text-center mb-12">
+          Agenda Studio
+        </h2>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          {bookings.map((booking) => (
+
+            <div
+              key={booking.id}
+              className="bg-red-950 border border-red-500 rounded-3xl p-6"
+            >
+
+              <p className="text-red-300 text-sm mb-2">
+                Giorno occupato
+              </p>
+
+              <h3 className="text-2xl font-bold text-white mb-4">
+                {booking.booking_date}
+              </h3>
+
+              <div className="space-y-2 text-gray-200">
+
+                <p>
+                  <span className="font-bold">
+                    Ora:
+                  </span>{" "}
+                  {booking.booking_time}
+                </p>
+
+                <p>
+                  <span className="font-bold">
+                    Cliente:
+                  </span>{" "}
+                  {booking.patient_name}
+                </p>
+
+                <p>
+                  <span className="font-bold">
+                    Servizio:
+                  </span>{" "}
+                  {booking.service}
+                </p>
+
+              </div>
+
+            </div>
+
+          ))}
 
         </div>
 
@@ -372,15 +495,6 @@ export default function App() {
 
           </nav>
 
-          <a
-            href="https://wa.me/393425620513"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-yellow-500 text-black px-5 py-2 rounded-full font-semibold"
-          >
-            Prenota
-          </a>
-
         </div>
 
       </header>
@@ -485,58 +599,6 @@ export default function App() {
             </span>
           </h2>
 
-          <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-8 mt-16">
-
-            <div className="bg-zinc-950 border border-yellow-700 rounded-[2rem] p-8">
-              <div className="text-5xl mb-6">🔍</div>
-
-              <h3 className="text-2xl font-bold mb-4">
-                Valutazione iniziale
-              </h3>
-
-              <p className="text-gray-400 leading-7">
-                Analisi completa della persona e degli obiettivi.
-              </p>
-            </div>
-
-            <div className="bg-zinc-950 border border-yellow-700 rounded-[2rem] p-8">
-              <div className="text-5xl mb-6">🧍</div>
-
-              <h3 className="text-2xl font-bold mb-4">
-                Analisi postura e movimento
-              </h3>
-
-              <p className="text-gray-400 leading-7">
-                Valutazione di postura, mobilità e schemi motori.
-              </p>
-            </div>
-
-            <div className="bg-zinc-950 border border-yellow-700 rounded-[2rem] p-8">
-              <div className="text-5xl mb-6">🎯</div>
-
-              <h3 className="text-2xl font-bold mb-4">
-                Percorso personalizzato
-              </h3>
-
-              <p className="text-gray-400 leading-7">
-                Programma costruito su misura in base agli obiettivi.
-              </p>
-            </div>
-
-            <div className="bg-zinc-950 border border-yellow-700 rounded-[2rem] p-8">
-              <div className="text-5xl mb-6">📈</div>
-
-              <h3 className="text-2xl font-bold mb-4">
-                Benessere e continuità
-              </h3>
-
-              <p className="text-gray-400 leading-7">
-                Monitoraggio costante dei progressi nel tempo.
-              </p>
-            </div>
-
-          </div>
-
         </div>
 
       </section>
@@ -581,6 +643,8 @@ export default function App() {
 
       <Prenotazione />
 
+      <AgendaPanel />
+
       <AdminPanel />
 
       <footer className="border-t border-yellow-700 py-8 text-center text-gray-400">
@@ -588,8 +652,6 @@ export default function App() {
         <p>Fabio Biestra – Chinesiologo</p>
 
         <p>Provincia di Pisa</p>
-
-        <p>info@fabiobiestrachinesiologo.it</p>
 
       </footer>
 
