@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react";
 import { supabase } from "./lib/supabase";
+import jsPDF from "jspdf";
+import emailjs from "@emailjs/browser";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
 function Prenotazione() {
 
   const [form, setForm] = useState({
     nome: "",
+    email: "",
     telefono: "",
     servizio: "",
     data: "",
@@ -12,6 +17,177 @@ function Prenotazione() {
   });
 
   const [availableTimes, setAvailableTimes] = useState([]);
+
+ const generaPDF = () => {
+
+  const doc = new jsPDF("p", "mm", "a4");
+
+  // SFONDO
+  doc.setFillColor(248, 246, 242);
+  doc.rect(0, 0, 210, 297, "F");
+
+  // HEADER
+  doc.setFillColor(10, 10, 10);
+  doc.rect(0, 0, 210, 45, "F");
+
+  // LINEA ORO
+  doc.setDrawColor(212, 175, 55);
+  doc.setLineWidth(1.5);
+  doc.line(0, 45, 210, 45);
+
+  // LOGO
+  doc.setTextColor(212, 175, 55);
+  doc.setFontSize(36);
+  doc.text("FB", 20, 28);
+
+  // NOME
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(24);
+  doc.text("FABIO BIESTRA", 45, 22);
+
+  doc.setTextColor(212, 175, 55);
+  doc.setFontSize(14);
+  doc.text("CHINESIOLOGO", 45, 32);
+
+  // TITOLO
+  doc.setTextColor(0, 0, 0);
+  doc.setFontSize(28);
+  doc.text("CONFERMA", 45, 70);
+
+  doc.setTextColor(212, 175, 55);
+  doc.text("PRENOTAZIONE", 110, 70);
+
+  // TESTO
+  doc.setTextColor(80, 80, 80);
+  doc.setFontSize(12);
+
+  doc.text(
+    "Grazie per aver scelto di affidarti a me per il tuo benessere.",
+    45,
+    82
+  );
+
+  // LINEA
+  doc.setDrawColor(212, 175, 55);
+  doc.setLineWidth(0.3);
+  doc.line(20, 95, 190, 95);
+
+  // DETTAGLI
+  doc.setTextColor(212, 175, 55);
+  doc.setFontSize(16);
+  doc.text("DETTAGLI APPUNTAMENTO", 30, 110);
+
+  // BOX DESTRO
+  doc.setFillColor(245, 242, 236);
+  doc.roundedRect(125, 110, 55, 70, 4, 4, "F");
+
+  // DATI
+  doc.setTextColor(0, 0, 0);
+  doc.setFontSize(12);
+
+  doc.text("CLIENTE", 30, 130);
+
+  doc.setFontSize(18);
+  doc.text(form.nome || "-", 30, 140);
+
+  doc.setFontSize(12);
+  doc.text("SERVIZIO", 30, 158);
+
+  doc.setFontSize(16);
+  doc.text(form.servizio || "-", 30, 168);
+
+  doc.setFontSize(12);
+  doc.text("DATA", 30, 186);
+
+  doc.setFontSize(16);
+  doc.text(form.data || "-", 30, 196);
+
+  doc.setFontSize(12);
+  doc.text("ORARIO", 95, 186);
+
+  doc.setFontSize(16);
+  doc.text(form.ora || "-", 95, 196);
+
+  doc.setFontSize(12);
+  doc.text("LUOGO", 30, 214);
+
+  doc.setFontSize(16);
+  doc.text("Studio - Provincia di Pisa", 30, 224);
+
+  doc.setFontSize(10);
+  doc.text(
+    "Via delle Colline, 123 - 56025 Pontedera (PI)",
+    30,
+    232
+  );
+
+  // IMPORTANTE
+  doc.setTextColor(212, 175, 55);
+  doc.setFontSize(14);
+  doc.text("IMPORTANTE", 135, 128);
+
+  doc.setTextColor(60, 60, 60);
+  doc.setFontSize(10);
+
+  doc.text(
+    [
+      "Ti invito a presentarti",
+      "qualche minuto prima",
+      "dell'orario stabilito.",
+      "",
+      "In caso di necessita,",
+      "contattami per modificare",
+      "o riprogrammare",
+      "il tuo appuntamento.",
+    ],
+    135,
+    140
+  );
+
+  // FRASE
+  doc.setFillColor(245, 242, 236);
+  doc.roundedRect(20, 245, 170, 22, 3, 3, "F");
+
+  doc.setTextColor(212, 175, 55);
+  doc.setFontSize(34);
+  doc.text('"', 28, 260);
+
+  doc.setTextColor(50, 50, 50);
+  doc.setFontSize(12);
+
+  doc.text(
+    "Il movimento e la chiave per sbloccare il tuo potenziale.",
+    55,
+    255
+  );
+
+  doc.text(
+    "Insieme, lavoreremo per il tuo benessere e i tuoi obiettivi.",
+    55,
+    262
+  );
+
+  // FOOTER
+  doc.setFillColor(10, 10, 10);
+  doc.rect(0, 280, 210, 17, "F");
+
+  doc.setTextColor(212, 175, 55);
+  doc.setFontSize(10);
+
+  doc.text(
+    "Fabio Biestra - Chinesiologo",
+    20,
+    290
+  );
+
+  doc.text(
+    "www.fabiobiestra.it",
+    145,
+    290
+  );
+
+  doc.save("prenotazione-premium.pdf");
+};
 
   const allTimes = [
     "09:00",
@@ -88,7 +264,35 @@ function Prenotazione() {
       return;
     }
 
-    alert("Prenotazione inviata correttamente!");
+try {
+
+  const response = await emailjs.send(
+    "service_tmhlpem",
+    "template_2j3vrkf",
+    {
+      nome: form.nome,
+      email: form.email,
+      data: form.data,
+      ora: form.ora,
+      servizio: form.servizio,
+    },
+    "sKfKiFQ7bwD1_A-YT"
+  );
+
+  console.log(response);
+
+  alert("Prenotazione inviata correttamente!");
+
+  generaPDF();
+
+} catch (err) {
+
+  console.log(err);
+
+  alert("Errore invio email");
+
+}
+
   };
 
   const inviaWhatsApp = () => {
@@ -152,7 +356,13 @@ Ora: ${form.ora}`
             onChange={handleChange}
             className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
           />
-
+<input
+  type="email"
+  name="email"
+  placeholder="Email"
+  onChange={handleChange}
+  className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
+/>
           <select
             name="servizio"
             onChange={handleChange}
@@ -205,10 +415,9 @@ Ora: ${form.ora}`
             </button>
 
             <button
-              onClick={async () => {
-                await invia();
-                inviaEmail();
-              }}
+  onClick={async () => {
+    await invia();
+  }}
               className="w-full bg-white text-black font-bold p-4 rounded-xl hover:bg-gray-200 transition"
             >
               Prenota via Email
@@ -226,7 +435,8 @@ Ora: ${form.ora}`
 
 function AgendaPanel() {
 
-  const [bookings, setBookings] = useState([]);
+const [bookings, setBookings] = useState([]);
+const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
     loadBookings();
@@ -242,67 +452,109 @@ function AgendaPanel() {
     setBookings(data || []);
   };
 
-  return (
-    <section className="py-24 px-6 bg-zinc-950">
+ return (
+  <section className="py-24 px-6 bg-zinc-950">
 
-      <div className="max-w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto">
 
-        <h2 className="text-4xl font-bold text-red-500 text-center mb-12">
-          Agenda Studio
-        </h2>
+      <h2 className="text-4xl font-bold text-yellow-500 text-center mb-12">
+        Agenda Studio
+      </h2>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-2 gap-10">
 
-          {bookings.map((booking) => (
+        <div className="bg-black p-6 rounded-3xl border border-yellow-500">
 
-            <div
-              key={booking.id}
-              className="bg-red-950 border border-red-500 rounded-3xl p-6"
-            >
+          <Calendar
+            onChange={setSelectedDate}
+            value={selectedDate}
+            className="rounded-2xl border-none w-full"
+            tileClassName={({ date }) => {
 
-              <p className="text-red-300 text-sm mb-2">
-                Giorno occupato
-              </p>
+              const formatted = date
+                .toISOString()
+                .split("T")[0];
 
-              <h3 className="text-2xl font-bold text-white mb-4">
-                {booking.booking_date}
-              </h3>
+              const occupied = bookings.some(
+                (booking) =>
+                  booking.booking_date === formatted
+              );
 
-              <div className="space-y-2 text-gray-200">
+              return occupied
+                ? "bg-red-600 text-white rounded-xl"
+                : "";
+            }}
+          />
 
-                <p>
-                  <span className="font-bold">
-                    Ora:
-                  </span>{" "}
-                  {booking.booking_time}
-                </p>
+        </div>
 
-                <p>
-                  <span className="font-bold">
-                    Cliente:
-                  </span>{" "}
-                  {booking.patient_name}
-                </p>
+        <div>
 
-                <p>
-                  <span className="font-bold">
-                    Servizio:
-                  </span>{" "}
-                  {booking.service}
-                </p>
+          <h3 className="text-2xl font-bold text-yellow-500 mb-6">
+            Appuntamenti
+          </h3>
 
-              </div>
+          <div className="space-y-4">
 
-            </div>
+            {bookings
+              .filter((booking) => {
 
-          ))}
+                const selected =
+                  selectedDate
+                    .toISOString()
+                    .split("T")[0];
+
+                return (
+                  booking.booking_date === selected
+                );
+              })
+              .map((booking) => (
+
+                <div
+                  key={booking.id}
+                  className="bg-red-950 border border-yellow-500 rounded-3xl p-6"
+                >
+
+                  <p className="text-red-300 text-sm mb-2">
+                    Giorno occupato
+                  </p>
+
+                  <h3 className="text-2xl font-bold text-white mb-4">
+                    {booking.booking_time}
+                  </h3>
+
+                  <div className="space-y-2 text-gray-200">
+
+                    <p>
+                      <span className="font-bold">
+                        Cliente:
+                      </span>{" "}
+                      {booking.patient_name}
+                    </p>
+
+                    <p>
+                      <span className="font-bold">
+                        Servizio:
+                      </span>{" "}
+                      {booking.service}
+                    </p>
+
+                  </div>
+
+                </div>
+
+              ))}
+
+          </div>
 
         </div>
 
       </div>
 
-    </section>
-  );
+    </div>
+
+  </section>
+);
 }
 
 function AdminPanel() {
@@ -421,6 +673,45 @@ function AdminPanel() {
 }
 
 export default function App() {
+
+const [user, setUser] = useState(null);
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
+
+useEffect(() => {
+
+  supabase.auth.getSession()
+    .then(({ data }) => {
+      setUser(data.session?.user || null);
+    });
+
+}, []);
+
+const login = async () => {
+
+  const { error } =
+    await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+  if (error) {
+    alert("Login non valido");
+    return;
+  }
+
+  const { data } =
+    await supabase.auth.getSession();
+
+  setUser(data.session?.user || null);
+};
+
+const logout = async () => {
+
+  await supabase.auth.signOut();
+
+  setUser(null);
+};
 
   const services = [
     "Valutazione chinesiologica",
@@ -645,7 +936,71 @@ export default function App() {
 
       <AgendaPanel />
 
-      <AdminPanel />
+      {user ? (
+
+  <div>
+
+    <div className="flex justify-center py-6">
+
+      <button
+        onClick={logout}
+        className="bg-red-600 hover:bg-red-500 px-6 py-3 rounded-2xl"
+      >
+        Logout Admin
+      </button>
+
+    </div>
+
+    <AdminPanel />
+
+  </div>
+
+) : (
+
+  <section className="py-24 px-6 bg-black">
+
+    <div className="max-w-md mx-auto bg-zinc-900 border border-yellow-700 rounded-3xl p-8">
+
+      <h2 className="text-3xl font-bold text-yellow-500 mb-8 text-center">
+        Login Admin
+      </h2>
+
+      <div className="space-y-4">
+
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) =>
+            setEmail(e.target.value)
+          }
+          className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) =>
+            setPassword(e.target.value)
+          }
+          className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
+        />
+
+        <button
+          onClick={login}
+          className="w-full bg-yellow-500 text-black font-bold p-4 rounded-xl hover:bg-yellow-400"
+        >
+          Accedi
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+)}
 
       <footer className="border-t border-yellow-700 py-8 text-center text-gray-400">
 
