@@ -430,10 +430,10 @@ Ora: ${form.ora}`
   const formatted =
     format(date, "yyyy-MM-dd");
 
-  setForm({
-    ...form,
-    data: formatted,
-  });
+ setForm((prev) => ({
+  ...prev,
+  data: formatted,
+}));
 
   const { data: slots } = await supabase
     .from("availability_slots")
@@ -661,13 +661,34 @@ function AdminPanel() {
 
   const eliminaPrenotazione = async (id) => {
 
+  const { data: booking } =
     await supabase
       .from("bookings")
-      .delete()
-      .eq("id", id);
+      .select("*")
+      .eq("id", id)
+      .single();
 
-    loadBookings();
-  };
+  await supabase
+    .from("availability_slots")
+    .update({
+      available: true,
+    })
+    .eq(
+      "slot_date",
+      booking.booking_date
+    )
+    .eq(
+      "slot_time",
+      booking.booking_time
+    );
+
+  await supabase
+    .from("bookings")
+    .delete()
+    .eq("id", id);
+
+  loadBookings();
+};
 
   return (
     <section className="py-24 px-6 bg-black">
