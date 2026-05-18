@@ -22,9 +22,9 @@ export default async function handler(req, res) {
 
     const dataEmail = await resend.emails.send({
 
-      from: "onboarding@resend.dev",
+  from: "Prenotazioni Fabio Biestra <prenotazioni@fabiobiestrachinesiologo.it>",
 
-     to: "TUA_MAIL_RESEND@gmail.com",
+     to: email,
 
       subject: "Conferma prenotazione",
 
