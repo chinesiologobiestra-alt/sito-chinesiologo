@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "./lib/supabase";
 import jsPDF from "jspdf";
-import emailjs from "@emailjs/browser";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
@@ -248,10 +247,11 @@ function Prenotazione() {
 
     const { error } = await supabase
       .from("bookings")
-      .insert([
-        {
-          patient_name: form.nome,
-          patient_phone: form.telefono,
+.insert([
+  {
+    patient_name: form.nome,
+    patient_email: form.email,
+    patient_phone: form.telefono,
           service: form.servizio,
           booking_date: form.data,
           booking_time: form.ora,
@@ -266,20 +266,29 @@ function Prenotazione() {
 
 try {
 
-  const response = await emailjs.send(
-    "service_tmhlpem",
-    "template_2j3vrkf",
-    {
+  const response = await fetch("/api/send-email", {
+
+    method: "POST",
+
+    headers: {
+      "Content-Type": "application/json",
+    },
+
+    body: JSON.stringify({
       nome: form.nome,
       email: form.email,
       data: form.data,
       ora: form.ora,
       servizio: form.servizio,
-    },
-    "sKfKiFQ7bwD1_A-YT"
-  );
+    }),
 
-  console.log(response);
+  });
+
+  if (!response.ok) {
+
+    throw new Error("Errore invio email");
+
+  }
 
   alert("Prenotazione inviata correttamente!");
 
