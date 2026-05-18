@@ -24,7 +24,7 @@ export default async function handler(req, res) {
 
       from: "onboarding@resend.dev",
 
-      to: email,
+     to: "TUA_MAIL_RESEND@gmail.com",
 
       subject: "Conferma prenotazione",
 
