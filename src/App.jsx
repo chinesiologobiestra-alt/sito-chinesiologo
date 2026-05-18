@@ -415,7 +415,7 @@ Ora: ${form.ora}`
 
           </select>
 
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
             <button
               onClick={async () => {
@@ -812,7 +812,7 @@ return (
 
       <header className="sticky top-0 z-50 bg-black border-b border-yellow-700">
 
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
 
           <div>
 
@@ -925,7 +925,7 @@ return (
 
         <div className="max-w-7xl mx-auto">
 
-          <h2 className="text-4xl text-yellow-500 font-bold text-center mb-12">
+          <h2 className="text-3xl md:text-4xl text-yellow-500 font-bold text-center mb-12">
             Servizi
           </h2>
 
@@ -1028,7 +1028,7 @@ return (
 
     </div>
 
-    <div className="grid md:grid-cols-3 gap-8">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
       {latestPosts.map((post) => (
 
@@ -1089,7 +1089,7 @@ return (
 
     </div>
 
-    <div className="grid md:grid-cols-2 gap-10">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
 
       {latestNews.map((item) => (
 
