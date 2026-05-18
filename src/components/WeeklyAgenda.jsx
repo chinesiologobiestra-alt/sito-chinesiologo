@@ -59,43 +59,51 @@ export default function WeeklyAgenda() {
   };
 
   const toggleSlot = async (
-    day,
-    hour
-  ) => {
+  day,
+  hour
+) => {
 
-    const date =
-      format(day, "yyyy-MM-dd");
+  const date =
+    format(day, "yyyy-MM-dd");
 
-    const existing = slots.find(
-      (slot) =>
-        slot.slot_date === date &&
-        slot.slot_time === hour
-    );
+  const existing = slots.find(
+    (slot) =>
+      slot.slot_date === date &&
+      slot.slot_time === hour
+  );
 
-    if (existing) {
+  if (!existing) {
 
-      await supabase
-        .from("availability_slots")
-        .update({
-          available:
-            !existing.available,
-        })
-        .eq("id", existing.id);
+    await supabase
+      .from("availability_slots")
+      .insert({
+        slot_date: date,
+        slot_time: hour,
+        available: true,
+      });
 
-    } else {
+  } else if (
+    existing.available === true
+  ) {
 
-      await supabase
-        .from("availability_slots")
-        .insert({
-          slot_date: date,
-          slot_time: hour,
-          available: true,
-        });
+    await supabase
+      .from("availability_slots")
+      .update({
+        available: false,
+      })
+      .eq("id", existing.id);
 
-    }
+  } else {
 
-    await loadSlots();
-  };
+    await supabase
+      .from("availability_slots")
+      .delete()
+      .eq("id", existing.id);
+
+  }
+
+  await loadSlots();
+};
 
   const weekDays = [];
 
