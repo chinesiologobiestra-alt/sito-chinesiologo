@@ -35,8 +35,9 @@ export default function News() {
 
           {news.map((item) => (
 
-            <div
-              key={item.id}
+            <a
+  href={`/news/${item.id}`}
+  key={item.id}
               className="bg-zinc-900 border border-yellow-700 rounded-3xl overflow-hidden"
             >
 
@@ -70,7 +71,7 @@ export default function News() {
 
               </div>
 
-            </div>
+            </a>
 
           ))}
 

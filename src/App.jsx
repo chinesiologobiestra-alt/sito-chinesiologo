@@ -12,6 +12,7 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import News from "./pages/News";
 import ContentManager from "./components/ContentManager";
+import NewsPost from "./pages/NewsPost";
 
 function Prenotazione() {
 
@@ -803,6 +804,10 @@ return (
       path="/news"
       element={<News />}
     />
+    <Route
+      path="/news/:id"
+      element={<NewsPost />}
+    />
 
     <Route
       path="/"
@@ -1093,10 +1098,11 @@ return (
 
       {latestNews.map((item) => (
 
-        <div
-          key={item.id}
-          className="bg-zinc-900 border border-yellow-700 rounded-3xl overflow-hidden"
-        >
+<a
+  href={`/news/${item.id}`}
+  key={item.id}
+  className="block bg-zinc-900 border border-yellow-700 rounded-3xl overflow-hidden hover:scale-[1.01] transition"
+>
 
           {item.image_url && (
 
@@ -1118,9 +1124,9 @@ return (
               {item.content}
             </p>
 
-          </div>
+                    </div>
 
-        </div>
+        </a>
 
       ))}
 
