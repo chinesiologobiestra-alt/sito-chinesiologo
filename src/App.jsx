@@ -3,6 +3,15 @@ import { supabase } from "./lib/supabase";
 import jsPDF from "jspdf";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import {
+  Routes,
+  Route,
+} from "react-router-dom";
+
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
+import News from "./pages/News";
+import ContentManager from "./components/ContentManager";
 
 function Prenotazione() {
 
@@ -726,6 +735,9 @@ const logout = async () => {
     "Benessere e prevenzione",
   ];
 
+  const [latestPosts, setLatestPosts] = useState([]);
+const [latestNews, setLatestNews] = useState([]);
+
   const faq = [
     {
       q: "Cos’è la chinesiologia?",
@@ -741,14 +753,62 @@ const logout = async () => {
     },
   ];
 
+  useEffect(() => {
+
+  loadHomepageContent();
+
+}, []);
+
+const loadHomepageContent = async () => {
+
+  const { data: posts } = await supabase
+    .from("blog_posts")
+    .select("*")
+    .order("created_at", {
+      ascending: false,
+    })
+    .limit(3);
+
+  const { data: news } = await supabase
+    .from("news_posts")
+    .select("*")
+    .order("created_at", {
+      ascending: false,
+    })
+    .limit(2);
+
+  setLatestPosts(posts || []);
+  setLatestNews(news || []);
+};
+
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({
       behavior: "smooth",
     });
   };
 
-  return (
-    <div className="bg-black text-white min-h-screen">
+return (
+
+  <Routes>
+
+    <Route
+      path="/blog"
+      element={<Blog />}
+    />
+<Route
+  path="/blog/:slug"
+  element={<BlogPost />}
+/>
+    <Route
+      path="/news"
+      element={<News />}
+    />
+
+    <Route
+      path="/"
+      element={
+
+<div className="bg-black text-white min-h-screen">
 
       <header className="sticky top-0 z-50 bg-black border-b border-yellow-700">
 
@@ -783,6 +843,19 @@ const logout = async () => {
             <button onClick={() => scrollTo("faq")}>
               FAQ
             </button>
+            <a
+  href="/blog"
+  className="hover:text-yellow-500 transition"
+>
+  Blog
+</a>
+
+<a
+  href="/news"
+  className="hover:text-yellow-500 transition"
+>
+  News
+</a>
 
             <button onClick={() => scrollTo("prenota")}>
               Prenota
@@ -936,6 +1009,127 @@ const logout = async () => {
 
       </section>
 
+      <section className="py-24 px-6 bg-zinc-950">
+
+  <div className="max-w-7xl mx-auto">
+
+    <div className="flex justify-between items-center mb-14">
+
+      <h2 className="text-4xl font-bold text-yellow-500">
+        Ultimi Articoli
+      </h2>
+
+      <a
+        href="/blog"
+        className="text-yellow-400 hover:text-yellow-300"
+      >
+        Vedi tutto →
+      </a>
+
+    </div>
+
+    <div className="grid md:grid-cols-3 gap-8">
+
+      {latestPosts.map((post) => (
+
+        <a
+          key={post.id}
+          href={`/blog/${post.slug}`}
+          className="bg-black rounded-3xl overflow-hidden border border-yellow-700 hover:scale-[1.02] transition"
+        >
+
+          {post.image_url && (
+
+            <img
+              src={post.image_url}
+              alt={post.title}
+              className="w-full h-56 object-cover"
+            />
+
+          )}
+
+          <div className="p-6">
+
+            <h3 className="text-2xl font-bold text-yellow-400 mb-4">
+              {post.title}
+            </h3>
+
+            <p className="text-gray-300 leading-7">
+              {post.excerpt}
+            </p>
+
+          </div>
+
+        </a>
+
+      ))}
+
+    </div>
+
+  </div>
+
+</section>
+
+<section className="py-24 px-6 bg-black">
+
+  <div className="max-w-7xl mx-auto">
+
+    <div className="flex justify-between items-center mb-14">
+
+      <h2 className="text-4xl font-bold text-yellow-500">
+        News & Eventi
+      </h2>
+
+      <a
+        href="/news"
+        className="text-yellow-400 hover:text-yellow-300"
+      >
+        Vedi tutto →
+      </a>
+
+    </div>
+
+    <div className="grid md:grid-cols-2 gap-10">
+
+      {latestNews.map((item) => (
+
+        <div
+          key={item.id}
+          className="bg-zinc-900 border border-yellow-700 rounded-3xl overflow-hidden"
+        >
+
+          {item.image_url && (
+
+            <img
+              src={item.image_url}
+              alt={item.title}
+              className="w-full h-72 object-cover"
+            />
+
+          )}
+
+          <div className="p-8">
+
+            <h3 className="text-3xl font-bold text-yellow-400 mb-5">
+              {item.title}
+            </h3>
+
+            <p className="text-gray-300 leading-8">
+              {item.content}
+            </p>
+
+          </div>
+
+        </div>
+
+      ))}
+
+    </div>
+
+  </div>
+
+</section>
+
       <Prenotazione />
 
       <AgendaPanel />
@@ -956,6 +1150,8 @@ const logout = async () => {
     </div>
 
     <AdminPanel />
+
+    <ContentManager />
 
   </div>
 
@@ -1014,6 +1210,12 @@ const logout = async () => {
 
       </footer>
 
-    </div>
+        </div>
+
+      }
+    />
+
+  </Routes>
+
   );
 }
