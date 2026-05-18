@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabase";
 import ReactQuill from "react-quill-new";
-import "react-quill-new/dist/quill.snow.css";
+import "quill/dist/quill.snow.css";;
 
 export default function ContentManager() {
 
