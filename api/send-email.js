@@ -11,6 +11,8 @@ export default async function handler(req, res) {
   }
 
   try {
+    console.log("BODY:");
+console.log(req.body);
 
     const {
       nome,
@@ -20,7 +22,12 @@ export default async function handler(req, res) {
       servizio,
     } = req.body;
 
+   console.log("INVIO EMAIL...");
+
     const dataEmail = await resend.emails.send({
+
+    
+
 
 from: "Fabio Biestra <info@fabiobiestrachinesiologo.it>",
 
@@ -162,12 +169,18 @@ from: "Fabio Biestra <info@fabiobiestrachinesiologo.it>",
 `,
     });
 
-    return res.status(200).json(response);
+    return res.status(200).json(dataEmail);
 
   } catch (error) {
 
-    console.log(error);
+    console.log("ERRORE RESEND:");
+console.log(error);
 
+return res.status(500).json({
+  message: error.message,
+  fullError: error,
+});
+console.log(dataEmail);
     return res.status(500).json({
       error,
     });

@@ -66,3 +66,27 @@
   color: white !important;
   border-radius: 12px;
 }
+.premium-calendar {
+  background: black;
+  border: none;
+  color: white;
+}
+
+.premium-calendar .react-calendar__tile {
+  color: white;
+  border-radius: 12px;
+}
+
+.premium-calendar .react-calendar__tile--active {
+  background: #eab308 !important;
+  color: black !important;
+}
+
+.premium-calendar .react-calendar__navigation button {
+  color: #eab308;
+}
+
+.premium-calendar .react-calendar__tile:hover {
+  background: #ca8a04;
+  color: black;
+}

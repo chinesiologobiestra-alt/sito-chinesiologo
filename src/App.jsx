@@ -13,6 +13,8 @@ import BlogPost from "./pages/BlogPost";
 import News from "./pages/News";
 import ContentManager from "./components/ContentManager";
 import NewsPost from "./pages/NewsPost";
+import WeeklyAgenda from "./components/WeeklyAgenda";
+import { format } from "date-fns";
 
 function Prenotazione() {
 
@@ -26,6 +28,8 @@ function Prenotazione() {
   });
 
   const [availableTimes, setAvailableTimes] = useState([]);
+  const [availableSlots, setAvailableSlots] = useState([]);
+  const [showCalendar, setShowCalendar] = useState(false);
 
  const generaPDF = () => {
 
@@ -198,17 +202,7 @@ function Prenotazione() {
   doc.save("prenotazione-premium.pdf");
 };
 
-  const allTimes = [
-    "09:00",
-    "10:00",
-    "11:00",
-    "12:00",
-    "15:00",
-    "16:00",
-    "17:00",
-    "18:00",
-  ];
-
+  
   const handleChange = async (e) => {
 
     const updatedForm = {
@@ -220,27 +214,28 @@ function Prenotazione() {
 
     if (e.target.name === "data") {
 
-      const { data, error } = await supabase
-        .from("bookings")
-        .select("booking_time")
-        .eq("booking_date", e.target.value);
+  const formatted =
+    new Date(e.target.value)
+      .toISOString()
+      .split("T")[0];
 
-      if (error) {
-        console.log(error);
-        return;
-      }
+  const { data, error } = await supabase
+    .from("availability_slots")
+    .select("*")
+    .eq("slot_date", formatted)
+    .eq("available", true);
 
-      const bookedTimes = data.map(
-        (item) => item.booking_time
-      );
+  if (error) {
+    console.log(error);
+    return;
+  }
 
-      const freeTimes = allTimes.filter(
-        (time) => !bookedTimes.includes(time)
-      );
+setAvailableTimes(
+  data.map((slot) => slot.slot_time)
+);
 
-      setAvailableTimes(freeTimes);
-    }
-  };
+}
+};
 
   const invia = async () => {
 
@@ -274,26 +269,51 @@ function Prenotazione() {
       return;
     }
 
+    await supabase
+  .from("availability_slots")
+  .upsert({
+    slot_date: new Date(form.data)
+  .toISOString()
+  .split("T")[0],
+    slot_time: form.ora,
+    available: false,
+  });
+
 try {
 
   const response = await fetch("/api/send-email", {
 
-    method: "POST",
+  method: "POST",
 
-    headers: {
-      "Content-Type": "application/json",
-    },
+  headers: {
+    "Content-Type": "application/json",
+  },
 
-    body: JSON.stringify({
-      nome: form.nome,
-      email: form.email,
-      data: form.data,
-      ora: form.ora,
-      servizio: form.servizio,
-    }),
+  body: JSON.stringify({
+    nome: form.nome,
+    email: form.email,
+    data: form.data,
+    ora: form.ora,
+    servizio: form.servizio,
+  }),
 
-  });
+});
 
+if (!response.ok) {
+
+  const errorText =
+  await response.text();
+
+console.log(errorText);
+
+alert(errorText);
+
+return;
+}
+
+;
+
+console.log(await response.text());
 
   alert("Prenotazione inviata correttamente!");
 
@@ -388,12 +408,57 @@ Ora: ${form.ora}`
             <option>Benessere generale</option>
           </select>
 
-          <input
-            type="date"
-            name="data"
-            onChange={handleChange}
-            className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
-          />
+          <div className="relative">
+
+  <button
+  type="button"
+  onClick={() =>
+    setShowCalendar(!showCalendar)
+  }
+  className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white text-left"
+>
+  {form.data || "Seleziona data"}
+</button>
+
+  {showCalendar && (
+
+  <div className="absolute z-50 mt-3">
+
+    <Calendar
+      onChange={async (date) => {
+
+  const formatted =
+    format(date, "yyyy-MM-dd");
+
+  setForm({
+    ...form,
+    data: formatted,
+  });
+
+  const { data: slots } = await supabase
+    .from("availability_slots")
+    .select("*")
+    .eq("slot_date", formatted)
+    .eq("available", true);
+
+  setAvailableTimes(
+    slots?.map(
+      (slot) => slot.slot_time
+    ) || []
+  );
+
+  setShowCalendar(false);
+}}
+      value={new Date()}
+      className="premium-calendar"
+    />
+
+  </div>
+
+)}
+
+</div>
+
 
           <select
             name="ora"
@@ -482,7 +547,7 @@ const [selectedDate, setSelectedDate] = useState(new Date());
           <Calendar
             onChange={setSelectedDate}
             value={selectedDate}
-            className="rounded-2xl border-none w-full"
+            className="agenda-calendar"
             tileClassName={({ date }) => {
 
               const formatted = date
@@ -1138,7 +1203,7 @@ return (
 
       <Prenotazione />
 
-      <AgendaPanel />
+      <WeeklyAgenda />
 
       {user ? (
 
