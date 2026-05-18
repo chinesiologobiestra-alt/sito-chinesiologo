@@ -102,7 +102,20 @@ export default function WeeklyAgenda() {
 
   }
 
-  await loadSlots();
+  const { data } = await supabase
+  .from("availability_slots")
+  .select("*")
+  .gte(
+    "slot_date",
+    format(
+      startOfWeek(currentWeek, {
+        weekStartsOn: 1,
+      }),
+      "yyyy-MM-dd"
+    )
+  );
+
+setSlots(data || []);
 };
 
   const weekDays = [];
