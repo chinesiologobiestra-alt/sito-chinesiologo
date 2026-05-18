@@ -22,7 +22,7 @@ export default async function handler(req, res) {
 
     const dataEmail = await resend.emails.send({
 
-  from: "Fabio Biestra <info@fabiobiestrachinesiologo.it>",
+from: "Fabio Biestra <info@fabiobiestrachinesiologo.it>",
 
      to: email,
 

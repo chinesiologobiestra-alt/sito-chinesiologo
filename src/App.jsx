@@ -284,11 +284,6 @@ try {
 
   });
 
-  if (!response.ok) {
-
-    throw new Error("Errore invio email");
-
-  }
 
   alert("Prenotazione inviata correttamente!");
 
