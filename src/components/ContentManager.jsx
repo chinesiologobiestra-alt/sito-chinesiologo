@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabase";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 
 export default function ContentManager() {
 
@@ -198,13 +200,21 @@ export default function ContentManager() {
                 className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
               />
 
-              <textarea
-                name="excerpt"
-                placeholder="Estratto breve"
-                value={form.excerpt}
-                onChange={handleChange}
-                className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white h-28"
-              />
+              <div className="bg-white text-black rounded-2xl overflow-hidden">
+
+  <ReactQuill
+    theme="snow"
+    value={form.content}
+    onChange={(value) =>
+      setForm({
+        ...form,
+        content: value,
+      })
+    }
+    className="h-72 mb-12"
+  />
+
+</div>
             </>
 
           )}
