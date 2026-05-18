@@ -772,7 +772,37 @@ function AdminPanel() {
   );
 }
 
+const maintenanceMode = true;
+
 export default function App() {
+
+  if (maintenanceMode) {
+
+  return (
+
+    <div className="min-h-screen bg-black text-white flex items-center justify-center px-6">
+
+      <div className="text-center max-w-2xl">
+
+        <h1 className="text-6xl font-bold text-yellow-500 mb-8">
+          Fabio Biestra
+        </h1>
+
+        <p className="text-2xl text-white mb-6">
+          Sito in aggiornamento
+        </p>
+
+        <p className="text-gray-400 leading-8">
+          Sto lavorando alla nuova piattaforma professionale.
+          Il sito sarà disponibile a breve.
+        </p>
+
+      </div>
+
+    </div>
+
+  );
+}
 
 const [user, setUser] = useState(null);
 const [email, setEmail] = useState("");
