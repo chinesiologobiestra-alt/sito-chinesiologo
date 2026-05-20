@@ -1011,15 +1011,21 @@ return (
         <div>
 
           <h2 className="text-4xl font-bold text-yellow-500 mb-6">
-            Chi sono
-          </h2>
+  Chi sono
+</h2>
 
-          <p className="text-gray-300 leading-8">
-            Sono Fabio Biestra, laureato in
-            Scienze delle Attività Motorie e Sportive.
-            Mi occupo di postura e benessere generale.
-          </p>
+<p className="text-gray-300 leading-8 text-lg">
+  Sono Fabio Biestra, laureato in Scienze delle
+  Attività Motorie e Sportive, specializzato nel
+  benessere della persona attraverso il movimento.
 
+  <br /><br />
+
+  Il mio obiettivo è aiutarti a migliorare postura,
+  qualità del movimento e benessere generale
+  attraverso percorsi personalizzati costruiti
+  sulle tue esigenze.
+</p>
         </div>
 
         <div className="flex justify-center">
