@@ -933,32 +933,32 @@ return (
 
       <header className="sticky top-0 z-50 bg-black border-b border-yellow-700">
 
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-2 flex justify-between items-center">
 
   <a
-    href="/"
-    className="flex items-center gap-4"
-  >
+  href="/"
+  className="flex items-center gap-4"
+>
 
-    <img
-      src="/logo.png"
-      alt="Fabio Biestra Logo"
-      className="w-14 h-14 object-contain"
-    />
+  <img
+    src="/logo.png"
+    alt="Fabio Biestra Logo"
+    className="w-24 h-24 object-contain"
+  />
 
-    <div>
+  <div>
 
-      <h1 className="text-yellow-500 text-xl font-bold">
-        Fabio Biestra
-      </h1>
+    <h1 className="text-yellow-500 text-3xl font-bold leading-none">
+      Fabio Biestra
+    </h1>
 
-      <p className="text-sm text-gray-400">
-        Chinesiologo
-      </p>
+    <p className="text-base text-gray-400 mt-2">
+      Chinesiologo
+    </p>
 
-    </div>
+  </div>
 
-  </a>
+</a>
 
   <nav className="hidden md:flex gap-6 text-sm text-gray-300">
             <button onClick={() => scrollTo("chi-sono")}>
