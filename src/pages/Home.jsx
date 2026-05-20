@@ -122,15 +122,30 @@ export default function Home() {
 
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-          <div>
-            <h1 className="text-yellow-500 text-2xl font-bold">
-              FB
-            </h1>
+          <a
+  href="/"
+  className="flex items-center gap-4"
+>
 
-            <p className="text-sm text-gray-400">
-              Fabio Biestra – Chinesiologo
-            </p>
-          </div>
+  <img
+    src="/logo.png"
+    alt="Fabio Biestra Logo"
+    className="w-16 h-16 object-contain"
+  />
+
+  <div>
+
+    <h1 className="text-yellow-500 text-2xl font-bold">
+      Fabio Biestra
+    </h1>
+
+    <p className="text-sm text-gray-400">
+      Chinesiologo
+    </p>
+
+  </div>
+
+</a>
 
           <a
             href="https://wa.me/393425620513"
