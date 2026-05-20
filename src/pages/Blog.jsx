@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 
 export default function Blog() {
-
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -10,7 +9,6 @@ export default function Blog() {
   }, []);
 
   const loadPosts = async () => {
-
     const { data } = await supabase
       .from("blog_posts")
       .select("*")
@@ -24,7 +22,6 @@ export default function Blog() {
 
   return (
     <div className="min-h-screen bg-black text-white px-6 py-24">
-
       <div className="max-w-7xl mx-auto">
 
         <h1 className="text-5xl font-bold text-yellow-500 mb-14">
@@ -55,8 +52,11 @@ export default function Blog() {
                   {post.title}
                 </h2>
 
-                <p className="text-gray-300 leading-7">
-                  {post.excerpt}
+                <p className="text-gray-300 leading-7 line-clamp-3">
+                  {post.content
+                    ?.replace(/<[^>]+>/g, "")
+                    .replace(/&nbsp;/g, " ")
+                    .substring(0, 180)}...
                 </p>
 
               </div>
@@ -68,7 +68,6 @@ export default function Blog() {
         </div>
 
       </div>
-
     </div>
   );
 }
