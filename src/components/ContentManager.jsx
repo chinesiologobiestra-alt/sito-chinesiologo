@@ -67,7 +67,9 @@ export default function ContentManager() {
   alert(error.message);
 
   return;
-}icePixelRatio
+}
+
+const pixelRatio = window.devicePixelRatio || 1;
 
     const { data } = supabase.storage
       .from("blog-images")
