@@ -993,6 +993,13 @@ return (
   News
 </a>
 
+<button
+  onClick={() => scrollTo("contatti")}
+  className="hover:text-yellow-500 transition"
+>
+  Contatti
+</button>
+
             <button onClick={() => scrollTo("prenota")}>
               Prenota
             </button>
@@ -1348,7 +1355,10 @@ return (
 </section>
 
 )}
-<footer className="border-t border-yellow-700/20 py-12 px-6 bg-black">
+<footer
+  id="contatti"
+  className="border-t border-yellow-700/20 py-12 px-6 bg-black"
+>
 
   <div className="max-w-7xl mx-auto text-center">
 
