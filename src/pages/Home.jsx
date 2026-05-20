@@ -128,10 +128,10 @@ export default function Home() {
 >
 
   <img
-  src="/logo.png?v=2"
-  alt="Fabio Biestra Logo"
-  className="w-16 h-16 object-contain"
-/>
+    src="/logo.png"
+    alt="Fabio Biestra Logo"
+    className="w-16 h-16 object-contain"
+  />
 
   <div>
 
