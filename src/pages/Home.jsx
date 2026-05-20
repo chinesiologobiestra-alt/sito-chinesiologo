@@ -13,11 +13,13 @@ function Prenotazione() {
   });
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const invia = async () => {
-
     const { error } = await supabase
       .from("bookings")
       .insert([
@@ -53,6 +55,7 @@ Ora: ${form.ora}`;
 
   return (
     <section id="prenota" className="py-24 px-6 bg-zinc-950">
+
       <div className="max-w-3xl mx-auto">
 
         <h2 className="text-4xl font-bold text-yellow-500 text-center mb-10">
@@ -108,7 +111,9 @@ Ora: ${form.ora}`;
           </button>
 
         </div>
+
       </div>
+
     </section>
   );
 }
@@ -122,59 +127,47 @@ export default function Home() {
 
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-          <a
-  href="/"
-  className="flex items-center gap-4"
->
+          <div>
 
-  <img
-    src="/logo.png"
-    alt="Fabio Biestra Logo"
-    className="w-16 h-16 object-contain"
-  />
+            <h1 className="text-yellow-500 text-2xl font-bold">
+              Fabio Biestra
+            </h1>
 
-  <div>
+            <p className="text-sm text-gray-400">
+              Chinesiologo
+            </p>
 
-    <h1 className="text-yellow-500 text-2xl font-bold">
-      Fabio Biestra
-    </h1>
-
-    <p className="text-sm text-gray-400">
-      Chinesiologo
-    </p>
-
-  </div>
-
-</a>
+          </div>
 
           <div className="flex items-center gap-6">
 
-  <a
-    href="tel:+393425620513"
-    className="text-sm text-gray-300 hover:text-yellow-400 transition hidden md:block"
-  >
-    +39 342 562 0513
-  </a>
+            <a
+              href="tel:+393425620513"
+              className="text-sm text-gray-300 hover:text-yellow-400 transition hidden md:block"
+            >
+              +39 342 562 0513
+            </a>
 
-  <a
-    href="mailto:info@fabiobiestrachinesiologo.it"
-    className="text-sm text-gray-300 hover:text-yellow-400 transition hidden md:block"
-  >
-    Email
-  </a>
+            <a
+              href="mailto:info@fabiobiestrachinesiologo.it"
+              className="text-sm text-gray-300 hover:text-yellow-400 transition hidden md:block"
+            >
+              info@fabiobiestrachinesiologo.it
+            </a>
 
-  <a
-    href="https://wa.me/393425620513"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="bg-yellow-500 text-black px-5 py-2 rounded-full font-semibold hover:bg-yellow-400 transition"
-  >
-    Prenota
-  </a>
+            <a
+              href="https://wa.me/393425620513"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-yellow-500 text-black px-5 py-2 rounded-full font-semibold hover:bg-yellow-400 transition"
+            >
+              Prenota
+            </a>
 
-</div>
+          </div>
 
         </div>
+
       </header>
 
       <section className="text-center py-24 px-6">
@@ -232,54 +225,54 @@ export default function Home() {
 
       <footer className="border-t border-yellow-700/20 py-12 px-6 bg-black">
 
-  <div className="max-w-7xl mx-auto text-center">
+        <div className="max-w-7xl mx-auto text-center">
 
-    <h3 className="text-3xl font-bold text-yellow-500 mb-4">
-      Fabio Biestra
-    </h3>
+          <h3 className="text-3xl font-bold text-yellow-500 mb-4">
+            Fabio Biestra
+          </h3>
 
-    <p className="text-gray-400 mb-8">
-      Chinesiologo
-    </p>
+          <p className="text-gray-400 mb-8">
+            Chinesiologo
+          </p>
 
-    <div className="space-y-3 text-gray-300">
+          <div className="space-y-3 text-gray-300">
 
-      <p>
-        📍 Provincia di Pisa
-      </p>
+            <p>
+              📍 Provincia di Pisa
+            </p>
 
-      <p>
-        📞{" "}
-        <a
-          href="tel:+393425620513"
-          className="hover:text-yellow-400 transition"
-        >
-          +39 342 562 0513
-        </a>
-      </p>
+            <p>
+              📞{" "}
+              <a
+                href="tel:+393425620513"
+                className="hover:text-yellow-400 transition"
+              >
+                +39 342 562 0513
+              </a>
+            </p>
 
-      <p>
-        ✉️{" "}
-        <a
-          href="mailto:info@fabiobiestrachinesiologo.it"
-          className="hover:text-yellow-400 transition"
-        >
-          info@fabiobiestrachinesiologo.it
-        </a>
-      </p>
+            <p>
+              ✉️{" "}
+              <a
+                href="mailto:info@fabiobiestrachinesiologo.it"
+                className="hover:text-yellow-400 transition"
+              >
+                info@fabiobiestrachinesiologo.it
+              </a>
+            </p>
 
-    </div>
+          </div>
 
-    <div className="mt-10 text-sm text-gray-500">
+          <div className="mt-10 text-sm text-gray-500">
 
-      © {new Date().getFullYear()} Fabio Biestra.
-      Tutti i diritti riservati.
+            © {new Date().getFullYear()} Fabio Biestra.
+            Tutti i diritti riservati.
 
-    </div>
+          </div>
 
-  </div>
+        </div>
 
-</footer>
+      </footer>
 
     </div>
   );
