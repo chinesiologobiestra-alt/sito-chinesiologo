@@ -65,9 +65,12 @@ export default function News() {
                   {item.title}
                 </h2>
 
-                <p className="text-gray-300 leading-8">
-                  {item.content}
-                </p>
+                <p className="text-gray-300 leading-8 line-clamp-4">
+  {item.content
+    ?.replace(/<[^>]+>/g, "")
+    .replace(/&nbsp;/g, " ")
+    .substring(0, 220)}...
+</p>
 
               </div>
 

@@ -1239,9 +1239,12 @@ return (
               {item.title}
             </h3>
 
-            <p className="text-gray-300 leading-8">
-              {item.content}
-            </p>
+            <p className="text-gray-300 leading-8 line-clamp-3">
+  {item.content
+    ?.replace(/<[^>]+>/g, "")
+    .replace(/&nbsp;/g, " ")
+    .substring(0, 180)}...
+</p>
 
                     </div>
 
