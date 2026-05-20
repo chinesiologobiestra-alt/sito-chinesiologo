@@ -1285,48 +1285,52 @@ return (
 
 ) : (
 
-  <section className="py-24 px-6 bg-black">
+  <section className="min-h-screen flex items-center justify-center px-6 bg-black">
 
-    <div className="max-w-md mx-auto bg-zinc-900 border border-yellow-700 rounded-3xl p-8">
+  <div className="w-full max-w-sm bg-zinc-900/90 backdrop-blur border border-yellow-700/30 rounded-3xl p-10 shadow-2xl">
 
-      <h2 className="text-3xl font-bold text-yellow-500 mb-8 text-center">
-        Login Admin
-      </h2>
+    <div className="text-center mb-10">
 
-      <div className="space-y-4">
+      <h1 className="text-5xl font-bold text-yellow-500 mb-3">
+        FB
+      </h1>
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) =>
-            setEmail(e.target.value)
-          }
-          className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
-        />
-
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) =>
-            setPassword(e.target.value)
-          }
-          className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
-        />
-
-        <button
-          onClick={login}
-          className="w-full bg-yellow-500 text-black font-bold p-4 rounded-xl hover:bg-yellow-400"
-        >
-          Accedi
-        </button>
-
-      </div>
+      <p className="text-gray-400 text-sm tracking-wide uppercase">
+        Area Riservata Admin
+      </p>
 
     </div>
 
-  </section>
+    <div className="space-y-5">
+
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="w-full p-4 rounded-2xl bg-black border border-yellow-700/20 text-white focus:outline-none focus:border-yellow-500 transition"
+      />
+
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        className="w-full p-4 rounded-2xl bg-black border border-yellow-700/20 text-white focus:outline-none focus:border-yellow-500 transition"
+      />
+
+      <button
+        onClick={login}
+        className="w-full bg-yellow-500 text-black font-bold p-4 rounded-2xl hover:bg-yellow-400 transition"
+      >
+        Accedi
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
 
 )}
 
