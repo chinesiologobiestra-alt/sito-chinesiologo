@@ -933,11 +933,9 @@ return (
 
       <header className="sticky top-0 z-50 bg-black border-b border-yellow-700">
 
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-end items-center">
 
-          <div className="flex items-center gap-6">
-
-          <nav className="hidden md:flex gap-6 text-sm text-gray-300">
+  <nav className="hidden md:flex gap-6 text-sm text-gray-300">
 
             <button onClick={() => scrollTo("chi-sono")}>
               Chi sono
