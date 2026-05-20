@@ -147,14 +147,32 @@ export default function Home() {
 
 </a>
 
-          <a
-            href="https://wa.me/393425620513"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-yellow-500 text-black px-5 py-2 rounded-full font-semibold"
-          >
-            Prenota
-          </a>
+          <div className="flex items-center gap-6">
+
+  <a
+    href="tel:+393425620513"
+    className="text-sm text-gray-300 hover:text-yellow-400 transition hidden md:block"
+  >
+    +39 342 562 0513
+  </a>
+
+  <a
+    href="mailto:info@fabiobiestrachinesiologo.it"
+    className="text-sm text-gray-300 hover:text-yellow-400 transition hidden md:block"
+  >
+    Email
+  </a>
+
+  <a
+    href="https://wa.me/393425620513"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="bg-yellow-500 text-black px-5 py-2 rounded-full font-semibold hover:bg-yellow-400 transition"
+  >
+    Prenota
+  </a>
+
+</div>
 
         </div>
       </header>
@@ -212,13 +230,56 @@ export default function Home() {
 
       <Prenotazione />
 
-      <footer className="border-t border-yellow-700/20 py-8 text-center text-gray-400">
+      <footer className="border-t border-yellow-700/20 py-12 px-6 bg-black">
 
-        <p>Fabio Biestra – Chinesiologo</p>
-        <p>Provincia di Pisa</p>
-        <p>info@fabiobiestrachinesiologo.it</p>
+  <div className="max-w-7xl mx-auto text-center">
 
-      </footer>
+    <h3 className="text-3xl font-bold text-yellow-500 mb-4">
+      Fabio Biestra
+    </h3>
+
+    <p className="text-gray-400 mb-8">
+      Chinesiologo
+    </p>
+
+    <div className="space-y-3 text-gray-300">
+
+      <p>
+        📍 Provincia di Pisa
+      </p>
+
+      <p>
+        📞{" "}
+        <a
+          href="tel:+393425620513"
+          className="hover:text-yellow-400 transition"
+        >
+          +39 342 562 0513
+        </a>
+      </p>
+
+      <p>
+        ✉️{" "}
+        <a
+          href="mailto:info@fabiobiestrachinesiologo.it"
+          className="hover:text-yellow-400 transition"
+        >
+          info@fabiobiestrachinesiologo.it
+        </a>
+      </p>
+
+    </div>
+
+    <div className="mt-10 text-sm text-gray-500">
+
+      © {new Date().getFullYear()} Fabio Biestra.
+      Tutti i diritti riservati.
+
+    </div>
+
+  </div>
+
+</footer>
 
     </div>
   );
