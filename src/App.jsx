@@ -1175,9 +1175,12 @@ return (
               {post.title}
             </h3>
 
-            <p className="text-gray-300 leading-7">
-              {post.excerpt}
-            </p>
+             <p className="text-gray-300 leading-7 line-clamp-3">
+  {post.content
+    ?.replace(/<[^>]+>/g, "")
+    .replace(/&nbsp;/g, " ")
+    .substring(0, 180)}...
+</p>
 
           </div>
 
