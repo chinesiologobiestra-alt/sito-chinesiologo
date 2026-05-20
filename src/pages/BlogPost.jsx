@@ -41,9 +41,9 @@ export default function BlogPost() {
         </h1>
 
         <div
-          className="text-gray-300 leading-9 text-lg"
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        ></div>
+  className="text-gray-300 text-lg leading-9 break-words max-w-full overflow-hidden [&_p]:mb-6 [&_strong]:font-bold [&_h2]:text-3xl [&_h2]:text-yellow-500 [&_h2]:mb-6"
+  dangerouslySetInnerHTML={{ __html: post.content }}
+></div>
       </div>
     </div>
   );
