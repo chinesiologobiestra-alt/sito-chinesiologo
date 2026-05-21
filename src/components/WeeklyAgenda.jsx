@@ -235,7 +235,7 @@ const saveSlot = async (type) => {
           ←
         </button>
 
-        <h2 className="text-3xl font-bold text-yellow-500">
+        <h2 className="text-2xl font-bold text-yellow-500">
 
           {format(
             weekDays[0],
@@ -266,7 +266,8 @@ const saveSlot = async (type) => {
 
       </div>
 
-      <div className="grid grid-cols-8 gap-2 min-w-[1200px]">
+      <div className="grid grid-cols-8 gap-1 min-w-[850px]">
+
 
         <div />
 
@@ -296,9 +297,10 @@ const saveSlot = async (type) => {
           <>
 
             <div
-              key={hour}
-              className="text-white py-3"
+            key={hour}
+            className="text-white py-1 text-sm"
             >
+          
               {hour}
             </div>
 
@@ -316,7 +318,7 @@ const saveSlot = async (type) => {
 
   setShowModal(true);
 }}
-                className={`h-14 rounded-xl transition ${
+                className={`h-8 rounded-xl transition ${
   user
     ? "cursor-pointer hover:scale-105"
     : "cursor-default"
