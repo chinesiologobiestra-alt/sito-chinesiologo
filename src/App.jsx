@@ -969,32 +969,35 @@ return (
       path="/blog"
       element={<Blog />}
     />
-<Route
-  path="/blog/:slug"
-  element={<BlogPost />}
-/>
+
+    <Route
+      path="/blog/:slug"
+      element={<BlogPost />}
+    />
+
     <Route
       path="/news"
       element={<News />}
     />
+
     <Route
       path="/news/:id"
       element={<NewsPost />}
     />
 
     <Route
+      path="/privacy-policy"
+      element={<PrivacyPolicy />}
+    />
+
+    <Route
+      path="/cookie-policy"
+      element={<CookiePolicy />}
+    />
+
+    <Route
       path="/"
       element={
-
-        <Route
-  path="/privacy-policy"
-  element={<PrivacyPolicy />}
-/>
-
-<Route
-  path="/cookie-policy"
-  element={<CookiePolicy />}
-/>
 
 <div className="bg-black text-white min-h-screen">
 
@@ -1023,7 +1026,6 @@ return (
       Chinesiologo
     </p>
 
-
   </div>
 
 </a>
@@ -1044,36 +1046,38 @@ return (
             <button onClick={() => scrollTo("faq")}>
               FAQ
             </button>
+
             <a
-  href="/blog"
-  className="hover:text-yellow-500 transition"
->
-  Blog
-</a>
+              href="/blog"
+              className="hover:text-yellow-500 transition"
+            >
+              Blog
+            </a>
 
-<a
-  href="/news"
-  className="hover:text-yellow-500 transition"
->
-  News
-</a>
+            <a
+              href="/news"
+              className="hover:text-yellow-500 transition"
+            >
+              News
+            </a>
 
-<button
-  onClick={() => scrollTo("contatti")}
-  className="hover:text-yellow-500 transition"
->
-  Contatti
-</button>
+            <button
+              onClick={() => scrollTo("contatti")}
+              className="hover:text-yellow-500 transition"
+            >
+              Contatti
+            </button>
 
             <button onClick={() => scrollTo("prenota")}>
               Prenota
             </button>
+
             <button
-  onClick={() => setShowLogin(true)}
-  className="hover:text-yellow-500 transition"
->
-  Accedi
-</button>
+              onClick={() => setShowLogin(true)}
+              className="hover:text-yellow-500 transition"
+            >
+              Accedi
+            </button>
 
           </nav>
 
