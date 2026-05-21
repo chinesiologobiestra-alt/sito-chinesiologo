@@ -846,13 +846,37 @@ const logout = async () => {
 };
 
   const services = [
-    "Valutazione chinesiologica",
-    "Rieducazione posturale",
-    "Recupero infortuni e dolore",
-    "Dimagrimento funzionale",
-    "Allenamento personalizzato",
-    "Benessere e prevenzione",
-  ];
+  {
+    title: "Valutazione chinesiologica",
+    description:
+      "Analisi della postura e del movimento per individuare squilibri e definire un percorso personalizzato.",
+  },
+  {
+    title: "Rieducazione posturale",
+    description:
+      "Percorsi specifici per migliorare l'allineamento corporeo, la mobilità e il controllo motorio.",
+  },
+  {
+    title: "Recupero infortuni e dolore",
+    description:
+      "Programmi progressivi per favorire il recupero funzionale e il ritorno alle normali attività quotidiane.",
+  },
+  {
+    title: "Dimagrimento funzionale",
+    description:
+      "Attività motoria personalizzata finalizzata al miglioramento della composizione corporea e del benessere generale.",
+  },
+  {
+    title: "Allenamento personalizzato",
+    description:
+      "Programmi costruiti sulle tue esigenze, sul livello di partenza e sugli obiettivi da raggiungere.",
+  },
+  {
+    title: "Benessere e prevenzione",
+    description:
+      "Percorsi dedicati al mantenimento della salute, alla prevenzione e alla promozione di uno stile di vita attivo.",
+  },
+];
 
   const [latestPosts, setLatestPosts] = useState([]);
 const [latestNews, setLatestNews] = useState([]);
@@ -1085,22 +1109,33 @@ return (
 
           <div className="grid md:grid-cols-3 gap-6">
 
-            {services.map((service) => (
+  {services.map((service) => (
 
-              <div
-                key={service}
-                className="bg-zinc-900 rounded-3xl p-6 border border-yellow-700"
-              >
+    <div
+      key={service.title}
+      className="bg-zinc-900 rounded-3xl p-8 border border-yellow-700 hover:border-yellow-500 transition"
+    >
 
-                <h3 className="text-yellow-400 font-semibold text-xl">
-                  {service}
-                </h3>
+      <h3 className="text-yellow-400 font-semibold text-2xl mb-4">
+        {service.title}
+      </h3>
 
-              </div>
+      <p className="text-gray-300 leading-7 mb-6">
+        {service.description}
+      </p>
 
-            ))}
+      <button
+        onClick={() => scrollTo("prenota")}
+        className="text-yellow-500 hover:text-yellow-400 font-semibold"
+      >
+        Prenota una consulenza →
+      </button>
 
-          </div>
+    </div>
+
+  ))}
+
+</div>
 
         </div>
 
