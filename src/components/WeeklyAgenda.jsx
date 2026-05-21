@@ -27,6 +27,8 @@ export default function WeeklyAgenda() {
     useState(new Date());
 
   const [slots, setSlots] = useState([]);
+  const [selectedSlot, setSelectedSlot] = useState(null);
+const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
 
@@ -116,6 +118,62 @@ export default function WeeklyAgenda() {
   );
 
 setSlots(data || []);
+};
+
+const saveSlot = async (type) => {
+
+  const date =
+    format(
+      selectedSlot.day,
+      "yyyy-MM-dd"
+    );
+
+  const existing = slots.find(
+    (slot) =>
+      slot.slot_date === date &&
+      slot.slot_time === selectedSlot.hour
+  );
+
+  if (type === "delete") {
+
+    if (existing) {
+
+      await supabase
+        .from("availability_slots")
+        .delete()
+        .eq("id", existing.id);
+
+    }
+
+  } else {
+
+    const payload = {
+      slot_date: date,
+      slot_time: selectedSlot.hour,
+      available: type !== "occupied",
+      location: type,
+    };
+
+    if (existing) {
+
+      await supabase
+        .from("availability_slots")
+        .update(payload)
+        .eq("id", existing.id);
+
+    } else {
+
+      await supabase
+        .from("availability_slots")
+        .insert(payload);
+
+    }
+
+  }
+
+  setShowModal(false);
+
+  loadSlots();
 };
 
   const weekDays = [];
@@ -248,9 +306,13 @@ setSlots(data || []);
 
               <div
                 key={`${day}-${hour}`}
-                onClick={() =>
-                  toggleSlot(day, hour)
-                }
+                onClick={() => {
+  setSelectedSlot({
+    day,
+    hour,
+  });
+  setShowModal(true);
+}}
                 className={`h-14 rounded-xl cursor-pointer hover:scale-105 transition ${getSlotColor(
                   day,
                   hour
@@ -264,6 +326,53 @@ setSlots(data || []);
         ))}
 
             </div>
+            {showModal && (
+
+  <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[9999]">
+
+    <div className="bg-zinc-900 border border-yellow-700 rounded-3xl p-8 w-96">
+
+      <h3 className="text-yellow-500 text-xl font-bold mb-6">
+        Seleziona disponibilità
+      </h3>
+
+      <div className="space-y-3">
+
+        <button
+          onClick={() => saveSlot("studio1")}
+          className="w-full bg-blue-600 p-3 rounded-xl"
+        >
+          Disponibile - Studio Provvisorio
+        </button>
+
+        <button
+          onClick={() => saveSlot("studio2")}
+          className="w-full bg-green-600 p-3 rounded-xl"
+        >
+          Disponibile - Studio Provvisorio 2
+        </button>
+
+        <button
+          onClick={() => saveSlot("occupied")}
+          className="w-full bg-red-600 p-3 rounded-xl"
+        >
+          Occupato
+        </button>
+
+        <button
+          onClick={() => saveSlot("delete")}
+          className="w-full bg-zinc-700 p-3 rounded-xl"
+        >
+          Non prenotabile
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+)}
 
       <div className="mt-8 bg-zinc-900 border border-yellow-700 rounded-2xl p-4">
 
