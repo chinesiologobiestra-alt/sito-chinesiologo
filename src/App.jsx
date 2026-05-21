@@ -882,19 +882,47 @@ const logout = async () => {
 const [latestNews, setLatestNews] = useState([]);
 
   const faq = [
-    {
-      q: "Cos’è la chinesiologia?",
-      a: "La chinesiologia studia il movimento umano e il suo ruolo nel benessere generale della persona.",
-    },
-    {
-      q: "Posso iniziare anche se sono sedentario?",
-      a: "Sì. Ogni percorso viene personalizzato in base al tuo livello di partenza.",
-    },
-    {
-      q: "Serve una preparazione fisica?",
-      a: "No, il percorso viene adattato alla persona e ai suoi obiettivi.",
-    },
-  ];
+  {
+    q: "Cos'è la chinesiologia?",
+    a: "La chinesiologia studia il movimento umano e il suo ruolo nel mantenimento e nel miglioramento del benessere della persona.",
+  },
+  {
+    q: "A chi si rivolgono i percorsi?",
+    a: "I percorsi sono rivolti a persone di ogni età che desiderano migliorare il proprio benessere, la postura, la qualità del movimento o adottare uno stile di vita più attivo.",
+  },
+  {
+    q: "Posso iniziare anche se sono sedentario?",
+    a: "Sì. Ogni percorso viene adattato al livello di partenza della persona e costruito in modo graduale e sostenibile.",
+  },
+  {
+    q: "Serve una preparazione fisica particolare?",
+    a: "No. Gli esercizi e le attività vengono personalizzati in base alle caratteristiche individuali e agli obiettivi da raggiungere.",
+  },
+  {
+    q: "Come si svolge il primo incontro?",
+    a: "Il primo appuntamento prevede un colloquio iniziale e una valutazione del movimento e della postura per comprendere esigenze e obiettivi della persona.",
+  },
+  {
+    q: "Quanto dura una seduta?",
+    a: "La durata può variare in base al percorso, ma generalmente una seduta ha una durata compresa tra 45 e 60 minuti.",
+  },
+  {
+    q: "Posso svolgere attività fisica se ho avuto infortuni o periodi di inattività?",
+    a: "Nella maggior parte dei casi sì, attraverso un percorso adeguato alle proprie condizioni e sviluppato con gradualità.",
+  },
+  {
+    q: "Quali benefici può portare un percorso chinesiologico?",
+    a: "Miglioramento della postura, maggiore mobilità, incremento della consapevolezza corporea, benessere generale e promozione di uno stile di vita attivo.",
+  },
+  {
+    q: "Esiste un collegamento tra movimento e benessere mentale?",
+    a: "Il movimento regolare può contribuire al benessere generale della persona, favorendo una migliore percezione di sé e aiutando nella gestione delle tensioni quotidiane.",
+  },
+  {
+    q: "Come posso prenotare una consulenza?",
+    a: "È possibile prenotare direttamente tramite il modulo presente sul sito oppure contattarmi telefonicamente o via email.",
+  },
+];
 
   useEffect(() => {
 
@@ -1227,6 +1255,85 @@ return (
           Verifica dei progressi e aggiornamento del programma
           per ottenere risultati concreti e duraturi.
         </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+      <section className="bg-zinc-950 py-24 px-6">
+
+  <div className="max-w-7xl mx-auto">
+
+    <div className="text-center mb-16">
+
+      <h2 className="text-4xl md:text-5xl font-bold text-yellow-500 mb-6">
+        Il movimento come strumento di benessere
+      </h2>
+
+      <p className="text-gray-300 text-lg leading-8 max-w-3xl mx-auto">
+        Il movimento rappresenta una risorsa fondamentale per il benessere
+        della persona. Attraverso percorsi personalizzati è possibile
+        migliorare la funzionalità del corpo, aumentare la consapevolezza
+        corporea e favorire una migliore qualità della vita quotidiana.
+      </p>
+
+    </div>
+
+    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+      <div className="bg-black border border-yellow-700 rounded-3xl p-8">
+
+        <h3 className="text-2xl font-semibold text-yellow-500 mb-4">
+          Personalizzazione
+        </h3>
+
+        <p className="text-gray-300 leading-7">
+          Ogni percorso viene adattato alle caratteristiche,
+          alle esigenze e agli obiettivi della persona.
+        </p>
+
+      </div>
+
+      <div className="bg-black border border-yellow-700 rounded-3xl p-8">
+
+        <h3 className="text-2xl font-semibold text-yellow-500 mb-4">
+          Consapevolezza corporea
+        </h3>
+
+        <p className="text-gray-300 leading-7">
+          Comprendere il proprio corpo e il proprio movimento
+          è il primo passo verso un miglior equilibrio funzionale.
+        </p>
+
+      </div>
+
+      <div className="bg-black border border-yellow-700 rounded-3xl p-8">
+
+        <h3 className="text-2xl font-semibold text-yellow-500 mb-4">
+          Corpo e mente
+        </h3>
+
+        <p className="text-gray-300 leading-7">
+          Corpo e mente sono strettamente collegati.
+          Il movimento può contribuire al benessere generale,
+          favorendo una migliore gestione delle tensioni e dello stress.
+        </p>
+
+      </div>
+
+      <div className="bg-black border border-yellow-700 rounded-3xl p-8">
+
+        <h3 className="text-2xl font-semibold text-yellow-500 mb-4">
+          Continuità
+        </h3>
+
+        <p className="text-gray-300 leading-7">
+          Piccoli cambiamenti sostenibili nel tempo possono
+          portare benefici duraturi per la salute e la qualità della vita.
+        </p>
+
       </div>
 
     </div>
