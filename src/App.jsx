@@ -1317,6 +1317,63 @@ return (
 
 
  ) : null}
+ {showLogin && !user && (
+
+  <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[9999]">
+
+    <div className="relative w-full max-w-sm bg-zinc-900 rounded-3xl p-10 border border-yellow-700">
+
+      <button
+        onClick={() => setShowLogin(false)}
+        className="absolute top-4 right-4 text-white text-xl"
+      >
+        ✕
+      </button>
+
+      <div className="text-center mb-10">
+
+        <h1 className="text-5xl font-bold text-yellow-500 mb-3">
+          FB
+        </h1>
+
+        <p className="text-gray-400 uppercase text-sm">
+          Area Riservata Admin
+        </p>
+
+      </div>
+
+      <div className="space-y-5">
+
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full p-4 rounded-2xl bg-black border border-yellow-700/20 text-white"
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full p-4 rounded-2xl bg-black border border-yellow-700/20 text-white"
+        />
+
+        <button
+          onClick={login}
+          className="w-full bg-yellow-500 text-black font-bold p-4 rounded-2xl hover:bg-yellow-400 transition"
+        >
+          Accedi
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+)}
 
 <footer
   id="contatti"
