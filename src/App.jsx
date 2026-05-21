@@ -1001,6 +1001,12 @@ return (
             <button onClick={() => scrollTo("prenota")}>
               Prenota
             </button>
+            <button
+  onClick={() => setShowLogin(true)}
+  className="hover:text-yellow-500 transition"
+>
+  Accedi
+</button>
 
           </nav>
 
@@ -1309,56 +1315,9 @@ return (
 
   </div>
 
-) : (
 
-  <section className="min-h-screen flex items-center justify-center px-6 bg-black">
+ ) : null}
 
-  <div className="w-full max-w-sm bg-zinc-900/90 backdrop-blur border border-yellow-700/30 rounded-3xl p-10 shadow-2xl">
-
-    <div className="text-center mb-10">
-
-      <h1 className="text-5xl font-bold text-yellow-500 mb-3">
-        FB
-      </h1>
-
-      <p className="text-gray-400 text-sm tracking-wide uppercase">
-        Area Riservata Admin
-      </p>
-
-    </div>
-
-    <div className="space-y-5">
-
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="w-full p-4 rounded-2xl bg-black border border-yellow-700/20 text-white focus:outline-none focus:border-yellow-500 transition"
-      />
-
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="w-full p-4 rounded-2xl bg-black border border-yellow-700/20 text-white focus:outline-none focus:border-yellow-500 transition"
-      />
-
-      <button
-        onClick={login}
-        className="w-full bg-yellow-500 text-black font-bold p-4 rounded-2xl hover:bg-yellow-400 transition"
-      >
-        Accedi
-      </button>
-
-    </div>
-
-  </div>
-
-</section>
-
-)}
 <footer
   id="contatti"
   className="border-t border-yellow-700/20 py-12 px-6 bg-black"
@@ -1376,37 +1335,38 @@ return (
 
     <div className="grid md:grid-cols-2 gap-6 text-gray-300 max-w-2xl mx-auto">
 
-  <div className="bg-zinc-900 rounded-2xl p-6 border border-yellow-700/20">
+      <div className="bg-zinc-900 rounded-2xl p-6 border border-yellow-700/20">
 
-    <p className="text-yellow-500 mb-2 font-semibold">
-      Telefono
-    </p>
+        <p className="text-yellow-500 mb-2 font-semibold">
+          Telefono
+        </p>
 
-    <a
-      href="tel:+393425620513"
-      className="hover:text-yellow-400 transition"
-    >
-      +39 342 562 0513
-    </a>
+        <a
+          href="tel:+393425620513"
+          className="hover:text-yellow-400 transition"
+        >
+          +39 342 562 0513
+        </a>
 
-  </div>
+      </div>
 
-  <div className="bg-zinc-900 rounded-2xl p-6 border border-yellow-700/20">
+      <div className="bg-zinc-900 rounded-2xl p-6 border border-yellow-700/20">
 
-    <p className="text-yellow-500 mb-2 font-semibold">
-      Email
-    </p>
+        <p className="text-yellow-500 mb-2 font-semibold">
+          Email
+        </p>
 
-    <a
-      href="mailto:info@fabiobiestrachinesiologo.it"
-      className="hover:text-yellow-400 transition break-all"
-    >
-      info@fabiobiestrachinesiologo.it
-    </a>
+        <a
+          href="mailto:info@fabiobiestrachinesiologo.it"
+          className="hover:text-yellow-400 transition break-all"
+        >
+          info@fabiobiestrachinesiologo.it
+        </a>
 
-  </div>
+      </div>
 
-</div>
+    </div>
+
     <div className="mt-10 text-sm text-gray-500">
 
       © {new Date().getFullYear()} Fabio Biestra.
