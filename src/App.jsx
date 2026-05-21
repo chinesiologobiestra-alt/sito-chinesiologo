@@ -807,6 +807,7 @@ export default function App() {
 const [user, setUser] = useState(null);
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
+const [showLogin, setShowLogin] = useState(false);
 
 useEffect(() => {
 
