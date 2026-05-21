@@ -814,6 +814,7 @@ useEffect(() => {
   supabase.auth.getSession()
     .then(({ data }) => {
       setUser(data.session?.user || null);
+      setShowLogin(false);
     });
 
 }, []);

@@ -130,38 +130,35 @@ setSlots(data || []);
     weekDays.push(addDays(start, i));
   }
 
-  const getSlotColor = (
-    day,
-    hour
-  ) => {
+  const getSlotColor = (day, hour) => {
 
-    const date =
-      format(day, "yyyy-MM-dd");
+  const date =
+    format(day, "yyyy-MM-dd");
 
-    const booking = slots.find(
-      (slot) =>
-        slot.slot_date === date &&
-        slot.slot_time === hour &&
-        slot.available === false
-    );
+  const slot = slots.find(
+    (s) =>
+      s.slot_date === date &&
+      s.slot_time === hour
+  );
 
-    if (booking) {
-      return "bg-red-600 border border-red-300";
-    }
-
-    const available = slots.find(
-      (slot) =>
-        slot.slot_date === date &&
-        slot.slot_time === hour &&
-        slot.available === true
-    );
-
-    if (available) {
-      return "bg-blue-600 border border-blue-300";
-    }
-
+  if (!slot) {
     return "bg-zinc-800";
-  };
+  }
+
+  if (slot.location === "studio1") {
+    return "bg-blue-600 border border-blue-300";
+  }
+
+  if (slot.location === "studio2") {
+    return "bg-green-600 border border-green-300";
+  }
+
+  if (slot.location === "occupied") {
+    return "bg-red-600 border border-red-300";
+  }
+
+  return "bg-zinc-800";
+};
 
   return (
 
@@ -265,6 +262,46 @@ setSlots(data || []);
           </>
 
         ))}
+
+            </div>
+
+      <div className="mt-8 bg-zinc-900 border border-yellow-700 rounded-2xl p-4">
+
+        <h3 className="text-yellow-500 font-semibold mb-4">
+          Legenda disponibilità
+        </h3>
+
+        <div className="flex flex-wrap gap-6 text-sm">
+
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-zinc-800 rounded"></div>
+            <span className="text-gray-300">
+              Non prenotabile
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2">
+  <div className="w-4 h-4 bg-blue-600 rounded"></div>
+  <span className="text-gray-300">
+    Disponibile - Studio Provvisorio
+  </span>
+</div>
+
+<div className="flex items-center gap-2">
+  <div className="w-4 h-4 bg-green-600 rounded"></div>
+  <span className="text-gray-300">
+    Disponibile - Studio Provvisorio 2
+  </span>
+</div>
+
+<div className="flex items-center gap-2">
+  <div className="w-4 h-4 bg-red-600 rounded"></div>
+  <span className="text-gray-300">
+    Occupato
+  </span>
+</div>
+
+        </div>
 
       </div>
 
