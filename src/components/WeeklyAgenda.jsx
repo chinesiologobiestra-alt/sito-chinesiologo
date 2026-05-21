@@ -307,16 +307,20 @@ const saveSlot = async (type) => {
               <div
                 key={`${day}-${hour}`}
                 onClick={() => {
+  if (!user) return;
+
   setSelectedSlot({
     day,
     hour,
   });
+
   setShowModal(true);
 }}
-                className={`h-14 rounded-xl cursor-pointer hover:scale-105 transition ${getSlotColor(
-                  day,
-                  hour
-                )}`}
+                className={`h-14 rounded-xl transition ${
+  user
+    ? "cursor-pointer hover:scale-105"
+    : "cursor-default"
+} ${getSlotColor(day, hour)}`}
               />
 
             ))}
@@ -330,11 +334,18 @@ const saveSlot = async (type) => {
 
   <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[9999]">
 
-    <div className="bg-zinc-900 border border-yellow-700 rounded-3xl p-8 w-96">
+    <div className="relative bg-zinc-900 border border-yellow-700 rounded-3xl p-8 w-96">
 
-      <h3 className="text-yellow-500 text-xl font-bold mb-6">
-        Seleziona disponibilità
-      </h3>
+  <button
+    onClick={() => setShowModal(false)}
+    className="absolute top-4 right-4 text-white hover:text-yellow-500 transition text-xl"
+  >
+    ✕
+  </button>
+
+  <h3 className="text-yellow-500 text-xl font-bold mb-6">
+    Seleziona disponibilità
+  </h3>
 
       <div className="space-y-3">
 
