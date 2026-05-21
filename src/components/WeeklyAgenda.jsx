@@ -21,7 +21,7 @@ for (let i = 8; i <= 22; i++) {
   );
 }
 
-export default function WeeklyAgenda() {
+export default function WeeklyAgenda({ user }) {
 
   const [currentWeek, setCurrentWeek] =
     useState(new Date());

@@ -1293,7 +1293,7 @@ return (
 
       <Prenotazione />
 
-      <WeeklyAgenda />
+      <WeeklyAgenda user={user} />
 
       {user ? (
 
