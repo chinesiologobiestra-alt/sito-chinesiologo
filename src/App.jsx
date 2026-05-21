@@ -1143,22 +1143,97 @@ return (
 
       <section id="metodo" className="py-24 px-6 bg-black">
 
-        <div className="max-w-7xl mx-auto text-center">
+  <div className="max-w-7xl mx-auto">
 
-          <p className="uppercase tracking-[0.3em] text-yellow-500 mb-3">
-            Il mio metodo
-          </p>
+    <div className="text-center mb-16">
 
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Prestazioni su misura,
-            <span className="text-yellow-500">
-              {" "}risultati concreti
-            </span>
-          </h2>
+      <p className="uppercase tracking-[0.3em] text-yellow-500 mb-3">
+        Il mio metodo
+      </p>
 
+      <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+        Un percorso costruito
+        <span className="text-yellow-500">
+          {" "}sulle tue esigenze
+        </span>
+      </h2>
+
+      <p className="text-gray-300 max-w-3xl mx-auto text-lg leading-8">
+        Ogni persona è diversa. Per questo motivo ogni percorso
+        viene sviluppato partendo da una valutazione iniziale e
+        adattato nel tempo in base ai progressi e agli obiettivi
+        individuali.
+      </p>
+
+    </div>
+
+    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+      <div className="bg-zinc-900 border border-yellow-700 rounded-3xl p-8">
+        <div className="text-4xl font-bold text-yellow-500 mb-4">
+          01
         </div>
 
-      </section>
+        <h3 className="text-xl font-semibold text-white mb-4">
+          Colloquio iniziale
+        </h3>
+
+        <p className="text-gray-300 leading-7">
+          Analisi delle esigenze, delle abitudini quotidiane
+          e degli obiettivi da raggiungere.
+        </p>
+      </div>
+
+      <div className="bg-zinc-900 border border-yellow-700 rounded-3xl p-8">
+        <div className="text-4xl font-bold text-yellow-500 mb-4">
+          02
+        </div>
+
+        <h3 className="text-xl font-semibold text-white mb-4">
+          Valutazione
+        </h3>
+
+        <p className="text-gray-300 leading-7">
+          Osservazione della postura e analisi del movimento
+          per individuare eventuali squilibri funzionali.
+        </p>
+      </div>
+
+      <div className="bg-zinc-900 border border-yellow-700 rounded-3xl p-8">
+        <div className="text-4xl font-bold text-yellow-500 mb-4">
+          03
+        </div>
+
+        <h3 className="text-xl font-semibold text-white mb-4">
+          Programma personalizzato
+        </h3>
+
+        <p className="text-gray-300 leading-7">
+          Definizione di un percorso specifico costruito
+          sulle caratteristiche e sugli obiettivi della persona.
+        </p>
+      </div>
+
+      <div className="bg-zinc-900 border border-yellow-700 rounded-3xl p-8">
+        <div className="text-4xl font-bold text-yellow-500 mb-4">
+          04
+        </div>
+
+        <h3 className="text-xl font-semibold text-white mb-4">
+          Monitoraggio
+        </h3>
+
+        <p className="text-gray-300 leading-7">
+          Verifica dei progressi e aggiornamento del programma
+          per ottenere risultati concreti e duraturi.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
 
       <section
         id="faq"
