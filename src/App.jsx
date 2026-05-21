@@ -15,6 +15,9 @@ import ContentManager from "./components/ContentManager";
 import NewsPost from "./pages/NewsPost";
 import WeeklyAgenda from "./components/WeeklyAgenda";
 import { format } from "date-fns";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import CookiePolicy from "./pages/CookiePolicy";
+import CookieBanner from "./components/CookieBanner";
 
 function Prenotazione() {
 
@@ -983,6 +986,16 @@ return (
       path="/"
       element={
 
+        <Route
+  path="/privacy-policy"
+  element={<PrivacyPolicy />}
+/>
+
+<Route
+  path="/cookie-policy"
+  element={<CookiePolicy />}
+/>
+
 <div className="bg-black text-white min-h-screen">
 
       <header className="sticky top-0 z-50 bg-black border-b border-yellow-700">
@@ -1009,6 +1022,7 @@ return (
     <p className="text-base text-gray-400 mt-2">
       Chinesiologo
     </p>
+
 
   </div>
 
@@ -1593,6 +1607,8 @@ return (
 
 )}
 
+<CookieBanner />
+
 <footer
   id="contatti"
   className="border-t border-yellow-700/20 py-12 px-6 bg-black"
@@ -1641,6 +1657,24 @@ return (
       </div>
 
     </div>
+
+    <div className="mt-10 flex justify-center gap-6 text-sm">
+
+  <a
+    href="/privacy-policy"
+    className="text-gray-400 hover:text-yellow-500"
+  >
+    Privacy Policy
+  </a>
+
+  <a
+    href="/cookie-policy"
+    className="text-gray-400 hover:text-yellow-500"
+  >
+    Cookie Policy
+  </a>
+
+</div>
 
     <div className="mt-10 text-sm text-gray-500">
 
