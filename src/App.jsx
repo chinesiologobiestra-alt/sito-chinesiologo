@@ -129,10 +129,6 @@ function Prenotazione() {
 doc.text("SEDE", 30, 214);
 
 doc.setFontSize(16);
-doc.setFontSize(12);
-doc.text("SEDE", 30, 214);
-
-doc.setFontSize(16);
 doc.text(form.sede || "-", 30, 224);
 
   // IMPORTANTE
