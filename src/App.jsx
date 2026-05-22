@@ -266,15 +266,19 @@ setAvailableTimes(
       return;
     }
 
-    await supabase
+ await supabase
   .from("availability_slots")
-  .upsert({
-    slot_date: new Date(form.data)
-  .toISOString()
-  .split("T")[0],
-    slot_time: form.ora,
+  .update({
     available: false,
-  });
+    location: "occupied",
+  })
+  .eq(
+    "slot_date",
+    new Date(form.data)
+      .toISOString()
+      .split("T")[0]
+  )
+  .eq("slot_time", form.ora);
 
 try {
 
