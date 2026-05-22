@@ -31,35 +31,6 @@ function Prenotazione() {
   ora: "",
 });
 
-<select
-  name="servizio"
-  onChange={handleChange}
-  className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
->
-  <option>Seleziona servizio</option>
-  <option>Valutazione chinesiologica</option>
-  <option>Rieducazione posturale</option>
-  <option>Benessere generale</option>
-</select>
-
-<select
-  name="sede"
-  onChange={handleChange}
-  className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
->
-  <option value="">
-    Seleziona sede
-  </option>
-
-  <option value="Studio Provvisorio">
-    Studio Provvisorio
-  </option>
-
-  <option value="Studio Provvisorio 2">
-    Studio Provvisorio 2
-  </option>
-</select>
-
   const [availableTimes, setAvailableTimes] = useState([]);
   const [availableSlots, setAvailableSlots] = useState([]);
   const [showCalendar, setShowCalendar] = useState(false);
@@ -319,13 +290,14 @@ try {
     "Content-Type": "application/json",
   },
 
-  body: JSON.stringify({
-    nome: form.nome,
-    email: form.email,
-    data: form.data,
-    ora: form.ora,
-    servizio: form.servizio,
-  }),
+ body: JSON.stringify({
+  nome: form.nome,
+  email: form.email,
+  data: form.data,
+  ora: form.ora,
+  servizio: form.servizio,
+  sede: form.sede,
+}),
 
 });
 
@@ -428,17 +400,31 @@ Ora: ${form.ora}`
   className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
 />
           <select
-            name="servizio"
-            onChange={handleChange}
-            className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
-          >
-            <option>Seleziona servizio</option>
-            <option>Valutazione chinesiologica</option>
-            <option>Rieducazione posturale</option>
-            <option>Benessere generale</option>
-          </select>
+  name="servizio"
+  onChange={handleChange}
+  className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
+>
+  <option>Seleziona servizio</option>
+  <option>Valutazione chinesiologica</option>
+  <option>Rieducazione posturale</option>
+  <option>Benessere generale</option>
+</select>
 
-          <div className="relative">
+<select
+  name="sede"
+  onChange={handleChange}
+  className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
+>
+  <option value="">Seleziona sede</option>
+  <option value="Studio Provvisorio">
+    Studio Provvisorio
+  </option>
+  <option value="Studio Provvisorio 2">
+    Studio Provvisorio 2
+  </option>
+</select>
+
+<div className="relative">
 
   <button
   type="button"
