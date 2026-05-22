@@ -280,20 +280,24 @@ setAvailableTimes(
   )
   .eq("slot_time", form.ora);
 
-  const { data: check } = await supabase
-  .from("availability_slots")
-  .select("*")
-  .eq(
-    "slot_date",
-    new Date(form.data)
-      .toISOString()
-      .split("T")[0]
-  )
-  .eq("slot_time", form.ora);
+  const { data: updated, error: updateError } =
+  await supabase
+    .from("availability_slots")
+    .update({
+      available: false,
+      location: "occupied",
+    })
+    .eq(
+      "slot_date",
+      new Date(form.data)
+        .toISOString()
+        .split("T")[0]
+    )
+    .eq("slot_time", form.ora)
+    .select();
 
-console.log("CHECK SLOT:", check);
-console.log("DATA:", form.data);
-console.log("ORA:", form.ora);
+console.log("UPDATE ERROR:", updateError);
+console.log("UPDATED:", updated);
 
 try {
 
