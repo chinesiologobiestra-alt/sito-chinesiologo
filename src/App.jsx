@@ -21,14 +21,44 @@ import CookieBanner from "./components/CookieBanner";
 
 function Prenotazione() {
 
-  const [form, setForm] = useState({
-    nome: "",
-    email: "",
-    telefono: "",
-    servizio: "",
-    data: "",
-    ora: "",
-  });
+ const [form, setForm] = useState({
+  nome: "",
+  email: "",
+  telefono: "",
+  servizio: "",
+  sede: "",
+  data: "",
+  ora: "",
+});
+
+<select
+  name="servizio"
+  onChange={handleChange}
+  className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
+>
+  <option>Seleziona servizio</option>
+  <option>Valutazione chinesiologica</option>
+  <option>Rieducazione posturale</option>
+  <option>Benessere generale</option>
+</select>
+
+<select
+  name="sede"
+  onChange={handleChange}
+  className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
+>
+  <option value="">
+    Seleziona sede
+  </option>
+
+  <option value="Studio Provvisorio">
+    Studio Provvisorio
+  </option>
+
+  <option value="Studio Provvisorio 2">
+    Studio Provvisorio 2
+  </option>
+</select>
 
   const [availableTimes, setAvailableTimes] = useState([]);
   const [availableSlots, setAvailableSlots] = useState([]);
@@ -124,18 +154,15 @@ function Prenotazione() {
   doc.setFontSize(16);
   doc.text(form.ora || "-", 95, 196);
 
-  doc.setFontSize(12);
-  doc.text("LUOGO", 30, 214);
+ doc.setFontSize(12);
+doc.text("SEDE", 30, 214);
 
-  doc.setFontSize(16);
-  doc.text("Studio - Provincia di Pisa", 30, 224);
+doc.setFontSize(16);
+doc.setFontSize(12);
+doc.text("SEDE", 30, 214);
 
-  doc.setFontSize(10);
-  doc.text(
-    "Via delle Colline, 123 - 56025 Pontedera (PI)",
-    30,
-    232
-  );
+doc.setFontSize(16);
+doc.text(form.sede || "-", 30, 224);
 
   // IMPORTANTE
   doc.setTextColor(212, 175, 55);

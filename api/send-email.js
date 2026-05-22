@@ -15,12 +15,13 @@ export default async function handler(req, res) {
 console.log(req.body);
 
     const {
-      nome,
-      email,
-      data,
-      ora,
-      servizio,
-    } = req.body;
+  nome,
+  email,
+  data,
+  ora,
+  servizio,
+  sede,
+} = req.body;
 
    console.log("INVIO EMAIL...");
 
@@ -118,6 +119,8 @@ from: "Fabio Biestra <info@fabiobiestrachinesiologo.it>",
         <p><strong>Data:</strong> ${data}</p>
 
         <p><strong>Orario:</strong> ${ora}</p>
+
+        <p><strong>Sede:</strong> ${sede}</p>
 
       </div>
 
