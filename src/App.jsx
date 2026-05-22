@@ -280,6 +280,21 @@ setAvailableTimes(
   )
   .eq("slot_time", form.ora);
 
+  const { data: check } = await supabase
+  .from("availability_slots")
+  .select("*")
+  .eq(
+    "slot_date",
+    new Date(form.data)
+      .toISOString()
+      .split("T")[0]
+  )
+  .eq("slot_time", form.ora);
+
+console.log("CHECK SLOT:", check);
+console.log("DATA:", form.data);
+console.log("ORA:", form.ora);
+
 try {
 
   const response = await fetch("/api/send-email", {
