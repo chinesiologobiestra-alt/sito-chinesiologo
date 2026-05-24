@@ -437,12 +437,14 @@ Ora: ${form.ora}`
   className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
 >
   <option value="">Seleziona sede</option>
-  <option value="Studio Provvisorio">
-    Studio Provvisorio
-  </option>
-  <option value="Studio Provvisorio 2">
-    Studio Provvisorio 2
-  </option>
+
+<option value="studio1">
+  Studio Provvisorio
+</option>
+
+<option value="studio2">
+  Studio Provvisorio 2
+</option>
 </select>
 
 <div className="relative">
@@ -473,10 +475,11 @@ Ora: ${form.ora}`
 }));
 
   const { data: slots } = await supabase
-    .from("availability_slots")
-    .select("*")
-    .eq("slot_date", formatted)
-    .eq("available", true);
+  .from("availability_slots")
+  .select("*")
+  .eq("slot_date", formatted)
+  .eq("available", true)
+  .eq("location", form.sede);
 
   setAvailableTimes([
   ...new Set(
