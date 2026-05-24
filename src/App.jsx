@@ -825,13 +825,19 @@ const maintenanceMode = true;
 
 export default function App() {
 
-  if (maintenanceMode) {
+ if (maintenanceMode) {
 
   return (
 
     <div className="min-h-screen bg-black text-white flex items-center justify-center px-6">
 
       <div className="text-center max-w-2xl">
+
+        <img
+          src="/logo.png"
+          alt="Fabio Biestra Logo"
+          className="w-40 h-40 object-contain mx-auto mb-8"
+        />
 
         <h1 className="text-6xl font-bold text-yellow-500 mb-8">
           Fabio Biestra
