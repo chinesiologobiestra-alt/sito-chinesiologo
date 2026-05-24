@@ -704,18 +704,19 @@ function AdminPanel() {
       .single();
 
   await supabase
-    .from("availability_slots")
-    .update({
-      available: true,
-    })
-    .eq(
-      "slot_date",
-      booking.booking_date
-    )
-    .eq(
-      "slot_time",
-      booking.booking_time
-    );
+  .from("availability_slots")
+  .update({
+    available: true,
+    location: "studio1",
+  })
+  .eq(
+    "slot_date",
+    booking.booking_date
+  )
+  .eq(
+    "slot_time",
+    booking.booking_time
+  );
 
   await supabase
     .from("bookings")
