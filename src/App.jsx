@@ -203,13 +203,19 @@ doc.text(form.sede || "-", 30, 224);
   const handleChange = async (e) => {
 
     const updatedForm = {
-      ...form,
-      [e.target.name]: e.target.value,
-    };
+  ...form,
+  [e.target.name]: e.target.value,
+};
 
-    setForm(updatedForm);
+if (e.target.name === "sede") {
+  updatedForm.data = "";
+  updatedForm.ora = "";
+  setAvailableTimes([]);
+}
 
-    if (e.target.name === "data") {
+setForm(updatedForm);
+
+if (e.target.name === "data") {
 
   const formatted =
     new Date(e.target.value)
