@@ -227,9 +227,11 @@ doc.text(form.sede || "-", 30, 224);
     return;
   }
 
-setAvailableTimes(
-  data.map((slot) => slot.slot_time)
-);
+setAvailableTimes([
+  ...new Set(
+    data.map(slot => slot.slot_time)
+  )
+]);
 
 }
 };
@@ -476,11 +478,13 @@ Ora: ${form.ora}`
     .eq("slot_date", formatted)
     .eq("available", true);
 
-  setAvailableTimes(
-    slots?.map(
-      (slot) => slot.slot_time
-    ) || []
-  );
+  setAvailableTimes([
+  ...new Set(
+    (slots || []).map(
+      slot => slot.slot_time
+    )
+  )
+]);
 
   setShowCalendar(false);
 }}
