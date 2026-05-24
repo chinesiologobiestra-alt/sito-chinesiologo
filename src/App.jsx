@@ -32,6 +32,7 @@ function Prenotazione() {
 });
 
   const [availableTimes, setAvailableTimes] = useState([]);
+  const [availableDates, setAvailableDates] = useState([]);
   const [availableSlots, setAvailableSlots] = useState([]);
   const [showCalendar, setShowCalendar] = useState(false);
 
@@ -212,6 +213,20 @@ if (e.target.name === "sede") {
   updatedForm.ora = "";
   setAvailableTimes([]);
 }
+
+const { data: slots } = await supabase
+  .from("availability_slots")
+  .select("slot_date")
+  .eq("available", true)
+  .eq("location", e.target.value);
+
+setAvailableDates([
+  ...new Set(
+    (slots || []).map(
+      slot => slot.slot_date
+    )
+  )
+]);
 
 setForm(updatedForm);
 
@@ -491,41 +506,53 @@ Ora: ${form.ora}`
   <div className="absolute z-50 mt-3">
 
     <Calendar
-      onChange={async (date) => {
+  tileDisabled={({ date }) => {
 
-  const formatted =
-    format(date, "yyyy-MM-dd");
+    const formatted =
+      format(date, "yyyy-MM-dd");
 
- setForm((prev) => ({
-  ...prev,
-  data: formatted,
-}));
+    return !availableDates.includes(
+      formatted
+    );
 
-  const { data: slots } = await supabase
-  .from("availability_slots")
-  .select("*")
-  .eq("slot_date", formatted)
-  .eq("available", true)
-  .eq("location", form.sede);
+  }}
 
-  setAvailableTimes([
-  ...new Set(
-    (slots || []).map(
-      slot => slot.slot_time
-    )
-  )
-]);
+  onChange={async (date) => {
 
-  setShowCalendar(false);
-}}
-      value={new Date()}
-      className="premium-calendar"
-    />
+    const formatted =
+      format(date, "yyyy-MM-dd");
 
-  </div>
+    setForm((prev) => ({
+      ...prev,
+      data: formatted,
+    }));
+
+    const { data: slots } = await supabase
+      .from("availability_slots")
+      .select("*")
+      .eq("slot_date", formatted)
+      .eq("available", true)
+      .eq("location", form.sede);
+
+    setAvailableTimes([
+      ...new Set(
+        (slots || []).map(
+          slot => slot.slot_time
+        )
+      )
+    ]);
+
+    setShowCalendar(false);
+
+  }}
+
+  value={new Date()}
+  className="premium-calendar"
+/>
+
+</div>
 
 )}
-
 </div>
 
 
