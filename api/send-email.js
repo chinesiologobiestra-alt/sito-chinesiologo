@@ -60,24 +60,29 @@ from: "Fabio Biestra <info@fabiobiestrachinesiologo.it>",
       text-align:center;
       border-bottom:3px solid #d4af37;
     ">
+<div style="text-align:center;">
 
-      <h1 style="
-        color:#d4af37;
-        margin:0;
-        font-size:34px;
-        letter-spacing:2px;
-      ">
-        FABIO BIESTRA
-      </h1>
+  <img
+    src="https://www.fabiobiestrachinesiologo.it/logo.png"
+    alt="Fabio Biestra"
+    style="
+      width:140px;
+      height:auto;
+      display:block;
+      margin:0 auto 15px auto;
+    "
+  />
 
-      <p style="
-        color:white;
-        margin-top:10px;
-        font-size:15px;
-        letter-spacing:3px;
-      ">
-        CHINESIOLOGO
-      </p>
+  <p style="
+    color:white;
+    margin:0;
+    font-size:15px;
+    letter-spacing:3px;
+  ">
+    CHINESIOLOGO
+  </p>
+
+</div>
 
     </div>
 
@@ -171,6 +176,26 @@ from: "Fabio Biestra <info@fabiobiestrachinesiologo.it>",
 
 `,
     });
+
+    await resend.emails.send({
+
+  from: "Fabio Biestra <info@fabiobiestrachinesiologo.it>",
+
+  to: "info@fabiobiestrachinesiologo.it",
+
+   subject: `Nuova prenotazione - ${nome}`,
+
+  html: `
+    <h2>Nuova prenotazione</h2>
+
+    <p><strong>Nome:</strong> ${nome}</p>
+    <p><strong>Email:</strong> ${email}</p>
+    <p><strong>Servizio:</strong> ${servizio}</p>
+    <p><strong>Sede:</strong> ${sede}</p>
+    <p><strong>Data:</strong> ${data}</p>
+    <p><strong>Orario:</strong> ${ora}</p>
+  `,
+});
 
     return res.status(200).json(dataEmail);
 

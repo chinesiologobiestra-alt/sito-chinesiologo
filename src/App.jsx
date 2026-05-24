@@ -431,10 +431,31 @@ Ora: ${form.ora}`
   onChange={handleChange}
   className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
 >
-  <option>Seleziona servizio</option>
-  <option>Valutazione chinesiologica</option>
-  <option>Rieducazione posturale</option>
-  <option>Benessere generale</option>
+  <option value="">Seleziona servizio</option>
+
+  <option value="Valutazione chinesiologica">
+    Valutazione chinesiologica
+  </option>
+
+  <option value="Rieducazione posturale">
+    Rieducazione posturale
+  </option>
+
+  <option value="Recupero infortuni e dolore">
+    Recupero infortuni e dolore
+  </option>
+
+  <option value="Dimagrimento funzionale">
+    Dimagrimento funzionale
+  </option>
+
+  <option value="Allenamento personalizzato">
+    Allenamento personalizzato
+  </option>
+
+  <option value="Benessere e prevenzione">
+    Benessere e prevenzione
+  </option>
 </select>
 
 <select
