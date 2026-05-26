@@ -147,11 +147,12 @@
 /* GIORNI DISPONIBILI */
 
 .available-day {
-  background: rgba(234, 179, 8, 0.20) !important;
+  background: #eab308 !important;
   border: 2px solid #eab308 !important;
-  color: #eab308 !important;
+  color: #000 !important;
   font-weight: 700;
   border-radius: 12px;
+  box-shadow: 0 0 8px rgba(234, 179, 8, 0.4);
 }
 
 /* HOVER SOLO SUI GIORNI DISPONIBILI */
