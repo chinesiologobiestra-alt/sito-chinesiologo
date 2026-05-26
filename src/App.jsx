@@ -379,7 +379,7 @@ return;
 
 console.log(await response.text());
 
-  setBookingSuccess(true);
+ alert("Prenotazione inviata correttamente!");
 
   generaPDF();
 
