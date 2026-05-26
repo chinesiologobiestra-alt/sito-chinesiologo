@@ -146,3 +146,13 @@
 .react-calendar__month-view__days__day--neighboringMonth {
   color: #777 !important;
 }
+/* GIORNI DISPONIBILI */
+
+.available-day {
+  background: rgba(234, 179, 8, 0.25) !important;
+  border: 2px solid #eab308 !important;
+  color: #eab308 !important;
+  font-weight: 700;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(234, 179, 8, 0.4);
+}

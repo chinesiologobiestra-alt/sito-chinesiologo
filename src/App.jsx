@@ -517,6 +517,18 @@ Ora: ${form.ora}`
 
   }}
 
+  tileClassName={({ date }) => {
+
+    const formatted =
+      format(date, "yyyy-MM-dd");
+
+    return availableDates.includes(formatted)
+      ? "available-day"
+      : "";
+
+  }}
+
+
   onChange={async (date) => {
 
     const formatted =
