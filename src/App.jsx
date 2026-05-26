@@ -36,6 +36,9 @@ function Prenotazione() {
   const [availableSlots, setAvailableSlots] = useState([]);
   const [showCalendar, setShowCalendar] = useState(false);
 
+  const [errorMessage, setErrorMessage] = useState("");
+
+
  const generaPDF = () => {
 
   const doc = new jsPDF("p", "mm", "a4");
@@ -259,6 +262,23 @@ setAvailableTimes([
 
   const invia = async () => {
 
+    if (
+  !form.nome ||
+  !form.telefono ||
+  !form.email ||
+  !form.servizio ||
+  !form.sede ||
+  !form.data ||
+  !form.ora
+) {
+  setErrorMessage(
+    "Compila tutti i campi obbligatori"
+  );
+  return;
+}
+
+setErrorMessage("");
+
     const { data: existing } = await supabase
       .from("bookings")
       .select("*")
@@ -359,7 +379,7 @@ return;
 
 console.log(await response.text());
 
-  alert("Prenotazione inviata correttamente!");
+  setBookingSuccess(true);
 
   generaPDF();
 
@@ -588,6 +608,12 @@ Ora: ${form.ora}`
             ))}
 
           </select>
+
+          {errorMessage && (
+  <div className="bg-red-900 border border-red-500 text-red-200 p-4 rounded-xl">
+    {errorMessage}
+  </div>
+)}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
