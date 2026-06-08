@@ -36,6 +36,11 @@ function Prenotazione() {
   const [availableSlots, setAvailableSlots] = useState([]);
   const [showCalendar, setShowCalendar] = useState(false);
 
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const [errors, setErrors] = useState({});
+
+
  const generaPDF = () => {
 
   const doc = new jsPDF("p", "mm", "a4");
@@ -259,6 +264,27 @@ setAvailableTimes([
 
   const invia = async () => {
 
+   const newErrors = {};
+
+if (!form.nome) newErrors.nome = true;
+if (!form.telefono) newErrors.telefono = true;
+if (!form.email) newErrors.email = true;
+if (!form.servizio) newErrors.servizio = true;
+if (!form.sede) newErrors.sede = true;
+if (!form.data) newErrors.data = true;
+if (!form.ora) newErrors.ora = true;
+
+if (Object.keys(newErrors).length > 0) {
+  setErrors(newErrors);
+  setErrorMessage(
+    "Compila tutti i campi obbligatori"
+  );
+  return;
+}
+
+setErrors({});
+setErrorMessage("");
+
     const { data: existing } = await supabase
       .from("bookings")
       .select("*")
@@ -359,7 +385,7 @@ return;
 
 console.log(await response.text());
 
-  alert("Prenotazione inviata correttamente!");
+ alert("Prenotazione inviata correttamente!");
 
   generaPDF();
 
@@ -425,26 +451,42 @@ Ora: ${form.ora}`
             name="nome"
             placeholder="Nome e cognome"
             onChange={handleChange}
-            className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
+            className={`w-full p-4 rounded-xl bg-black text-white ${
+  errors.nome
+    ? "border-2 border-red-500"
+    : "border border-yellow-700"
+}`}
           />
 
           <input
             name="telefono"
             placeholder="Telefono"
             onChange={handleChange}
-            className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
+            className={`w-full p-4 rounded-xl bg-black text-white ${
+  errors.telefono
+    ? "border-2 border-red-500"
+    : "border border-yellow-700"
+}`}
           />
 <input
   type="email"
   name="email"
   placeholder="Email"
   onChange={handleChange}
-  className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
+  className={`w-full p-4 rounded-xl bg-black text-white ${
+  errors.email
+    ? "border-2 border-red-500"
+    : "border border-yellow-700"
+}`}
 />
           <select
   name="servizio"
   onChange={handleChange}
-  className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
+  className={`w-full p-4 rounded-xl bg-black text-white ${
+  errors.servizio
+    ? "border-2 border-red-500"
+    : "border border-yellow-700"
+}`}
 >
   <option value="">Seleziona servizio</option>
 
@@ -476,7 +518,11 @@ Ora: ${form.ora}`
 <select
   name="sede"
   onChange={handleChange}
-  className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
+  className={`w-full p-4 rounded-xl bg-black text-white ${
+  errors.sede
+    ? "border-2 border-red-500"
+    : "border border-yellow-700"
+}`}
 >
   <option value="">Seleziona sede</option>
 
@@ -496,7 +542,11 @@ Ora: ${form.ora}`
   onClick={() =>
     setShowCalendar(!showCalendar)
   }
-  className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white text-left"
+  className={`w-full p-4 rounded-xl bg-black text-white text-left ${
+  errors.data
+    ? "border-2 border-red-500"
+    : "border border-yellow-700"
+}`}
 >
   {form.data || "Seleziona data"}
 </button>
@@ -516,6 +566,18 @@ Ora: ${form.ora}`
     );
 
   }}
+
+  tileClassName={({ date }) => {
+
+    const formatted =
+      format(date, "yyyy-MM-dd");
+
+    return availableDates.includes(formatted)
+      ? "available-day"
+      : "";
+
+  }}
+
 
   onChange={async (date) => {
 
@@ -559,7 +621,11 @@ Ora: ${form.ora}`
           <select
             name="ora"
             onChange={handleChange}
-            className="w-full p-4 rounded-xl bg-black border border-yellow-700 text-white"
+            className={`w-full p-4 rounded-xl bg-black text-white ${
+  errors.ora
+    ? "border-2 border-red-500"
+    : "border border-yellow-700"
+}`}
           >
 
             <option>
@@ -576,6 +642,12 @@ Ora: ${form.ora}`
             ))}
 
           </select>
+
+          {errorMessage && (
+  <div className="bg-red-900 border border-red-500 text-red-200 p-4 rounded-xl">
+    {errorMessage}
+  </div>
+)}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
