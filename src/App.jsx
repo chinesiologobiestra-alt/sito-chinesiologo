@@ -6,6 +6,7 @@ import "react-calendar/dist/Calendar.css";
 import {
   Routes,
   Route,
+  useNavigate,
 } from "react-router-dom";
 
 import Blog from "./pages/Blog";
@@ -19,6 +20,8 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiePolicy from "./pages/CookiePolicy";
 import CookieBanner from "./components/CookieBanner";
 import Dashboard from "./pages/studio/Dashboard";
+import Valutazione from "./pages/studio/Valutazione";
+import Pazienti from "./pages/studio/Pazienti";
 
 function Prenotazione() {
 
@@ -942,9 +945,11 @@ function AdminPanel() {
   );
 }
 
-const maintenanceMode = false;
+const maintenanceMode = true;
 
 export default function App() {
+
+const navigate = useNavigate();
 
  if (maintenanceMode) {
 
@@ -1008,19 +1013,23 @@ const login = async () => {
     return;
   }
 
-  const { data } =
-    await supabase.auth.getSession();
 
-  setUser(data.session?.user || null);
+  setShowLogin(false);
+
+  navigate("/studio");
+
 };
+
 
 const logout = async () => {
 
   await supabase.auth.signOut();
 
   setUser(null);
-};
 
+  navigate("/");
+
+};
   const services = [
   {
     title: "Valutazione chinesiologica",
@@ -1172,6 +1181,17 @@ return (
   path="/studio"
   element={<Dashboard />}
 />
+
+<Route
+  path="/studio/pazienti"
+  element={<Pazienti />}
+/>
+
+<Route
+    path="/studio/valutazione"
+    element={<Valutazione />}
+/>
+
 
     <Route
       path="/"
