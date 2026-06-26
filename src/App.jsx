@@ -18,6 +18,7 @@ import { format } from "date-fns";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiePolicy from "./pages/CookiePolicy";
 import CookieBanner from "./components/CookieBanner";
+import Dashboard from "./pages/studio/Dashboard";
 
 function Prenotazione() {
 
@@ -1166,6 +1167,11 @@ return (
       path="/cookie-policy"
       element={<CookiePolicy />}
     />
+
+    <Route
+  path="/studio"
+  element={<Dashboard />}
+/>
 
     <Route
       path="/"
