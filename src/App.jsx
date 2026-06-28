@@ -1748,11 +1748,15 @@ return (
     Gestionale Studio
   </h2>
 
+<p className="text-center text-gray-400 mb-12 text-lg">
+  Seleziona l'area del gestionale che desideri utilizzare.
+</p>
+
   <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
 
     <button
       onClick={() => navigate("/studio/pazienti")}
-      className="bg-zinc-900 border border-yellow-600 rounded-3xl p-8 hover:border-yellow-400 hover:scale-[1.02] transition"
+     className="bg-zinc-900 border border-yellow-600 rounded-3xl p-8 hover:border-yellow-400 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(234,179,8,0.25)] transition-all duration-300"
     >
       <div className="text-5xl mb-4">
         👥
@@ -1770,7 +1774,7 @@ return (
 
     <button
       disabled
-      className="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 opacity-60 cursor-not-allowed"
+      className="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 opacity-60 hover:opacity-80 transition-all duration-300"
     >
       <div className="text-5xl mb-4">
         📝
@@ -1788,7 +1792,7 @@ return (
 
     <button
       disabled
-      className="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 opacity-60 cursor-not-allowed"
+      className="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 opacity-60 hover:opacity-80 transition-all duration-300"
     >
       <div className="text-5xl mb-4">
         📁
@@ -1806,7 +1810,7 @@ return (
 
     <button
       disabled
-      className="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 opacity-60 cursor-not-allowed"
+      className="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 opacity-60 hover:opacity-80 transition-all duration-300"
     >
       <div className="text-5xl mb-4">
         🏋️
@@ -1824,7 +1828,7 @@ return (
 
     <button
       disabled
-      className="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 opacity-60 cursor-not-allowed"
+      className="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 opacity-60 hover:opacity-80 transition-all duration-300"
     >
       <div className="text-5xl mb-4">
         📅
@@ -1842,7 +1846,7 @@ return (
 
     <button
       disabled
-      className="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 opacity-60 cursor-not-allowed"
+      className="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 opacity-60 hover:opacity-80 transition-all duration-300"
     >
       <div className="text-5xl mb-4">
         ⚙️
