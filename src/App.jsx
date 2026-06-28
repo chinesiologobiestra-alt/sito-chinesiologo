@@ -945,7 +945,7 @@ function AdminPanel() {
   );
 }
 
-const maintenanceMode = true;
+const maintenanceMode = false;
 
 export default function App() {
 
