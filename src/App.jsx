@@ -1742,6 +1742,125 @@ return (
       </button>
 
     </div>
+<div className="max-w-6xl mx-auto py-10">
+
+  <h2 className="text-4xl font-bold text-center text-yellow-500 mb-10">
+    Gestionale Studio
+  </h2>
+
+  <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+
+    <button
+      onClick={() => navigate("/studio/pazienti")}
+      className="bg-zinc-900 border border-yellow-600 rounded-3xl p-8 hover:border-yellow-400 hover:scale-[1.02] transition"
+    >
+      <div className="text-5xl mb-4">
+        👥
+      </div>
+
+      <h3 className="text-yellow-500 font-bold text-xl">
+        Gestione Pazienti
+      </h3>
+
+      <p className="text-gray-400 mt-2">
+        Anagrafica e valutazioni
+      </p>
+
+    </button>
+
+    <button
+      disabled
+      className="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 opacity-60 cursor-not-allowed"
+    >
+      <div className="text-5xl mb-4">
+        📝
+      </div>
+
+      <h3 className="text-white font-bold text-xl">
+        Valutazioni
+      </h3>
+
+      <p className="text-gray-500 mt-2">
+        Prossimamente
+      </p>
+
+    </button>
+
+    <button
+      disabled
+      className="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 opacity-60 cursor-not-allowed"
+    >
+      <div className="text-5xl mb-4">
+        📁
+      </div>
+
+      <h3 className="text-white font-bold text-xl">
+        Archivio
+      </h3>
+
+      <p className="text-gray-500 mt-2">
+        Prossimamente
+      </p>
+
+    </button>
+
+    <button
+      disabled
+      className="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 opacity-60 cursor-not-allowed"
+    >
+      <div className="text-5xl mb-4">
+        🏋️
+      </div>
+
+      <h3 className="text-white font-bold text-xl">
+        Programmi
+      </h3>
+
+      <p className="text-gray-500 mt-2">
+        Prossimamente
+      </p>
+
+    </button>
+
+    <button
+      disabled
+      className="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 opacity-60 cursor-not-allowed"
+    >
+      <div className="text-5xl mb-4">
+        📅
+      </div>
+
+      <h3 className="text-white font-bold text-xl">
+        Agenda
+      </h3>
+
+      <p className="text-gray-500 mt-2">
+        Prossimamente
+      </p>
+
+    </button>
+
+    <button
+      disabled
+      className="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 opacity-60 cursor-not-allowed"
+    >
+      <div className="text-5xl mb-4">
+        ⚙️
+      </div>
+
+      <h3 className="text-white font-bold text-xl">
+        Impostazioni
+      </h3>
+
+      <p className="text-gray-500 mt-2">
+        Prossimamente
+      </p>
+
+    </button>
+
+  </div>
+
+</div>
 
     <AdminPanel />
 
