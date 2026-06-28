@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Layout from "../../components/studio/Layout";
 import NuovoPazienteModal from "../../components/studio/NuovoPazienteModal";
+import { useNavigate } from "react-router-dom";
+
 
 import {
   creaPaziente,
@@ -15,6 +17,8 @@ export default function Pazienti() {
   const [loading, setLoading] = useState(true);
 
   const [ricerca, setRicerca] = useState("");
+
+  const navigate = useNavigate();
 
   async function caricaPazienti() {
     try {
@@ -134,19 +138,20 @@ export default function Pazienti() {
             pazientiFiltrati.map((p) => (
 
               <div
-                key={p.id}
-                className="
-                  flex
-                  justify-between
-                  items-center
-                  px-6
-                  py-5
-                  border-b
-                  hover:bg-zinc-50
-                  cursor-pointer
-                  transition
-                "
-              >
+  key={p.id}
+  onClick={() => navigate(`/studio/pazienti/${p.id}`)}
+  className="
+    flex
+    justify-between
+    items-center
+    px-6
+    py-5
+    border-b
+    hover:bg-zinc-50
+    cursor-pointer
+    transition
+  "
+>
 
                 <div>
 

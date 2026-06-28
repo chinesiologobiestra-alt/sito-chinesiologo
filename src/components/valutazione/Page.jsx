@@ -3,6 +3,7 @@ export default function Page({ children }) {
     <div className="flex justify-center py-10 bg-zinc-200 min-h-screen print:bg-white print:p-0">
 
       <div
+      id="scheda-valutazione"
   className="
     bg-white
     w-[210mm]

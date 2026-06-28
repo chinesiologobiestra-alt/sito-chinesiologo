@@ -22,6 +22,7 @@ import CookieBanner from "./components/CookieBanner";
 import Dashboard from "./pages/studio/Dashboard";
 import Valutazione from "./pages/studio/Valutazione";
 import Pazienti from "./pages/studio/Pazienti";
+import Paziente from "./pages/studio/Paziente";
 
 function Prenotazione() {
 
@@ -1185,6 +1186,11 @@ return (
 <Route
   path="/studio/pazienti"
   element={<Pazienti />}
+/>
+
+<Route
+  path="/studio/pazienti/:id"
+  element={<Paziente />}
 />
 
 <Route
