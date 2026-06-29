@@ -16,18 +16,21 @@ import VAS from "../../components/valutazione/VAS";
 import Antropometria from "../../components/valutazione/Antropometria";
 import ParametriVitali from "../../components/valutazione/ParametriVitali";
 import OsservazioneGenerale from "../../components/valutazione/OsservazioneGenerale";
-
 import { salvaValutazione } from "../../services/valutazioniService";
+
 
 import { generaPDF } from "../../services/pdfService";
 
 export default function Valutazione() {
 
-  const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
 
+  const navigate = useNavigate();
+
   const pazienteId = searchParams.get("paziente");
+
+  console.log("PAZIENTE ID:", pazienteId);
 
   const [scheda, setScheda] = useState({
 
@@ -304,7 +307,7 @@ ausili: [],
 
             <SectionTitle title="4. VALUTAZIONE DEL DOLORE" />
 
-            ...
+        
             <SectionBox>
 
               <VAS
