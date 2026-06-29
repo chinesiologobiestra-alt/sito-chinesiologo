@@ -3,65 +3,81 @@ import jsPDF from "jspdf";
 
 export async function generaPDF(nomeFile = "Valutazione") {
 
-  const element = document.getElementById("scheda-valutazione");
+  const pagine = document.querySelectorAll(".pdf-page");
 
-  const canvas = await html2canvas(element, {
+  if (!pagine.length) {
 
-    scale: 3,
-    useCORS: true,
-    backgroundColor: "#ffffff",
-    scrollY: -window.scrollY,
+    alert("Nessuna pagina trovata.");
+
+    return;
+
+  }
+
+  const pdf = new jsPDF({
+
+    orientation: "portrait",
+    unit: "mm",
+    format: "a4",
 
   });
 
-  const imgData = canvas.toDataURL("image/png");
+  const pageWidth = 210;
+  const pageHeight = 297;
 
-  const pdf = new jsPDF("p", "mm", "a4");
+  const margin = 5;
 
-  const pdfWidth = 210;
+  const printableWidth = pageWidth - margin * 2;
+  const printableHeight = pageHeight - margin * 2;
 
-  const pdfHeight = 297;
+  for (let i = 0; i < pagine.length; i++) {
 
-  const imgWidth = pdfWidth;
+    const canvas = await html2canvas(pagine[i], {
 
-  const imgHeight =
-    (canvas.height * imgWidth) / canvas.width;
+      scale: 3,
 
-  let heightLeft = imgHeight;
+      useCORS: true,
 
-  let position = 0;
+      backgroundColor: "#ffffff",
 
-  pdf.addImage(
-    imgData,
-    "PNG",
-    0,
-    position,
-    imgWidth,
-    imgHeight,
-    "",
-    "FAST"
-  );
+      logging: false,
 
-  heightLeft -= pdfHeight;
+      scrollX: 0,
 
-  while (heightLeft > 0) {
+      scrollY: 0,
 
-    position = heightLeft - imgHeight;
+      windowWidth: pagine[i].scrollWidth,
 
-    pdf.addPage();
+      windowHeight: pagine[i].scrollHeight,
+
+    });
+
+    const imgData = canvas.toDataURL("image/png");
+
+    if (i > 0) {
+
+      pdf.addPage();
+
+    }
 
     pdf.addImage(
-      imgData,
-      "PNG",
-      0,
-      position,
-      imgWidth,
-      imgHeight,
-      "",
-      "FAST"
-    );
 
-    heightLeft -= pdfHeight;
+      imgData,
+
+      "PNG",
+
+      margin,
+
+      margin,
+
+      printableWidth,
+
+      printableHeight,
+
+      undefined,
+
+      "FAST"
+
+    );
 
   }
 

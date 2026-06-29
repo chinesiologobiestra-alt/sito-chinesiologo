@@ -1,5 +1,9 @@
 import { supabase } from "../lib/supabase";
 
+/* ========================= */
+/* CREA VALUTAZIONE */
+/* ========================= */
+
 export async function salvaValutazione(pazienteId, scheda) {
 
   const { data, error } = await supabase
@@ -17,7 +21,12 @@ export async function salvaValutazione(pazienteId, scheda) {
   if (error) throw error;
 
   return data;
+
 }
+
+/* ========================= */
+/* STORICO PAZIENTE */
+/* ========================= */
 
 export async function getValutazioniPaziente(pazienteId) {
 
@@ -32,5 +41,59 @@ export async function getValutazioniPaziente(pazienteId) {
   if (error) throw error;
 
   return data;
+
+}
+
+/* ========================= */
+/* SINGOLA VALUTAZIONE */
+/* ========================= */
+
+export async function getValutazione(id) {
+
+  const { data, error } = await supabase
+    .from("valutazioni")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) throw error;
+
+  return data;
+
+}
+
+/* ========================= */
+/* MODIFICA */
+/* ========================= */
+
+export async function updateValutazione(id, scheda) {
+
+  const { data, error } = await supabase
+    .from("valutazioni")
+    .update({
+      dati: scheda,
+    })
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) throw error;
+
+  return data;
+
+}
+
+/* ========================= */
+/* ELIMINA */
+/* ========================= */
+
+export async function eliminaValutazione(id) {
+
+  const { error } = await supabase
+    .from("valutazioni")
+    .delete()
+    .eq("id", id);
+
+  if (error) throw error;
 
 }
