@@ -1,7 +1,5 @@
 export default function Page({ children }) {
-
   return (
-
     <div
       className="
         flex
@@ -13,7 +11,6 @@ export default function Page({ children }) {
         print:bg-white
       "
     >
-
       <div
         className="
           pdf-page
@@ -21,29 +18,21 @@ export default function Page({ children }) {
           bg-white
 
           w-[210mm]
-          min-h-[287mm]
+          h-[297mm]
 
           box-border
-
           overflow-hidden
 
           shadow-2xl
 
-          px-[8mm]
-          pt-[8mm]
-          pb-[8mm]
+          p-[10mm]
 
           print:shadow-none
           print:m-0
         "
       >
-
         {children}
-
       </div>
-
     </div>
-
   );
-
 }
