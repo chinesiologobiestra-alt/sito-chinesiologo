@@ -1,100 +1,146 @@
-export default function GiornoProgramma({
-  giorno,
-  valore,
-  onChange,
-}) {
+import { useState } from "react";
 
-  const gruppi = [
-    "",
-    "Riposo",
-    "Petto",
-    "Schiena",
-    "Gambe",
-    "Spalle",
-    "Braccia",
-    "Addome",
-    "Petto - Tricipiti",
-    "Schiena - Bicipiti",
-    "Spalle - Addome",
-    "Upper Body",
-    "Lower Body",
-    "Push",
-    "Pull",
-    "Legs",
-    "Push / Pull",
-    "Total Body",
-    "Cardio",
-    "Camminata",
-    "Mobilità",
-    "Stretching",
-  ];
+import Layout from "../../components/studio/Layout";
+
+import HeaderProgramma from "../../components/programmi/HeaderProgramma";
+import DatiProgramma from "../../components/programmi/DatiProgramma";
+import NoteGenerali from "../../components/programmi/NoteGenerali";
+import GiornoProgramma from "../../components/programmi/GiornoProgramma";
+
+export default function Programma() {
+
+  const [programma, setProgramma] = useState({
+
+    nome: "",
+
+    obiettivo: "",
+
+    settimane: 4,
+
+    noteGenerali: "",
+
+    giorni: {
+
+      lunedi: {
+        gruppo: "",
+        note: "",
+      },
+
+      martedi: {
+        gruppo: "",
+        note: "",
+      },
+
+      mercoledi: {
+        gruppo: "",
+        note: "",
+      },
+
+      giovedi: {
+        gruppo: "",
+        note: "",
+      },
+
+      venerdi: {
+        gruppo: "",
+        note: "",
+      },
+
+      sabato: {
+        gruppo: "",
+        note: "",
+      },
+
+      domenica: {
+        gruppo: "",
+        note: "",
+      },
+
+    },
+
+  });
+
+  function aggiornaGiorno(giorno, dati) {
+
+    setProgramma((prev) => ({
+
+      ...prev,
+
+      giorni: {
+
+        ...prev.giorni,
+
+        [giorno]: dati,
+
+      },
+
+    }));
+
+  }
 
   return (
 
-    <div className="bg-white border border-zinc-300 rounded-xl p-5 space-y-4">
+    <Layout>
 
-      <h2 className="text-xl font-bold text-yellow-600">
-        {giorno}
-      </h2>
+      <div className="max-w-5xl mx-auto space-y-6">
 
-      <div>
+        <HeaderProgramma />
 
-        <label className="block text-sm font-semibold mb-2">
-          Gruppo muscolare
-        </label>
+        <DatiProgramma
+          programma={programma}
+          setProgramma={setProgramma}
+        />
 
-        <select
-          value={valore.gruppo}
-          onChange={(e)=>
-            onChange({
-              ...valore,
-              gruppo:e.target.value,
-            })
-          }
-          className="w-full border rounded-lg px-3 py-2"
-        >
+        <NoteGenerali
+          programma={programma}
+          setProgramma={setProgramma}
+        />
 
-          {gruppi.map((g)=>(
-            <option
-              key={g}
-              value={g}
-            >
-              {g || "Seleziona..."}
-            </option>
-          ))}
+        <GiornoProgramma
+          giorno="Lunedì"
+          valore={programma.giorni.lunedi}
+          onChange={(v) => aggiornaGiorno("lunedi", v)}
+        />
 
-        </select>
+        <GiornoProgramma
+          giorno="Martedì"
+          valore={programma.giorni.martedi}
+          onChange={(v) => aggiornaGiorno("martedi", v)}
+        />
 
-      </div>
+        <GiornoProgramma
+          giorno="Mercoledì"
+          valore={programma.giorni.mercoledi}
+          onChange={(v) => aggiornaGiorno("mercoledi", v)}
+        />
 
-      <div>
+        <GiornoProgramma
+          giorno="Giovedì"
+          valore={programma.giorni.giovedi}
+          onChange={(v) => aggiornaGiorno("giovedi", v)}
+        />
 
-        <label className="block text-sm font-semibold mb-2">
-          Note
-        </label>
+        <GiornoProgramma
+          giorno="Venerdì"
+          valore={programma.giorni.venerdi}
+          onChange={(v) => aggiornaGiorno("venerdi", v)}
+        />
 
-        <textarea
-          rows={4}
-          value={valore.note}
-          onChange={(e)=>
-            onChange({
-              ...valore,
-              note:e.target.value,
-            })
-          }
-          className="
-            w-full
-            border
-            rounded-lg
-            px-3
-            py-2
-            resize-none
-          "
+        <GiornoProgramma
+          giorno="Sabato"
+          valore={programma.giorni.sabato}
+          onChange={(v) => aggiornaGiorno("sabato", v)}
+        />
+
+        <GiornoProgramma
+          giorno="Domenica"
+          valore={programma.giorni.domenica}
+          onChange={(v) => aggiornaGiorno("domenica", v)}
         />
 
       </div>
 
-    </div>
+    </Layout>
 
   );
 
