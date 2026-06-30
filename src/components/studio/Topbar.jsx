@@ -1,8 +1,17 @@
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../../lib/supabase";
 
 export default function Topbar() {
 
   const navigate = useNavigate();
+
+  async function handleLogout() {
+
+    await supabase.auth.signOut();
+
+    navigate("/");
+
+  }
 
   return (
     <header className="h-16 bg-white border-b flex items-center justify-between px-6">
@@ -11,10 +20,10 @@ export default function Topbar() {
         Gestionale Studio
       </h1>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
 
         <button
-          onClick={() => navigate("/")}
+          onClick={() => window.open("/", "_blank")}
           className="
             px-4
             py-2
@@ -28,7 +37,23 @@ export default function Topbar() {
             transition
           "
         >
-          ← Sito
+          🌐 Sito Web
+        </button>
+
+        <button
+          onClick={handleLogout}
+          className="
+            px-4
+            py-2
+            rounded-lg
+            bg-red-600
+            hover:bg-red-500
+            text-white
+            font-medium
+            transition
+          "
+        >
+          🚪 Esci
         </button>
 
         <span className="text-sm text-gray-500">
