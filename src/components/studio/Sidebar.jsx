@@ -18,6 +18,11 @@ const menu = [
     name: "Programmi",
     path: "/studio/programmi",
   },
+
+  {
+  name: "Agenda",
+  path: "/studio/agenda",
+},
 ];
 
 export default function Sidebar() {

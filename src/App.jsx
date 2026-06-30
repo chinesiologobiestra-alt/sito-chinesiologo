@@ -24,6 +24,7 @@ import Valutazione from "./pages/studio/Valutazione";
 import Pazienti from "./pages/studio/Pazienti";
 import Paziente from "./pages/studio/Paziente";
 import Archivio from "./pages/studio/Archivio";
+import Agenda from "./pages/studio/Agenda";
 
 function Prenotazione() {
 
@@ -1204,6 +1205,11 @@ return (
     element={<Valutazione />}
 />
 
+<Route
+  path="/studio/agenda"
+  element={<Agenda />}
+/>
+
 
     <Route
       path="/"
@@ -1821,22 +1827,22 @@ return (
     </button>
 
     <button
-      disabled
-      className="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 opacity-60 hover:opacity-80 transition-all duration-300"
-    >
-      <div className="text-5xl mb-4">
-        📅
-      </div>
+  onClick={() => navigate("/studio/agenda")}
+  className="bg-zinc-900 border border-yellow-600 rounded-3xl p-8 hover:border-yellow-400 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(234,179,8,0.25)] transition-all duration-300"
+>
+  <div className="text-5xl mb-4">
+    📅
+  </div>
 
-      <h3 className="text-white font-bold text-xl">
-        Agenda
-      </h3>
+  <h3 className="text-yellow-500 font-bold text-xl">
+    Agenda
+  </h3>
 
-      <p className="text-gray-500 mt-2">
-        Prossimamente
-      </p>
+  <p className="text-gray-400 mt-2">
+    Appuntamenti prenotati
+  </p>
 
-    </button>
+</button>
 
     
   </div>
