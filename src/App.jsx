@@ -25,6 +25,7 @@ import Pazienti from "./pages/studio/Pazienti";
 import Paziente from "./pages/studio/Paziente";
 import Archivio from "./pages/studio/Archivio";
 import Agenda from "./pages/studio/Agenda";
+import Programma from "./pages/studio/Programma";
 
 function Prenotazione() {
 
@@ -1210,6 +1211,11 @@ return (
   element={<Agenda />}
 />
 
+<Route
+  path="/studio/programmi"
+  element={<Programma />}
+/>
+
 
     <Route
       path="/"
@@ -1809,22 +1815,23 @@ return (
 </button>
 
     <button
-      disabled
-      className="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 opacity-60 hover:opacity-80 transition-all duration-300"
-    >
-      <div className="text-5xl mb-4">
-        🏋️
-      </div>
+  onClick={() => navigate("/studio/programmi")}
+  className="bg-zinc-900 border border-yellow-600 rounded-3xl p-8 hover:border-yellow-400 hover:scale-[1.02] transition-all duration-300"
+>
 
-      <h3 className="text-white font-bold text-xl">
-        Programmi
-      </h3>
+  <div className="text-5xl mb-4">
+    💪
+  </div>
 
-      <p className="text-gray-500 mt-2">
-        Prossimamente
-      </p>
+  <h3 className="text-yellow-500 font-bold text-xl">
+    Programmi
+  </h3>
 
-    </button>
+  <p className="text-gray-400 mt-2">
+    Programmi di allenamento
+  </p>
+
+</button>
 
     <button
   onClick={() => navigate("/studio/agenda")}
