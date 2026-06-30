@@ -357,6 +357,7 @@ console.log("valutazioneId:", valutazioneId);
 
       </div>
 
+
       <Page>
 
         <Header />
@@ -364,61 +365,48 @@ console.log("valutazioneId:", valutazioneId);
         <SectionTitle title="1. DATI ANAGRAFICI" />
 
         <SectionBox>
-
-          <Anagrafica
-            scheda={scheda}
-            setScheda={setScheda}
-          />
-
+          <Anagrafica scheda={scheda} setScheda={setScheda} />
         </SectionBox>
 
         <SectionTitle title="2. ANAMNESI GENERALE" />
 
         <SectionBox>
-
-          <Anamnesi
-            scheda={scheda}
-            setScheda={setScheda}
-          />
-
+          <Anamnesi scheda={scheda} setScheda={setScheda} />
         </SectionBox>
+
+      </Page>
+
+      <Page>
 
         <SectionTitle title="3. ANAMNESI PATOLOGICA" />
 
         <div className="grid grid-cols-3 gap-4">
 
           <div className="col-span-2">
-
             <SectionBox>
-
               <AnamnesiPatologica
                 scheda={scheda}
                 setScheda={setScheda}
               />
-
             </SectionBox>
-
           </div>
 
           <div className="space-y-4">
-                      <SectionBox>
 
+            <SectionBox>
               <BodyMap
                 scheda={scheda}
                 setScheda={setScheda}
               />
-
             </SectionBox>
 
             <SectionTitle title="4. VALUTAZIONE DEL DOLORE" />
 
             <SectionBox>
-
               <VAS
                 scheda={scheda}
                 setScheda={setScheda}
               />
-
             </SectionBox>
 
           </div>
@@ -427,61 +415,55 @@ console.log("valutazioneId:", valutazioneId);
 
       </Page>
 
-      {/* ========================= */}
-      {/* PAGINA 2 */}
-      {/* ========================= */}
+      <Page>
 
-     <Page>
+        <SectionTitle title="5. ESAME OBIETTIVO" />
 
-  <SectionTitle title="5. ESAME OBIETTIVO" />
+        <SectionBox>
+          <Antropometria
+            scheda={scheda}
+            setScheda={setScheda}
+          />
+        </SectionBox>
 
-  <SectionBox>
+      </Page>
 
-    <Antropometria
-      scheda={scheda}
-      setScheda={setScheda}
-    />
+      <Page>
 
-  </SectionBox>
+        <SectionTitle title="6. PARAMETRI VITALI" />
 
-  <SectionTitle title="6. PARAMETRI VITALI" />
+        <SectionBox>
+          <ParametriVitali
+            scheda={scheda}
+            setScheda={setScheda}
+          />
+        </SectionBox>
 
-  <SectionBox>
+        <SectionTitle title="7. OSSERVAZIONE GENERALE" />
 
-    <ParametriVitali
-      scheda={scheda}
-      setScheda={setScheda}
-    />
+        <SectionBox>
+          <OsservazioneGenerale
+            scheda={scheda}
+            setScheda={setScheda}
+          />
+        </SectionBox>
 
-  </SectionBox>
+      </Page>
 
-  <SectionTitle title="7. OSSERVAZIONE GENERALE" />
+      <Page>
 
-  <SectionBox>
+        <SectionTitle title="8. ESAME POSTURALE STATICO" />
 
-    <OsservazioneGenerale
-      scheda={scheda}
-      setScheda={setScheda}
-    />
+        <SectionBox>
+          <EsamePosturale
+            scheda={scheda}
+            setScheda={setScheda}
+          />
+        </SectionBox>
 
-  </SectionBox>
+      </Page>
 
-</Page>
 
-<Page>
-
-  <SectionTitle title="8. ESAME POSTURALE STATICO" />
-
-  <SectionBox>
-
-    <EsamePosturale
-      scheda={scheda}
-      setScheda={setScheda}
-    />
-
-  </SectionBox>
-
-</Page>
 </Layout>
 
 );
