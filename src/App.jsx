@@ -1838,24 +1838,7 @@ return (
 
     </button>
 
-    <button
-      disabled
-      className="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 opacity-60 hover:opacity-80 transition-all duration-300"
-    >
-      <div className="text-5xl mb-4">
-        ⚙️
-      </div>
-
-      <h3 className="text-white font-bold text-xl">
-        Impostazioni
-      </h3>
-
-      <p className="text-gray-500 mt-2">
-        Prossimamente
-      </p>
-
-    </button>
-
+    
   </div>
 
 </div>
