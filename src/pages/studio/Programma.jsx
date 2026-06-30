@@ -21,48 +21,27 @@ export default function Programma() {
 
     giorni: {
 
-      lunedi: {
-        gruppo: "",
-        note: "",
-      },
+      lunedi: { gruppo: "", note: "" },
 
-      martedi: {
-        gruppo: "",
-        note: "",
-      },
+      martedi: { gruppo: "", note: "" },
 
-      mercoledi: {
-        gruppo: "",
-        note: "",
-      },
+      mercoledi: { gruppo: "", note: "" },
 
-      giovedi: {
-        gruppo: "",
-        note: "",
-      },
+      giovedi: { gruppo: "", note: "" },
 
-      venerdi: {
-        gruppo: "",
-        note: "",
-      },
+      venerdi: { gruppo: "", note: "" },
 
-      sabato: {
-        gruppo: "",
-        note: "",
-      },
+      sabato: { gruppo: "", note: "" },
 
-      domenica: {
-        gruppo: "",
-        note: "",
-      },
+      domenica: { gruppo: "", note: "" },
 
     },
 
   });
 
-  function aggiornaGiorno(giorno, dati) {
+  function aggiornaGiorno(nome, dati) {
 
-    setProgramma((prev) => ({
+    setProgramma(prev => ({
 
       ...prev,
 
@@ -70,7 +49,7 @@ export default function Programma() {
 
         ...prev.giorni,
 
-        [giorno]: dati,
+        [nome]: dati,
 
       },
 
@@ -82,7 +61,7 @@ export default function Programma() {
 
     <Layout>
 
-      <div className="max-w-5xl mx-auto space-y-6">
+      <div className="space-y-6">
 
         <HeaderProgramma />
 
@@ -96,47 +75,55 @@ export default function Programma() {
           setProgramma={setProgramma}
         />
 
-        <GiornoProgramma
-          giorno="Lunedì"
-          valore={programma.giorni.lunedi}
-          onChange={(v) => aggiornaGiorno("lunedi", v)}
-        />
+        <div className="overflow-x-auto">
 
-        <GiornoProgramma
-          giorno="Martedì"
-          valore={programma.giorni.martedi}
-          onChange={(v) => aggiornaGiorno("martedi", v)}
-        />
+          <div className="grid grid-cols-7 gap-4 min-w-[1500px]">
 
-        <GiornoProgramma
-          giorno="Mercoledì"
-          valore={programma.giorni.mercoledi}
-          onChange={(v) => aggiornaGiorno("mercoledi", v)}
-        />
+            <GiornoProgramma
+              giorno="Lunedì"
+              valore={programma.giorni.lunedi}
+              onChange={(v)=>aggiornaGiorno("lunedi",v)}
+            />
 
-        <GiornoProgramma
-          giorno="Giovedì"
-          valore={programma.giorni.giovedi}
-          onChange={(v) => aggiornaGiorno("giovedi", v)}
-        />
+            <GiornoProgramma
+              giorno="Martedì"
+              valore={programma.giorni.martedi}
+              onChange={(v)=>aggiornaGiorno("martedi",v)}
+            />
 
-        <GiornoProgramma
-          giorno="Venerdì"
-          valore={programma.giorni.venerdi}
-          onChange={(v) => aggiornaGiorno("venerdi", v)}
-        />
+            <GiornoProgramma
+              giorno="Mercoledì"
+              valore={programma.giorni.mercoledi}
+              onChange={(v)=>aggiornaGiorno("mercoledi",v)}
+            />
 
-        <GiornoProgramma
-          giorno="Sabato"
-          valore={programma.giorni.sabato}
-          onChange={(v) => aggiornaGiorno("sabato", v)}
-        />
+            <GiornoProgramma
+              giorno="Giovedì"
+              valore={programma.giorni.giovedi}
+              onChange={(v)=>aggiornaGiorno("giovedi",v)}
+            />
 
-        <GiornoProgramma
-          giorno="Domenica"
-          valore={programma.giorni.domenica}
-          onChange={(v) => aggiornaGiorno("domenica", v)}
-        />
+            <GiornoProgramma
+              giorno="Venerdì"
+              valore={programma.giorni.venerdi}
+              onChange={(v)=>aggiornaGiorno("venerdi",v)}
+            />
+
+            <GiornoProgramma
+              giorno="Sabato"
+              valore={programma.giorni.sabato}
+              onChange={(v)=>aggiornaGiorno("sabato",v)}
+            />
+
+            <GiornoProgramma
+              giorno="Domenica"
+              valore={programma.giorni.domenica}
+              onChange={(v)=>aggiornaGiorno("domenica",v)}
+            />
+
+          </div>
+
+        </div>
 
       </div>
 

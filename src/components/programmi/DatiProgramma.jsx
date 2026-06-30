@@ -14,83 +14,130 @@ export default function DatiProgramma({
 
   return (
 
-    <div className="bg-white border border-zinc-300 rounded-xl p-5 space-y-5">
+    <div className="bg-white rounded-xl border border-zinc-300 shadow-sm p-6">
 
-      <div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-        <label className="block text-sm font-semibold mb-2">
-          Nome Programma
-        </label>
+        {/* Nome programma */}
 
-        <input
-          value={programma.nome}
-          onChange={(e)=>
-            setProgramma({
-              ...programma,
-              nome:e.target.value,
-            })
-          }
-          className="w-full border rounded-lg px-3 py-2"
-        />
+        <div>
 
-      </div>
-
-      <div>
-
-        <label className="block text-sm font-semibold mb-2">
-          Obiettivo
-        </label>
-
-        <select
-          value={programma.obiettivo}
-          onChange={(e)=>
-            setProgramma({
-              ...programma,
-              obiettivo:e.target.value,
-            })
-          }
-          className="w-full border rounded-lg px-3 py-2"
-        >
-
-          <option value="">
-            Seleziona...
-          </option>
-
-          {obiettivi.map((o)=>(
-            <option key={o}>
-              {o}
-            </option>
-          ))}
-
-        </select>
-
-      </div>
-
-      <div>
-
-        <label className="block text-sm font-semibold mb-2">
-          Durata
-        </label>
-
-        <div className="flex items-center gap-3">
+          <label className="block text-sm font-semibold text-zinc-700 mb-2">
+            Nome Programma
+          </label>
 
           <input
-            type="number"
-            min={1}
-            max={52}
-            value={programma.settimane}
-            onChange={(e)=>
+            value={programma.nome}
+            onChange={(e) =>
               setProgramma({
                 ...programma,
-                settimane:e.target.value,
+                nome: e.target.value,
               })
             }
-            className="w-24 border rounded-lg px-3 py-2"
+            placeholder="Es. Programma Dimagrimento"
+            className="
+              w-full
+              rounded-xl
+              border
+              border-zinc-300
+              px-4
+              py-3
+              focus:outline-none
+              focus:ring-2
+              focus:ring-yellow-400
+            "
           />
 
-          <span className="text-zinc-500">
-            settimane
-          </span>
+        </div>
+
+        {/* Obiettivo */}
+
+        <div>
+
+          <label className="block text-sm font-semibold text-zinc-700 mb-2">
+            Obiettivo
+          </label>
+
+          <select
+            value={programma.obiettivo}
+            onChange={(e) =>
+              setProgramma({
+                ...programma,
+                obiettivo: e.target.value,
+              })
+            }
+            className="
+              w-full
+              rounded-xl
+              border
+              border-zinc-300
+              px-4
+              py-3
+              focus:outline-none
+              focus:ring-2
+              focus:ring-yellow-400
+            "
+          >
+
+            <option value="">
+              Seleziona...
+            </option>
+
+            {obiettivi.map((o) => (
+
+              <option
+                key={o}
+                value={o}
+              >
+                {o}
+              </option>
+
+            ))}
+
+          </select>
+
+        </div>
+
+        {/* Durata */}
+
+        <div>
+
+          <label className="block text-sm font-semibold text-zinc-700 mb-2">
+            Durata
+          </label>
+
+          <div className="flex items-center gap-3">
+
+            <input
+              type="number"
+              min={1}
+              max={52}
+              value={programma.settimane}
+              onChange={(e) =>
+                setProgramma({
+                  ...programma,
+                  settimane: e.target.value,
+                })
+              }
+              className="
+                w-28
+                rounded-xl
+                border
+                border-zinc-300
+                px-4
+                py-3
+                text-center
+                focus:outline-none
+                focus:ring-2
+                focus:ring-yellow-400
+              "
+            />
+
+            <span className="text-zinc-600 font-medium">
+              settimane
+            </span>
+
+          </div>
 
         </div>
 

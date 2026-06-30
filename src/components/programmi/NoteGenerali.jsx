@@ -1,152 +1,60 @@
-import { useState } from "react";
-
-import Layout from "../../components/studio/Layout";
-
-import HeaderProgramma from "../../components/programmi/HeaderProgramma";
-import DatiProgramma from "../../components/programmi/DatiProgramma";
-import GiornoProgramma from "../../components/programmi/GiornoProgramma";
-
-export default function Programma() {
-
-  const [programma, setProgramma] = useState({
-
-    nome: "",
-
-    obiettivo: "",
-
-    settimane: 4,
-
-    giorni: {
-
-      lunedi: {
-        gruppo: "",
-        note: "",
-      },
-
-      martedi: {
-        gruppo: "",
-        note: "",
-      },
-
-      mercoledi: {
-        gruppo: "",
-        note: "",
-      },
-
-      giovedi: {
-        gruppo: "",
-        note: "",
-      },
-
-      venerdi: {
-        gruppo: "",
-        note: "",
-      },
-
-      sabato: {
-        gruppo: "",
-        note: "",
-      },
-
-      domenica: {
-        gruppo: "",
-        note: "",
-      },
-
-    },
-
-  });
-
-  function aggiornaGiorno(giorno, dati) {
-
-    setProgramma({
-
-      ...programma,
-
-      giorni: {
-
-        ...programma.giorni,
-
-        [giorno]: dati,
-
-      },
-
-    });
-
-  }
+export default function NoteGenerali({
+  programma,
+  setProgramma,
+}) {
 
   return (
 
-    <Layout>
+    <div className="bg-white rounded-xl border border-zinc-300 shadow-sm overflow-hidden">
 
-      <div className="max-w-5xl mx-auto space-y-6">
+      <div className="bg-zinc-900 px-5 py-3 border-b border-yellow-500">
 
-        <HeaderProgramma />
+        <h2 className="text-lg font-bold text-white">
+          NOTE GENERALI
+        </h2>
 
-        <DatiProgramma
-          programma={programma}
-          setProgramma={setProgramma}
-        />
+      </div>
 
-        <GiornoProgramma
-          giorno="Lunedì"
-          valore={programma.giorni.lunedi}
-          onChange={(v) =>
-            aggiornaGiorno("lunedi", v)
+      <div className="p-5">
+
+        <textarea
+          rows={6}
+          value={programma.noteGenerali}
+          onChange={(e) =>
+            setProgramma({
+              ...programma,
+              noteGenerali: e.target.value,
+            })
           }
-        />
+          placeholder={`Esempio:
 
-        <GiornoProgramma
-          giorno="Martedì"
-          valore={programma.giorni.martedi}
-          onChange={(v) =>
-            aggiornaGiorno("martedi", v)
-          }
-        />
+• Bere almeno 2 litri di acqua al giorno.
 
-        <GiornoProgramma
-          giorno="Mercoledì"
-          valore={programma.giorni.mercoledi}
-          onChange={(v) =>
-            aggiornaGiorno("mercoledi", v)
-          }
-        />
+• Effettuare sempre 10 minuti di riscaldamento.
 
-        <GiornoProgramma
-          giorno="Giovedì"
-          valore={programma.giorni.giovedi}
-          onChange={(v) =>
-            aggiornaGiorno("giovedi", v)
-          }
-        />
+• Camminare almeno 8.000-10.000 passi.
 
-        <GiornoProgramma
-          giorno="Venerdì"
-          valore={programma.giorni.venerdi}
-          onChange={(v) =>
-            aggiornaGiorno("venerdi", v)
-          }
-        />
+• Stretching al termine dell'allenamento.
 
-        <GiornoProgramma
-          giorno="Sabato"
-          valore={programma.giorni.sabato}
-          onChange={(v) =>
-            aggiornaGiorno("sabato", v)
-          }
-        />
-
-        <GiornoProgramma
-          giorno="Domenica"
-          valore={programma.giorni.domenica}
-          onChange={(v) =>
-            aggiornaGiorno("domenica", v)
-          }
+• Interrompere l'esercizio in caso di dolore.`}
+          className="
+            w-full
+            rounded-xl
+            border
+            border-zinc-300
+            px-4
+            py-4
+            resize-none
+            leading-7
+            focus:outline-none
+            focus:ring-2
+            focus:ring-yellow-400
+          "
         />
 
       </div>
 
-    </Layout>
+    </div>
 
   );
 
