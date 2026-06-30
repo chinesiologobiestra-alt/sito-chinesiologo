@@ -4,7 +4,8 @@ export default function Page({ children }) {
       className="
         flex
         justify-center
-        py-10
+
+        py-6
         bg-zinc-200
 
         print:p-0
@@ -21,11 +22,14 @@ export default function Page({ children }) {
           h-[297mm]
 
           box-border
+
           overflow-hidden
 
-          shadow-2xl
+          shadow-xl
 
-          p-[10mm]
+          px-[8mm]
+          pt-[8mm]
+          pb-[8mm]
 
           print:shadow-none
           print:m-0

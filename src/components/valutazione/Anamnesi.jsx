@@ -17,7 +17,7 @@ export default function Anamnesi({
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-3">
 
       <TextField
         label="Motivo della visita"
@@ -31,7 +31,7 @@ export default function Anamnesi({
         onChange={(e) => update("obiettivi", e.target.value)}
       />
 
-      <div className="grid grid-cols-2 gap-5">
+      <div className="grid grid-cols-2 gap-3">
 
         <TextField
           label="Attività fisica"
@@ -47,7 +47,7 @@ export default function Anamnesi({
 
       </div>
 
-      <div className="grid grid-cols-2 gap-5">
+      <div className="grid grid-cols-2 gap-3">
 
         <TextField
           label="Ore di sonno"
@@ -65,7 +65,7 @@ export default function Anamnesi({
 
       <TextAreaField
         label="Osservazioni"
-        rows={5}
+        rows={4}
         value={scheda.anamnesi.osservazioni}
         onChange={(e) => update("osservazioni", e.target.value)}
       />
