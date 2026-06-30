@@ -14,128 +14,140 @@ export default function DatiProgramma({
 
   return (
 
-    <div className="bg-white rounded-xl border border-zinc-300 shadow-sm p-6">
+    <div className="bg-white rounded-xl border border-zinc-300 shadow-sm overflow-hidden">
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="bg-zinc-900 px-6 py-3 border-b border-yellow-500">
 
-        {/* Nome programma */}
+        <h2 className="text-lg font-bold text-white">
+          DATI DEL PROGRAMMA
+        </h2>
 
-        <div>
+      </div>
 
-          <label className="block text-sm font-semibold text-zinc-700 mb-2">
-            Nome Programma
-          </label>
+      <div className="p-6">
 
-          <input
-            value={programma.nome}
-            onChange={(e) =>
-              setProgramma({
-                ...programma,
-                nome: e.target.value,
-              })
-            }
-            placeholder="Es. Programma Dimagrimento"
-            className="
-              w-full
-              rounded-xl
-              border
-              border-zinc-300
-              px-4
-              py-3
-              focus:outline-none
-              focus:ring-2
-              focus:ring-yellow-400
-            "
-          />
+        <div className="grid grid-cols-12 gap-6">
 
-        </div>
+          {/* Nome Programma */}
 
-        {/* Obiettivo */}
+          <div className="col-span-6">
 
-        <div>
-
-          <label className="block text-sm font-semibold text-zinc-700 mb-2">
-            Obiettivo
-          </label>
-
-          <select
-            value={programma.obiettivo}
-            onChange={(e) =>
-              setProgramma({
-                ...programma,
-                obiettivo: e.target.value,
-              })
-            }
-            className="
-              w-full
-              rounded-xl
-              border
-              border-zinc-300
-              px-4
-              py-3
-              focus:outline-none
-              focus:ring-2
-              focus:ring-yellow-400
-            "
-          >
-
-            <option value="">
-              Seleziona...
-            </option>
-
-            {obiettivi.map((o) => (
-
-              <option
-                key={o}
-                value={o}
-              >
-                {o}
-              </option>
-
-            ))}
-
-          </select>
-
-        </div>
-
-        {/* Durata */}
-
-        <div>
-
-          <label className="block text-sm font-semibold text-zinc-700 mb-2">
-            Durata
-          </label>
-
-          <div className="flex items-center gap-3">
+            <label className="block text-sm font-semibold text-zinc-700 mb-2">
+              Nome Programma
+            </label>
 
             <input
-              type="number"
-              min={1}
-              max={52}
-              value={programma.settimane}
-              onChange={(e) =>
+              value={programma.nome}
+              onChange={(e)=>
                 setProgramma({
                   ...programma,
-                  settimane: e.target.value,
+                  nome:e.target.value,
                 })
               }
+              placeholder="Es. Programma Dimagrimento"
               className="
-                w-28
+                w-full
                 rounded-xl
                 border
                 border-zinc-300
                 px-4
                 py-3
-                text-center
                 focus:outline-none
                 focus:ring-2
                 focus:ring-yellow-400
               "
             />
 
-            <span className="text-zinc-600 font-medium">
-              settimane
-            </span>
+          </div>
+
+          {/* Obiettivo */}
+
+          <div className="col-span-4">
+
+            <label className="block text-sm font-semibold text-zinc-700 mb-2">
+              Obiettivo
+            </label>
+
+            <select
+              value={programma.obiettivo}
+              onChange={(e)=>
+                setProgramma({
+                  ...programma,
+                  obiettivo:e.target.value,
+                })
+              }
+              className="
+                w-full
+                rounded-xl
+                border
+                border-zinc-300
+                px-4
+                py-3
+                focus:outline-none
+                focus:ring-2
+                focus:ring-yellow-400
+              "
+            >
+
+              <option value="">
+                Seleziona...
+              </option>
+
+              {obiettivi.map((o)=>(
+
+                <option
+                  key={o}
+                  value={o}
+                >
+                  {o}
+                </option>
+
+              ))}
+
+            </select>
+
+          </div>
+
+          {/* Durata */}
+
+          <div className="col-span-2">
+
+            <label className="block text-sm font-semibold text-zinc-700 mb-2">
+              Durata
+            </label>
+
+            <div className="flex items-center gap-2">
+
+              <input
+                type="number"
+                min={1}
+                max={52}
+                value={programma.settimane}
+                onChange={(e)=>
+                  setProgramma({
+                    ...programma,
+                    settimane:e.target.value,
+                  })
+                }
+                className="
+                  w-full
+                  rounded-xl
+                  border
+                  border-zinc-300
+                  px-3
+                  py-3
+                  text-center
+                  focus:outline-none
+                  focus:ring-2
+                  focus:ring-yellow-400
+                "
+              />
+
+              <span className="text-sm text-zinc-600">
+                sett.
+              </span>
+
+            </div>
 
           </div>
 
