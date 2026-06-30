@@ -9,10 +9,7 @@ const menu = [
     name: "Pazienti",
     path: "/studio/pazienti",
   },
-  {
-    name: "Valutazione",
-    path: "/studio/valutazione",
-  },
+
   {
     name: "Archivio",
     path: "/studio/archivio",
