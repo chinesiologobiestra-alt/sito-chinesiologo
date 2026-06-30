@@ -18,14 +18,14 @@ export default function NoteGenerali({
 
       {/* Contenuto */}
 
-      <div className="p-6">
+      <div className="p-4">
 
         <p className="text-sm text-zinc-500 mb-4">
           Indicazioni valide per tutta la durata del programma.
         </p>
 
         <textarea
-          rows={7}
+          rows={5}
           value={programma.noteGenerali}
           onChange={(e)=>
             setProgramma({

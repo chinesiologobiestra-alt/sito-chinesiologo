@@ -4,7 +4,7 @@ export default function HeaderProgramma() {
 
       {/* Header */}
 
-      <div className="bg-zinc-950 border-b-4 border-yellow-500 px-8 py-6">
+      <div className="bg-zinc-950 border-b-4 border-yellow-500 px-6 py-4">
 
         <div className="flex items-center justify-between gap-8">
 
@@ -17,14 +17,14 @@ export default function HeaderProgramma() {
               <img
                 src="/logo.png"
                 alt="Fabio Biestra"
-                className="h-24 object-contain"
+                className="h-18 object-contain"
               />
 
             </div>
 
             <div>
 
-              <h2 className="text-3xl font-bold text-white">
+              <h2 className="text-2xl font-bold text-white">
                 Fabio Biestra
               </h2>
 
@@ -40,7 +40,7 @@ export default function HeaderProgramma() {
 
           <div className="flex-1 text-center">
 
-            <h1 className="text-4xl font-black tracking-wide text-white">
+            <h1 className="text-3xl font-black tracking-wide text-white">
               PROGRAMMA DI ALLENAMENTO
             </h1>
 
