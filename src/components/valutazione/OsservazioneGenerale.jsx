@@ -29,9 +29,9 @@ export default function OsservazioneGenerale({
 
   return (
 
-    <div className="space-y-8">
+    <div className="space-y-4">
 
-      <h3 className="text-xl font-bold">
+      <h3 className="text-lg font-bold">
         Osservazione Generale
       </h3>
 
@@ -129,7 +129,7 @@ export default function OsservazioneGenerale({
 
       <TextArea
         label="Osservazioni"
-        rows={6}
+        rows={4}
         value={dati.note || ""}
         onChange={(e)=>aggiorna("note",e.target.value)}
       />
