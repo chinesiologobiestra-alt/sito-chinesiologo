@@ -18,6 +18,8 @@ import ParametriVitali from "../../components/valutazione/ParametriVitali";
 import OsservazioneGenerale from "../../components/valutazione/OsservazioneGenerale";
 import EsamePosturale from "../../components/valutazione/EsamePosturale";
 import ROMArticolare from "../../components/valutazione/ROMArticolare";
+import TestFunzionali from "../../components/valutazione/TestFunzionali";
+import SintesiValutativa from "../../components/valutazione/SintesiValutativa";
 
 import {
   salvaValutazione,
@@ -113,9 +115,6 @@ console.log("valutazioneId:", valutazioneId);
   note: "",
 
 },
-
-    rom: {},
-
         esameObiettivo: {
 
       altezza: "",
@@ -467,15 +466,35 @@ console.log("valutazioneId:", valutazioneId);
 
       </Page>
 
+
       <Page>
 
-        <SectionTitle title="9. ROM ARTICOLARE" />
+        <SectionTitle title="10. TEST FUNZIONALI" />
 
         <SectionBox>
-          <ROMArticolare
+
+          <TestFunzionali
             scheda={scheda}
             setScheda={setScheda}
           />
+
+        </SectionBox>
+
+      </Page>
+
+
+
+      <Page>
+
+        <SectionTitle title="11. SINTESI VALUTATIVA" />
+
+        <SectionBox>
+
+          <SintesiValutativa
+            scheda={scheda}
+            setScheda={setScheda}
+          />
+
         </SectionBox>
 
       </Page>
