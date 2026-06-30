@@ -17,6 +17,7 @@ import Antropometria from "../../components/valutazione/Antropometria";
 import ParametriVitali from "../../components/valutazione/ParametriVitali";
 import OsservazioneGenerale from "../../components/valutazione/OsservazioneGenerale";
 import EsamePosturale from "../../components/valutazione/EsamePosturale";
+import ROMArticolare from "../../components/valutazione/ROMArticolare";
 
 import {
   salvaValutazione,
@@ -112,6 +113,9 @@ console.log("valutazioneId:", valutazioneId);
   note: "",
 
 },
+
+    rom: {},
+
         esameObiettivo: {
 
       altezza: "",
@@ -456,6 +460,19 @@ console.log("valutazioneId:", valutazioneId);
 
         <SectionBox>
           <EsamePosturale
+            scheda={scheda}
+            setScheda={setScheda}
+          />
+        </SectionBox>
+
+      </Page>
+
+      <Page>
+
+        <SectionTitle title="9. ROM ARTICOLARE" />
+
+        <SectionBox>
+          <ROMArticolare
             scheda={scheda}
             setScheda={setScheda}
           />
