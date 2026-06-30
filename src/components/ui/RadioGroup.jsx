@@ -9,27 +9,28 @@ export default function RadioGroup({
 
   return (
 
-    <div className="space-y-2">
+    <div className="space-y-1">
 
-      <div className="text-sm font-medium">
+      <div className="text-[11px] font-semibold text-zinc-700">
 
         {label}
 
       </div>
 
-      <div className="flex flex-wrap gap-5">
+      <div className="flex flex-wrap gap-x-4 gap-y-1">
 
         {options.map((opzione) => (
 
           <label
             key={opzione}
-            className="flex items-center gap-2 cursor-pointer"
+            className="flex items-center gap-1 text-[12px] cursor-pointer"
           >
 
             <input
               type="radio"
               checked={value === opzione}
               onChange={() => onChange(opzione)}
+              className="scale-90"
             />
 
             {opzione}

@@ -5,9 +5,9 @@ export default function PosturaSelect({
   options = [],
 }) {
   return (
-    <div className="grid grid-cols-2 gap-4 items-center py-2">
+    <div className="grid grid-cols-[110px_1fr] gap-3 items-center py-1">
 
-      <label className="font-medium text-zinc-700">
+      <label className="text-[12px] font-medium text-zinc-700">
         {label}
       </label>
 
@@ -16,15 +16,23 @@ export default function PosturaSelect({
         onChange={(e) => onChange(e.target.value)}
         className="
           w-full
-          rounded-lg
+
+          h-8
+
+          rounded-md
           border
           border-zinc-300
-          px-3
-          py-2
+
+          px-2
+
+          text-[12px]
+
           bg-white
+
           focus:outline-none
-          focus:ring-2
+          focus:ring-1
           focus:ring-yellow-400
+          focus:border-yellow-500
         "
       >
         <option value="">Seleziona...</option>

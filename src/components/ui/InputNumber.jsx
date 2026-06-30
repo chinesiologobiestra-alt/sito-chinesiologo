@@ -9,9 +9,9 @@ export default function InputNumber({
 
   return (
 
-    <div className="space-y-1">
+    <div className="space-y-0.5">
 
-      <label className="block text-sm font-medium text-zinc-700">
+      <label className="block text-[10px] font-semibold uppercase tracking-wide text-zinc-700">
 
         {label}
 
@@ -25,17 +25,25 @@ export default function InputNumber({
           onChange={onChange}
           className="
             w-full
-            rounded-xl
+            h-9
+
+            rounded-lg
+
             border
             border-zinc-300
+
             bg-white
-            px-4
-            py-3
-            pr-12
+
+            px-3
+            pr-10
+
+            text-[13px]
+
             outline-none
             transition
+
             focus:border-yellow-500
-            focus:ring-2
+            focus:ring-1
             focus:ring-yellow-200
           "
         />
@@ -45,11 +53,12 @@ export default function InputNumber({
           <span
             className="
               absolute
-              right-4
+              right-3
               top-1/2
               -translate-y-1/2
+
+              text-[11px]
               text-zinc-500
-              text-sm
             "
           >
 
