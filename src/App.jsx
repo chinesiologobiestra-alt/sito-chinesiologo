@@ -23,6 +23,7 @@ import Dashboard from "./pages/studio/Dashboard";
 import Valutazione from "./pages/studio/Valutazione";
 import Pazienti from "./pages/studio/Pazienti";
 import Paziente from "./pages/studio/Paziente";
+import Archivio from "./pages/studio/Archivio";
 
 function Prenotazione() {
 
@@ -1194,6 +1195,11 @@ return (
 />
 
 <Route
+  path="/studio/archivio"
+  element={<Archivio />}
+/>
+
+<Route
     path="/studio/valutazione"
     element={<Valutazione />}
 />
@@ -1778,41 +1784,23 @@ return (
 
     </button>
 
-    <button
-      disabled
-      className="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 opacity-60 hover:opacity-80 transition-all duration-300"
-    >
-      <div className="text-5xl mb-4">
-        📝
-      </div>
-
-      <h3 className="text-white font-bold text-xl">
-        Valutazioni
-      </h3>
-
-      <p className="text-gray-500 mt-2">
-        Prossimamente
-      </p>
-
-    </button>
 
     <button
-      disabled
-      className="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 opacity-60 hover:opacity-80 transition-all duration-300"
-    >
-      <div className="text-5xl mb-4">
-        📁
-      </div>
+  onClick={() => navigate("/studio/archivio")}
+  className="bg-zinc-900 border border-yellow-600 rounded-3xl p-8 hover:border-yellow-400 hover:scale-[1.02] transition-all duration-300"
+>
+  <div className="text-5xl mb-4">
+    📁
+  </div>
 
-      <h3 className="text-white font-bold text-xl">
-        Archivio
-      </h3>
+  <h3 className="text-yellow-500 font-bold text-xl">
+    Archivio
+  </h3>
 
-      <p className="text-gray-500 mt-2">
-        Prossimamente
-      </p>
-
-    </button>
+  <p className="text-gray-400 mt-2">
+    Cartelle cliniche
+  </p>
+</button>
 
     <button
       disabled
