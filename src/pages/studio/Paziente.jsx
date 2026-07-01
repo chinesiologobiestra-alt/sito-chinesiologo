@@ -111,10 +111,106 @@ export default function Paziente() {
           </div>
         </div>
 
-        {/* BLOCCO VALUTAZIONI */}
-        <div className="bg-white rounded-2xl shadow p-8">
-          {/* Mantieni qui il blocco delle valutazioni già presente nel tuo file senza modifiche */}
+       {/* BLOCCO VALUTAZIONI */}
+
+<div className="bg-white rounded-2xl shadow p-8">
+
+  <div className="flex justify-between items-center mb-8">
+
+    <h2 className="text-2xl font-bold">
+      Storico Valutazioni
+    </h2>
+
+    <button
+      onClick={() =>
+        navigate(`/studio/valutazione?paziente=${id}`)
+      }
+      className="
+        bg-yellow-500
+        hover:bg-yellow-400
+        text-black
+        px-6
+        py-3
+        rounded-xl
+        font-semibold
+      "
+    >
+      + Nuova Valutazione
+    </button>
+
+  </div>
+
+  {valutazioni.length === 0 ? (
+
+    <div className="text-center py-10 text-zinc-500">
+      Nessuna valutazione presente.
+    </div>
+
+  ) : (
+
+    <div className="space-y-4">
+
+      {valutazioni.map((v) => (
+
+        <div
+          key={v.id}
+          className="border rounded-xl p-5 flex justify-between items-center"
+        >
+
+          <div>
+
+            <div className="font-semibold">
+              {new Date(v.data_valutazione).toLocaleDateString("it-IT")}
+            </div>
+
+            <div className="text-sm text-zinc-500">
+              Valutazione clinica
+            </div>
+
+          </div>
+
+          <div className="flex gap-2">
+
+            <button
+              onClick={() =>
+                navigate(
+                  `/studio/valutazione?id=${v.id}&paziente=${id}&readonly=true`
+                )
+              }
+              className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-semibold"
+            >
+              👁 Apri
+            </button>
+
+            <button
+              onClick={() =>
+                navigate(
+                  `/studio/valutazione?id=${v.id}&paziente=${id}`
+                )
+              }
+              className="bg-yellow-500 hover:bg-yellow-400 text-black px-4 py-2 rounded-lg text-sm font-semibold"
+            >
+              ✏ Modifica
+            </button>
+
+            <button
+              onClick={() => handleElimina(v.id)}
+              className="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg text-sm font-semibold"
+            >
+              🗑 Elimina
+            </button>
+
+          </div>
+
         </div>
+
+      ))}
+
+    </div>
+
+  )}
+
+</div>
 
         {/* BLOCCO PROGRAMMI */}
         <div className="bg-white rounded-2xl shadow p-8">
