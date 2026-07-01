@@ -1815,7 +1815,7 @@ return (
 </button>
 
     <button
-  onClick={() => navigate("/studio/programmi")}
+  onClick={() => navigate("/studio/programma")}
   className="bg-zinc-900 border border-yellow-600 rounded-3xl p-8 hover:border-yellow-400 hover:scale-[1.02] transition-all duration-300"
 >
 

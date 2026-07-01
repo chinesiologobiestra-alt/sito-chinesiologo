@@ -16,7 +16,7 @@ const menu = [
   },
   {
     name: "Programmi",
-    path: "/studio/programmi",
+    path: "/studio/programma",
   },
 
   {
