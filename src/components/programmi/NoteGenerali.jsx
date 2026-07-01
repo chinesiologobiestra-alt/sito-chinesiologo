@@ -4,13 +4,13 @@ export default function NoteGenerali({
 }) {
   return (
 
-    <div className="bg-white rounded-xl border border-zinc-300 shadow-sm overflow-hidden">
+    <div className="bg-white border border-zinc-300 rounded-xl overflow-hidden">
 
       {/* Header */}
 
-      <div className="bg-zinc-900 border-b border-yellow-500 px-6 py-3">
+      <div className="bg-zinc-900 border-b border-yellow-500 px-5 py-2">
 
-        <h2 className="text-lg font-bold text-white">
+        <h2 className="text-base font-bold text-white">
           NOTE GENERALI
         </h2>
 
@@ -18,14 +18,14 @@ export default function NoteGenerali({
 
       {/* Contenuto */}
 
-      <div className="p-4">
+      <div className="p-3">
 
-        <p className="text-sm text-zinc-500 mb-4">
+        <p className="text-xs text-zinc-500 mb-2">
           Indicazioni valide per tutta la durata del programma.
         </p>
 
         <textarea
-          rows={5}
+          rows={3}
           value={programma.noteGenerali}
           onChange={(e)=>
             setProgramma({
@@ -36,23 +36,19 @@ export default function NoteGenerali({
           placeholder={`Esempio:
 
 • Bere almeno 2 litri di acqua al giorno
-
 • Camminare almeno 8.000-10.000 passi
-
-• Effettuare sempre il riscaldamento
-
-• Stretching al termine dell'allenamento
-
-• Interrompere l'esercizio in caso di dolore`}
+• Riscaldamento prima dell'allenamento
+• Stretching finale`}
           className="
             w-full
-            rounded-xl
+            rounded-lg
             border
             border-zinc-300
-            px-5
-            py-4
+            px-3
+            py-2
             resize-none
-            leading-7
+            text-sm
+            leading-5
             text-zinc-700
             focus:outline-none
             focus:ring-2

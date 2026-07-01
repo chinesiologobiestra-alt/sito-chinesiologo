@@ -35,21 +35,23 @@ export default function GiornoProgramma({
         bg-white
         flex
         flex-col
-        h-full
         ${!ultimaColonna ? "border-r border-zinc-300" : ""}
       `}
     >
       {/* GIORNO */}
 
-      <div className="bg-zinc-900 text-white text-center py-2 border-b-2 border-yellow-500">
-        <h2 className="font-bold uppercase tracking-wide text-xs">
+      <div className="bg-zinc-900 text-white text-center py-1.5 border-b border-yellow-500">
+
+        <h2 className="font-bold uppercase tracking-wide text-[11px]">
           {giorno}
         </h2>
+
       </div>
 
-      {/* GRUPPO MUSCOLARE */}
+      {/* GRUPPO */}
 
-      <div className="p-2 border-b border-zinc-300">
+      <div className="p-1.5 border-b border-zinc-300">
+
         <select
           value={valore?.gruppo || ""}
           onChange={(e) =>
@@ -60,19 +62,17 @@ export default function GiornoProgramma({
           }
           className="
             w-full
-            rounded-md
+            rounded
             border
             border-zinc-300
             bg-white
-            px-2
-            py-1.5
-            text-xs
+            px-1.5
+            py-1
+            text-[11px]
             focus:outline-none
-            focus:ring-2
-            focus:ring-yellow-400
           "
         >
-          <option value="">Seleziona...</option>
+          <option value="">-</option>
 
           {gruppi.map(
             (g) =>
@@ -83,11 +83,13 @@ export default function GiornoProgramma({
               )
           )}
         </select>
+
       </div>
 
       {/* NOTE */}
 
-      <div className="flex-1 p-2">
+      <div className="flex-1 p-1.5">
+
         <textarea
           value={valore?.note || ""}
           onChange={(e) =>
@@ -96,24 +98,26 @@ export default function GiornoProgramma({
               note: e.target.value,
             })
           }
-          placeholder="Esercizi, serie, ripetizioni..."
+          placeholder="Serie - Rip. - Recupero"
           className="
             w-full
             h-full
             resize-none
             border-0
             bg-transparent
-            text-xs
-            leading-6
+            text-[11px]
+            leading-5
             focus:outline-none
           "
           style={{
             backgroundImage:
-              "linear-gradient(to bottom, transparent 23px, #e4e4e7 24px)",
-            backgroundSize: "100% 24px",
+              "linear-gradient(to bottom, transparent 19px, #e4e4e7 20px)",
+            backgroundSize: "100% 20px",
           }}
         />
+
       </div>
+
     </div>
   );
 }
