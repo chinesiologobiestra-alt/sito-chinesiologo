@@ -1,3 +1,5 @@
+import ProgrammaPage from "./ProgrammaPage";
+
 import HeaderProgramma from "./HeaderProgramma";
 import DatiProgramma from "./DatiProgramma";
 import NoteGenerali from "./NoteGenerali";
@@ -11,53 +13,54 @@ export default function DocumentoProgramma({
   readonly = false,
 }) {
   return (
-    <div className="flex justify-center">
-      <div
-        id="programma-pdf"
-        className="
-          bg-white
-          shadow-xl
-          border
-          border-zinc-300
-          rounded-xl
-          w-[297mm]
-          min-h-[210mm]
-          p-[10mm]
-          overflow-hidden
-        "
-      >
-        <HeaderProgramma programma={programma} />
+    <ProgrammaPage>
 
-        <div className="mt-4">
-          <DatiProgramma
-            programma={programma}
-            setProgramma={setProgramma}
-            aggiornaProgramma={aggiornaProgramma}
-            readonly={readonly}
-          />
-        </div>
+      {/* HEADER */}
 
-        <div className="mt-5">
-          <NoteGenerali
-            programma={programma}
-            setProgramma={setProgramma}
-            aggiornaProgramma={aggiornaProgramma}
-            readonly={readonly}
-          />
-        </div>
+      <HeaderProgramma />
 
-        <div className="mt-6">
-          <h2 className="text-lg font-bold text-zinc-800 border-b pb-2 mb-4">
-            Programma Settimanale
-          </h2>
+      {/* DATI PROGRAMMA */}
 
-          <PlannerSettimanale
-            programma={programma}
-            aggiornaGiorno={aggiornaGiorno}
-            readonly={readonly}
-          />
-        </div>
+      <div className="mt-5">
+
+        <DatiProgramma
+          programma={programma}
+          setProgramma={setProgramma}
+          aggiornaProgramma={aggiornaProgramma}
+          readonly={readonly}
+        />
+
       </div>
-    </div>
+
+      {/* NOTE GENERALI */}
+
+      <div className="mt-5">
+
+        <NoteGenerali
+          programma={programma}
+          setProgramma={setProgramma}
+          aggiornaProgramma={aggiornaProgramma}
+          readonly={readonly}
+        />
+
+      </div>
+
+      {/* PLANNER */}
+
+      <div className="mt-6">
+
+        <h2 className="text-lg font-bold text-zinc-800 border-b pb-2 mb-4">
+          Programma Settimanale
+        </h2>
+
+        <PlannerSettimanale
+          programma={programma}
+          aggiornaGiorno={aggiornaGiorno}
+          readonly={readonly}
+        />
+
+      </div>
+
+    </ProgrammaPage>
   );
 }

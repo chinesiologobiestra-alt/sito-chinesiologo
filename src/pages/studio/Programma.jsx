@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
+
+import { generaPDF } from "../../services/pdfService";
+
 import Layout from "../../components/studio/Layout";
 import DocumentoProgramma from "../../components/programmi/DocumentoProgramma";
 import ToolbarProgramma from "../../components/programmi/ToolbarProgramma";
@@ -37,7 +38,9 @@ export default function Programma() {
   });
 
   useEffect(() => {
-    if (programmaId) caricaProgramma();
+    if (programmaId) {
+      caricaProgramma();
+    }
   }, [programmaId]);
 
   async function caricaProgramma() {
@@ -61,7 +64,7 @@ export default function Programma() {
   function aggiornaProgramma(campo, valore) {
     if (readonly) return;
 
-    setProgramma(prev => ({
+    setProgramma((prev) => ({
       ...prev,
       [campo]: valore,
     }));
@@ -70,7 +73,7 @@ export default function Programma() {
   function aggiornaGiorno(giorno, dati) {
     if (readonly) return;
 
-    setProgramma(prev => ({
+    setProgramma((prev) => ({
       ...prev,
       giorni: {
         ...prev.giorni,
@@ -87,11 +90,25 @@ export default function Programma() {
       }
 
       if (programma.id) {
-        const aggiornato = await updateProgramma(programma.id, programma);
-        setProgramma(prev => ({ ...prev, id: aggiornato.id }));
+        const aggiornato = await updateProgramma(
+          programma.id,
+          programma
+        );
+
+        setProgramma((prev) => ({
+          ...prev,
+          id: aggiornato.id,
+        }));
       } else {
-        const creato = await creaProgramma(pazienteId, programma);
-        setProgramma(prev => ({ ...prev, id: creato.id }));
+        const creato = await creaProgramma(
+          pazienteId,
+          programma
+        );
+
+        setProgramma((prev) => ({
+          ...prev,
+          id: creato.id,
+        }));
       }
 
       alert("Programma salvato con successo.");
@@ -101,58 +118,19 @@ export default function Programma() {
     }
   }
 
- async function esportaPDF() {
-  try {
-    const elemento = document.getElementById("programma-pdf");
-
-    if (!elemento) {
-      alert("Documento non trovato.");
-      return;
-    }
-
-    const canvas = await html2canvas(elemento, {
-      scale: 3,
-      useCORS: true,
-      backgroundColor: "#ffffff",
-      logging: false,
-      windowWidth: elemento.scrollWidth,
-      windowHeight: elemento.scrollHeight,
-    });
-
-    const imgData = canvas.toDataURL("image/png");
-
-    const pdf = new jsPDF({
-      orientation: "landscape",
-      unit: "mm",
-      format: "a4",
-    });
-
-    pdf.addImage(
-      imgData,
-      "PNG",
-      0,
-      0,
-      297,
-      210
-    );
-
-    const nome =
-      programma.nome?.trim() || "Programma";
-
-    pdf.save(`${nome}.pdf`);
-
-  } catch (err) {
-    console.error(err);
-    alert("Errore durante la creazione del PDF.");
-  }
-}
   return (
     <Layout>
+
       <div className="mx-auto w-full max-w-[1500px] p-6 space-y-6">
 
         <ToolbarProgramma
           onSalva={readonly ? undefined : salva}
-          onPDF={esportaPDF}
+          onPDF={() =>
+            generaPDF(
+              programma.nome || "Programma"
+            )
+          }
+          readonly={readonly}
         />
 
         <DocumentoProgramma
@@ -164,6 +142,7 @@ export default function Programma() {
         />
 
       </div>
+
     </Layout>
   );
 }
