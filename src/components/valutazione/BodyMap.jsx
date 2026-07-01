@@ -1,3 +1,6 @@
+import front from "../../assets/bodymap/front.png";
+import back from "../../assets/bodymap/back.png";
+
 export default function BodyMap() {
   return (
     <div className="border border-zinc-300 rounded-md p-4 bg-white">
@@ -6,14 +9,22 @@ export default function BodyMap() {
         Mappa del dolore
       </h4>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-6">
 
-        <div className="border border-dashed border-zinc-400 rounded-md h-[250px] flex items-center justify-center">
-          Vista anteriore
+        <div className="border border-zinc-300 rounded-md p-3 flex justify-center items-center bg-zinc-50">
+          <img
+            src={front}
+            alt="Vista anteriore"
+            className="h-[240px] object-contain"
+          />
         </div>
 
-        <div className="border border-dashed border-zinc-400 rounded-md h-[250px] flex items-center justify-center">
-          Vista posteriore
+        <div className="border border-zinc-300 rounded-md p-3 flex justify-center items-center bg-zinc-50">
+          <img
+            src={back}
+            alt="Vista posteriore"
+            className="h-[240px] object-contain"
+          />
         </div>
 
       </div>
