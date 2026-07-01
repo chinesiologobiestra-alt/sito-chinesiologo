@@ -8,9 +8,9 @@ export default function NoteGenerali({
 
       {/* Header */}
 
-      <div className="bg-zinc-900 border-b border-yellow-500 px-5 py-2">
+      <div className="bg-zinc-900 border-b border-yellow-500 px-4 py-2">
 
-        <h2 className="text-base font-bold text-white">
+        <h2 className="text-sm font-bold text-white tracking-wide">
           NOTE GENERALI
         </h2>
 
@@ -20,12 +20,12 @@ export default function NoteGenerali({
 
       <div className="p-3">
 
-        <p className="text-xs text-zinc-500 mb-2">
+        <p className="text-[11px] text-zinc-500 mb-2">
           Indicazioni valide per tutta la durata del programma.
         </p>
 
         <textarea
-          rows={3}
+          rows={2}
           value={programma.noteGenerali}
           onChange={(e)=>
             setProgramma({
@@ -36,7 +36,7 @@ export default function NoteGenerali({
           placeholder={`Esempio:
 
 • Bere almeno 2 litri di acqua al giorno
-• Camminare almeno 8.000-10.000 passi
+• Camminare 8.000-10.000 passi
 • Riscaldamento prima dell'allenamento
 • Stretching finale`}
           className="

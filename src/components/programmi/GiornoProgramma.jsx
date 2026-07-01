@@ -40,9 +40,9 @@ export default function GiornoProgramma({
     >
       {/* GIORNO */}
 
-      <div className="bg-zinc-900 text-white text-center py-1.5 border-b border-yellow-500">
+      <div className="bg-zinc-900 text-white text-center py-1 border-b border-yellow-500">
 
-        <h2 className="font-bold uppercase tracking-wide text-[11px]">
+        <h2 className="font-bold uppercase tracking-wide text-[10px]">
           {giorno}
         </h2>
 
@@ -50,7 +50,7 @@ export default function GiornoProgramma({
 
       {/* GRUPPO */}
 
-      <div className="p-1.5 border-b border-zinc-300">
+      <div className="p-1 border-b border-zinc-300">
 
         <select
           value={valore?.gruppo || ""}
@@ -62,13 +62,15 @@ export default function GiornoProgramma({
           }
           className="
             w-full
+            h-8
             rounded
             border
             border-zinc-300
             bg-white
-            px-1.5
-            py-1
-            text-[11px]
+            px-2
+            text-[10px]
+            leading-none
+            appearance-none
             focus:outline-none
           "
         >
@@ -88,7 +90,7 @@ export default function GiornoProgramma({
 
       {/* NOTE */}
 
-      <div className="flex-1 p-1.5">
+      <div className="flex-1 p-1">
 
         <textarea
           value={valore?.note || ""}
@@ -105,14 +107,14 @@ export default function GiornoProgramma({
             resize-none
             border-0
             bg-transparent
-            text-[11px]
-            leading-5
+            text-[10px]
+            leading-4
             focus:outline-none
           "
           style={{
             backgroundImage:
-              "linear-gradient(to bottom, transparent 19px, #e4e4e7 20px)",
-            backgroundSize: "100% 20px",
+              "linear-gradient(to bottom, transparent 15px, #e4e4e7 16px)",
+            backgroundSize: "100% 16px",
           }}
         />
 

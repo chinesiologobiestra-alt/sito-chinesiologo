@@ -47,12 +47,13 @@ export default function DatiProgramma({
               placeholder="Es. Programma Dimagrimento"
               className="
                 w-full
+                h-10
                 rounded-lg
                 border
                 border-zinc-300
                 px-3
-                py-2
                 text-sm
+                leading-none
                 focus:outline-none
                 focus:ring-2
                 focus:ring-yellow-400
@@ -79,12 +80,13 @@ export default function DatiProgramma({
               }
               className="
                 w-full
+                h-10
                 rounded-lg
                 border
                 border-zinc-300
                 px-3
-                py-2
                 text-sm
+                appearance-none
                 focus:outline-none
                 focus:ring-2
                 focus:ring-yellow-400
@@ -116,7 +118,7 @@ export default function DatiProgramma({
               Durata
             </label>
 
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-2">
 
               <input
                 type="number"
@@ -131,20 +133,21 @@ export default function DatiProgramma({
                 }
                 className="
                   w-full
+                  h-10
                   rounded-lg
                   border
                   border-zinc-300
                   px-2
-                  py-2
                   text-sm
                   text-center
+                  leading-none
                   focus:outline-none
                   focus:ring-2
                   focus:ring-yellow-400
                 "
               />
 
-              <span className="text-xs text-zinc-600">
+              <span className="text-xs text-zinc-600 whitespace-nowrap">
                 sett.
               </span>
 
