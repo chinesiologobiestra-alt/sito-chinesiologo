@@ -126,10 +126,11 @@ export default function Programma() {
         <ToolbarProgramma
           onSalva={readonly ? undefined : salva}
           onPDF={() =>
-            generaPDF(
-              programma.nome || "Programma"
-            )
-          }
+  generaPDF(
+    programma.nome || "Programma",
+    "landscape"
+  )
+}
           readonly={readonly}
         />
 

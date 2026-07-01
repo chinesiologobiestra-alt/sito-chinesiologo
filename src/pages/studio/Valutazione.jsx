@@ -336,13 +336,14 @@ console.log("valutazioneId:", valutazioneId);
 
           )}
                     <button
-            onClick={() =>
-              generaPDF(
-                `Valutazione_${
-                  scheda.anagrafica.nome || "Paziente"
-                }`
-              )
-            }
+  onClick={() =>
+    generaPDF(
+      `Valutazione_${
+        scheda.anagrafica.nome || "Paziente"
+      }`,
+      "portrait"
+    )
+  }
             className="
               bg-red-600
               hover:bg-red-500
