@@ -1212,7 +1212,7 @@ return (
 />
 
 <Route
-  path="/studio/programmi"
+  path="/studio/programma"
   element={<Programma />}
 />
 
