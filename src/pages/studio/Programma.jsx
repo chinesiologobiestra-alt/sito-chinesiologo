@@ -1,11 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import Layout from "../../components/studio/Layout";
 import DocumentoProgramma from "../../components/programmi/DocumentoProgramma";
 import ToolbarProgramma from "../../components/programmi/ToolbarProgramma";
 
+import {
+  salvaProgramma as creaProgramma,
+  updateProgramma,
+  getProgramma,
+} from "../../services/programmaService";
+
 export default function Programma() {
+  const [searchParams] = useSearchParams();
+
+  const pazienteId = searchParams.get("paziente");
+  const programmaId = searchParams.get("id");
+  const readonly = searchParams.get("readonly") === "true";
+
   const [programma, setProgramma] = useState({
+    id: null,
     nome: "",
     obiettivo: "",
     settimane: 4,
@@ -21,21 +35,41 @@ export default function Programma() {
     },
   });
 
-  // ==========================
-  // Aggiornamento dati generali
-  // ==========================
+  useEffect(() => {
+    if (programmaId) caricaProgramma();
+  }, [programmaId]);
+
+  async function caricaProgramma() {
+    try {
+      const data = await getProgramma(programmaId);
+
+      setProgramma({
+        id: data.id,
+        nome: data.nome ?? "",
+        obiettivo: data.obiettivo ?? "",
+        settimane: data.settimane ?? 4,
+        noteGenerali: data.note_generali ?? "",
+        giorni: data.giorni,
+      });
+    } catch (err) {
+      console.error(err);
+      alert("Errore durante il caricamento del programma.");
+    }
+  }
+
   function aggiornaProgramma(campo, valore) {
-    setProgramma((prev) => ({
+    if (readonly) return;
+
+    setProgramma(prev => ({
       ...prev,
       [campo]: valore,
     }));
   }
 
-  // ==========================
-  // Aggiornamento singolo giorno
-  // ==========================
   function aggiornaGiorno(giorno, dati) {
-    setProgramma((prev) => ({
+    if (readonly) return;
+
+    setProgramma(prev => ({
       ...prev,
       giorni: {
         ...prev.giorni,
@@ -44,35 +78,38 @@ export default function Programma() {
     }));
   }
 
-  // ==========================
-  // Salvataggio (da implementare)
-  // ==========================
-  async function salvaProgramma() {
-    console.log("Salvataggio Programma");
+  async function salva() {
+    try {
+      if (!pazienteId) {
+        alert("Paziente non selezionato.");
+        return;
+      }
 
-    console.log(programma);
+      if (programma.id) {
+        const aggiornato = await updateProgramma(programma.id, programma);
+        setProgramma(prev => ({ ...prev, id: aggiornato.id }));
+      } else {
+        const creato = await creaProgramma(pazienteId, programma);
+        setProgramma(prev => ({ ...prev, id: creato.id }));
+      }
 
-    // TODO:
-    // Salvataggio su Supabase
+      alert("Programma salvato con successo.");
+    } catch (err) {
+      console.error(err);
+      alert("Errore durante il salvataggio.");
+    }
   }
 
-  // ==========================
-  // PDF (da implementare)
-  // ==========================
   async function esportaPDF() {
-    console.log("Esporta PDF");
-
-    // TODO:
-    // html2canvas + jsPDF
+    alert("Esportazione PDF in sviluppo.");
   }
 
   return (
     <Layout>
-
       <div className="mx-auto w-full max-w-[1500px] p-6 space-y-6">
 
         <ToolbarProgramma
-          onSalva={salvaProgramma}
+          onSalva={readonly ? undefined : salva}
           onPDF={esportaPDF}
         />
 
@@ -81,10 +118,10 @@ export default function Programma() {
           setProgramma={setProgramma}
           aggiornaProgramma={aggiornaProgramma}
           aggiornaGiorno={aggiornaGiorno}
+          readonly={readonly}
         />
 
       </div>
-
     </Layout>
   );
 }
