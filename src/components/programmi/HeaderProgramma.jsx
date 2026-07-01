@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getPaziente } from "../../services/pazienteService";
+import { getPaziente } from "../../services/pazientiService";
 
 export default function HeaderProgramma({
   pazienteId,
