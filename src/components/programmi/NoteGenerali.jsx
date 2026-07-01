@@ -25,7 +25,7 @@ export default function NoteGenerali({
         </p>
 
         <textarea
-          rows={2}
+          rows={4}
           value={programma.noteGenerali}
           onChange={(e)=>
             setProgramma({
@@ -40,15 +40,16 @@ export default function NoteGenerali({
 • Riscaldamento prima dell'allenamento
 • Stretching finale`}
           className="
-            w-full
-            rounded-lg
-            border
-            border-zinc-300
-            px-3
-            py-2
-            resize-none
-            text-sm
-            leading-5
+  w-full
+  h-28
+  rounded-lg
+  border
+  border-zinc-300
+  px-3
+  py-2
+  resize-none
+  text-sm
+  leading-5
             text-zinc-700
             focus:outline-none
             focus:ring-2

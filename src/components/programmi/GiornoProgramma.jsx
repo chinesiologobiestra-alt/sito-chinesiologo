@@ -90,7 +90,7 @@ export default function GiornoProgramma({
 
       {/* NOTE */}
 
-      <div className="flex-1 p-1">
+      <div className="flex-1 p-1 min-h-[140px]">
 
         <textarea
           value={valore?.note || ""}
