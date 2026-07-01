@@ -14,25 +14,25 @@ export default function DatiProgramma({
 
   return (
 
-    <div className="bg-white rounded-xl border border-zinc-300 shadow-sm overflow-hidden">
+    <div className="bg-white border border-zinc-300 rounded-xl overflow-hidden">
 
-      <div className="bg-zinc-900 px-6 py-3 border-b border-yellow-500">
+      <div className="bg-zinc-900 px-5 py-2 border-b border-yellow-500">
 
-        <h2 className="text-lg font-bold text-white">
+        <h2 className="text-base font-bold text-white">
           DATI DEL PROGRAMMA
         </h2>
 
       </div>
 
-      <div className="p-4">
+      <div className="p-3">
 
-        <div className="grid grid-cols-12 gap-6">
+        <div className="grid grid-cols-12 gap-4">
 
-          {/* Nome Programma */}
+          {/* Nome */}
 
-          <div className="col-span-6">
+          <div className="col-span-5">
 
-            <label className="block text-sm font-semibold text-zinc-700 mb-2">
+            <label className="block text-xs font-semibold text-zinc-700 mb-1">
               Nome Programma
             </label>
 
@@ -47,11 +47,12 @@ export default function DatiProgramma({
               placeholder="Es. Programma Dimagrimento"
               className="
                 w-full
-                rounded-xl
+                rounded-lg
                 border
                 border-zinc-300
-                px-4
-                py-3
+                px-3
+                py-2
+                text-sm
                 focus:outline-none
                 focus:ring-2
                 focus:ring-yellow-400
@@ -62,9 +63,9 @@ export default function DatiProgramma({
 
           {/* Obiettivo */}
 
-          <div className="col-span-4">
+          <div className="col-span-5">
 
-            <label className="block text-sm font-semibold text-zinc-700 mb-2">
+            <label className="block text-xs font-semibold text-zinc-700 mb-1">
               Obiettivo
             </label>
 
@@ -78,11 +79,12 @@ export default function DatiProgramma({
               }
               className="
                 w-full
-                rounded-xl
+                rounded-lg
                 border
                 border-zinc-300
-                px-4
-                py-3
+                px-3
+                py-2
+                text-sm
                 focus:outline-none
                 focus:ring-2
                 focus:ring-yellow-400
@@ -94,14 +96,12 @@ export default function DatiProgramma({
               </option>
 
               {obiettivi.map((o)=>(
-
                 <option
                   key={o}
                   value={o}
                 >
                   {o}
                 </option>
-
               ))}
 
             </select>
@@ -112,11 +112,11 @@ export default function DatiProgramma({
 
           <div className="col-span-2">
 
-            <label className="block text-sm font-semibold text-zinc-700 mb-2">
+            <label className="block text-xs font-semibold text-zinc-700 mb-1">
               Durata
             </label>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
 
               <input
                 type="number"
@@ -131,11 +131,12 @@ export default function DatiProgramma({
                 }
                 className="
                   w-full
-                  rounded-xl
+                  rounded-lg
                   border
                   border-zinc-300
-                  px-3
-                  py-3
+                  px-2
+                  py-2
+                  text-sm
                   text-center
                   focus:outline-none
                   focus:ring-2
@@ -143,7 +144,7 @@ export default function DatiProgramma({
                 "
               />
 
-              <span className="text-sm text-zinc-600">
+              <span className="text-xs text-zinc-600">
                 sett.
               </span>
 
