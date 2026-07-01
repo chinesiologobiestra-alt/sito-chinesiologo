@@ -2,8 +2,8 @@ export default function GiornoProgramma({
   giorno,
   valore,
   onChange,
+  ultimaColonna = false,
 }) {
-
   const gruppi = [
     "",
     "Riposo",
@@ -30,27 +30,26 @@ export default function GiornoProgramma({
   ];
 
   return (
+    <div
+      className={`
+        bg-white
+        flex
+        flex-col
+        h-full
+        ${!ultimaColonna ? "border-r border-zinc-300" : ""}
+      `}
+    >
+      {/* GIORNO */}
 
-    <div className="border-r border-zinc-300 bg-white flex flex-col h-full">
-
-      {/* Intestazione giorno */}
-
-      <div className="bg-zinc-900 text-white text-center py-3 border-b-2 border-yellow-500">
-
-        <h2 className="font-bold tracking-wide uppercase text-sm">
+      <div className="bg-zinc-900 text-white text-center py-2 border-b-2 border-yellow-500">
+        <h2 className="font-bold uppercase tracking-wide text-xs">
           {giorno}
         </h2>
-
       </div>
 
-      {/* Gruppo muscolare */}
+      {/* GRUPPO MUSCOLARE */}
 
-      <div className="p-3 border-b border-zinc-300">
-
-        <label className="block text-[11px] font-semibold uppercase text-zinc-500 mb-2">
-          Gruppo
-        </label>
-
+      <div className="p-2 border-b border-zinc-300">
         <select
           value={valore?.gruppo || ""}
           onChange={(e) =>
@@ -61,41 +60,34 @@ export default function GiornoProgramma({
           }
           className="
             w-full
-            text-xs
             rounded-md
             border
             border-zinc-300
-            px-2
-            py-2
             bg-white
+            px-2
+            py-1.5
+            text-xs
             focus:outline-none
             focus:ring-2
             focus:ring-yellow-400
           "
         >
+          <option value="">Seleziona...</option>
 
-          <option value="">-</option>
-
-          {gruppi.map((g) => (
-            g && (
-              <option key={g} value={g}>
-                {g}
-              </option>
-            )
-          ))}
-
+          {gruppi.map(
+            (g) =>
+              g && (
+                <option key={g} value={g}>
+                  {g}
+                </option>
+              )
+          )}
         </select>
-
       </div>
 
-      {/* Note */}
+      {/* NOTE */}
 
-      <div className="flex-1 p-3 flex flex-col">
-
-        <label className="block text-[11px] font-semibold uppercase text-zinc-500 mb-2">
-          Note
-        </label>
-
+      <div className="flex-1 p-2">
         <textarea
           value={valore?.note || ""}
           onChange={(e) =>
@@ -104,27 +96,24 @@ export default function GiornoProgramma({
               note: e.target.value,
             })
           }
-          placeholder="Indicazioni..."
+          placeholder="Esercizi, serie, ripetizioni..."
           className="
-            flex-1
             w-full
+            h-full
             resize-none
             border-0
             bg-transparent
-            text-sm
-            leading-7
+            text-xs
+            leading-6
             focus:outline-none
           "
           style={{
             backgroundImage:
-              "linear-gradient(to bottom, transparent 31px, #e4e4e7 32px)",
-            backgroundSize: "100% 32px",
+              "linear-gradient(to bottom, transparent 23px, #e4e4e7 24px)",
+            backgroundSize: "100% 24px",
           }}
         />
-
       </div>
-
     </div>
-
   );
 }
