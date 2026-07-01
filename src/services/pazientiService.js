@@ -11,6 +11,18 @@ export async function getPazienti() {
   return data;
 }
 
+export async function getPaziente(id) {
+  const { data, error } = await supabase
+    .from("pazienti")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) throw error;
+
+  return data;
+}
+
 export async function creaPaziente(paziente) {
   const { data, error } = await supabase
     .from("pazienti")

@@ -7,6 +7,8 @@ import PlannerSettimanale from "./PlannerSettimanale";
 
 export default function DocumentoProgramma({
   programma,
+  pazienteId,
+  programmaId,
   setProgramma,
   aggiornaProgramma,
   aggiornaGiorno,
@@ -17,7 +19,10 @@ export default function DocumentoProgramma({
 
       {/* HEADER */}
 
-      <HeaderProgramma />
+      <HeaderProgramma
+        pazienteId={pazienteId}
+        programma={programma}
+      />
 
       {/* DATI PROGRAMMA */}
 

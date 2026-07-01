@@ -120,30 +120,28 @@ export default function Programma() {
 
   return (
     <Layout>
-
       <div className="mx-auto w-full max-w-[1500px] p-6 space-y-6">
-
         <ToolbarProgramma
           onSalva={readonly ? undefined : salva}
           onPDF={() =>
-  generaPDF(
-    programma.nome || "Programma",
-    "landscape"
-  )
-}
+            generaPDF(
+              programma.nome || "Programma",
+              "landscape"
+            )
+          }
           readonly={readonly}
         />
 
         <DocumentoProgramma
           programma={programma}
+          pazienteId={pazienteId}
+          programmaId={programmaId}
+          readonly={readonly}
           setProgramma={setProgramma}
           aggiornaProgramma={aggiornaProgramma}
           aggiornaGiorno={aggiornaGiorno}
-          readonly={readonly}
         />
-
       </div>
-
     </Layout>
   );
 }

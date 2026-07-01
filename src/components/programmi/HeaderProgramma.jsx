@@ -1,4 +1,43 @@
-export default function HeaderProgramma() {
+import { useEffect, useState } from "react";
+import { getPaziente } from "../../services/pazienteService";
+
+export default function HeaderProgramma({
+  pazienteId,
+  programma,
+}) {
+  const [paziente, setPaziente] = useState(null);
+
+  useEffect(() => {
+    if (pazienteId) {
+      caricaPaziente();
+    }
+  }, [pazienteId]);
+
+  async function caricaPaziente() {
+    try {
+      const data = await getPaziente(pazienteId);
+      setPaziente(data);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  const dataCorrente = new Date().toLocaleDateString("it-IT");
+
+  const nomePaziente = paziente
+    ? `${paziente.nome} ${paziente.cognome}`
+    : "—";
+
+  const nomeProgramma =
+    programma?.nome?.trim() || "Programma Personalizzato";
+
+  const durata =
+    programma?.settimane
+      ? `${programma.settimane} ${
+          programma.settimane === 1 ? "settimana" : "settimane"
+        }`
+      : "—";
+
   return (
     <div className="bg-white rounded-xl border border-zinc-300 overflow-hidden">
 
@@ -45,21 +84,23 @@ export default function HeaderProgramma() {
             </h1>
 
             <p className="mt-1 text-xs uppercase tracking-[5px] text-zinc-300">
-              Piano Personalizzato
+              {nomeProgramma}
             </p>
 
           </div>
 
           {/* Informazioni */}
 
-          <div className="min-w-[150px] text-right text-xs text-white space-y-2">
+          <div className="min-w-[220px] text-right text-xs text-white space-y-3">
 
             <div>
               <div className="font-semibold text-yellow-400">
                 Paziente
               </div>
 
-              <div>—</div>
+              <div className="font-medium">
+                {nomePaziente}
+              </div>
             </div>
 
             <div>
@@ -67,7 +108,9 @@ export default function HeaderProgramma() {
                 Data
               </div>
 
-              <div>—</div>
+              <div>
+                {dataCorrente}
+              </div>
             </div>
 
             <div>
@@ -75,7 +118,9 @@ export default function HeaderProgramma() {
                 Durata
               </div>
 
-              <div>—</div>
+              <div>
+                {durata}
+              </div>
             </div>
 
           </div>
