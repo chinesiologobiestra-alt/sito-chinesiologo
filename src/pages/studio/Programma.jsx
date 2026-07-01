@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 import Layout from "../../components/studio/Layout";
 import DocumentoProgramma from "../../components/programmi/DocumentoProgramma";
 import ToolbarProgramma from "../../components/programmi/ToolbarProgramma";
@@ -100,10 +101,51 @@ export default function Programma() {
     }
   }
 
-  async function esportaPDF() {
-    alert("Esportazione PDF in sviluppo.");
-  }
+ async function esportaPDF() {
+  try {
+    const elemento = document.getElementById("programma-pdf");
 
+    if (!elemento) {
+      alert("Documento non trovato.");
+      return;
+    }
+
+    const canvas = await html2canvas(elemento, {
+      scale: 3,
+      useCORS: true,
+      backgroundColor: "#ffffff",
+      logging: false,
+      windowWidth: elemento.scrollWidth,
+      windowHeight: elemento.scrollHeight,
+    });
+
+    const imgData = canvas.toDataURL("image/png");
+
+    const pdf = new jsPDF({
+      orientation: "landscape",
+      unit: "mm",
+      format: "a4",
+    });
+
+    pdf.addImage(
+      imgData,
+      "PNG",
+      0,
+      0,
+      297,
+      210
+    );
+
+    const nome =
+      programma.nome?.trim() || "Programma";
+
+    pdf.save(`${nome}.pdf`);
+
+  } catch (err) {
+    console.error(err);
+    alert("Errore durante la creazione del PDF.");
+  }
+}
   return (
     <Layout>
       <div className="mx-auto w-full max-w-[1500px] p-6 space-y-6">
